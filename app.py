@@ -14,6 +14,14 @@ CV_ABS_PATH = \
 PROFILE_IMG_ABS_PATH = \
     "/Users/macm1/Documents/Practice DA/Social Media Data/profile.jpg"
 
+# For Streamlit Cloud deployment - use relative paths
+if not os.path.exists(CV_ABS_PATH):
+    CV_ABS_PATH = "[CV]-[Data Analyst]-[Trinh Anh Tu].pdf"
+if not os.path.exists(DEFAULT_CSV_ABS_PATH):
+    DEFAULT_CSV_ABS_PATH = "sustainability_social_media_posts.csv"
+if not os.path.exists(PROFILE_IMG_ABS_PATH):
+    PROFILE_IMG_ABS_PATH = "profile.jpg"
+
 
 @st.cache_data(show_spinner=False)
 def load_data(csv_path: str) -> pd.DataFrame:
