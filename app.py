@@ -226,18 +226,32 @@ def about_me_tab() -> None:
             st.markdown("\n")
         st.markdown("<div class='card'><b>Resume (PDF)</b></div>", unsafe_allow_html=True)
         
-        # Always show CV inline by default
+        # Show CV with fallback options
         if os.path.exists(CV_ABS_PATH):
-            _render_pdf_inline(CV_ABS_PATH, height=600)
+            # Try to display PDF inline first
+            try:
+                _render_pdf_inline(CV_ABS_PATH, height=600)
+            except:
+                st.info("Your browser blocked PDF display. Use the buttons below:")
+            
             st.markdown("\n")
-            with open(CV_ABS_PATH, "rb") as f:
-                st.download_button(
-                    label="📄 Download Resume (PDF)",
-                    data=f.read(),
-                    file_name=os.path.basename(CV_ABS_PATH),
-                    mime="application/pdf",
-                    key="download_cv_main",
-                )
+            # Provide multiple options
+            col1, col2 = st.columns(2)
+            with col1:
+                with open(CV_ABS_PATH, "rb") as f:
+                    pdf_bytes = f.read()
+                b64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
+                st.markdown(f"[🔗 Open CV in new tab](data:application/pdf;base64,{b64_pdf})", unsafe_allow_html=True)
+            
+            with col2:
+                with open(CV_ABS_PATH, "rb") as f:
+                    st.download_button(
+                        label="📄 Download Resume (PDF)",
+                        data=f.read(),
+                        file_name=os.path.basename(CV_ABS_PATH),
+                        mime="application/pdf",
+                        key="download_cv_main",
+                    )
         else:
             st.warning("Resume file not found. Please add your CV file to the project directory.")
             uploaded_cv = st.file_uploader("Upload your Resume (PDF)", type=["pdf"], key="cv_upload_main")
