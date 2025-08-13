@@ -158,19 +158,22 @@ def chart_hashtag(df: pd.DataFrame) -> None:
     st.altair_chart(chart, use_container_width=True)
 
 
-def _render_pdf_inline(pdf_abs_path: str, height: int = 900) -> None:
-    if not os.path.exists(pdf_abs_path):
-        st.warning("Không tìm thấy tệp CV. Hãy kiểm tra đường dẫn hoặc tải lên bên dưới.")
-        uploaded = st.file_uploader("Tải lên CV (PDF)", type=["pdf"]) 
-        if uploaded is not None:
-            b64_pdf = base64.b64encode(uploaded.read()).decode("utf-8")
-            html = f'<iframe src="data:application/pdf;base64,{b64_pdf}" width="100%" height="{height}" type="application/pdf"></iframe>'
-            st.components.v1.html(html, height=height, scrolling=True)
-        return
-    with open(pdf_abs_path, "rb") as f:
-        b64_pdf = base64.b64encode(f.read()).decode("utf-8")
-    html = f'<iframe src="data:application/pdf;base64,{b64_pdf}" width="100%" height="{height}" type="application/pdf"></iframe>'
-    st.components.v1.html(html, height=height, scrolling=True)
+def _render_pdf_inline(pdf_path, height: int = 900) -> None:
+    try:
+        if isinstance(pdf_path, str) and os.path.exists(pdf_path):
+            # File path
+            with open(pdf_path, "rb") as f:
+                pdf_bytes = f.read()
+        else:
+            # Uploaded file object
+            pdf_bytes = pdf_path.read()
+        
+        b64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
+        html = f'<iframe src="data:application/pdf;base64,{b64_pdf}" width="100%" height="{height}" type="application/pdf"></iframe>'
+        st.components.v1.html(html, height=height, scrolling=True)
+    except Exception as e:
+        st.error(f"Could not display PDF: {e}")
+        st.info("Your browser may block PDF display. Try downloading the file instead.")
 
 
 def about_me_tab() -> None:
@@ -201,11 +204,11 @@ def about_me_tab() -> None:
     )
 
     st.markdown("\n")
-    c1, c2 = st.columns([1, 1])
+n    c1, c2 = st.columns([1, 1])
     with c1:
         st.markdown("<div class='card'><b>Summary</b><br/>Data Analyst focusing on analytical storytelling, dashboarding, and experimentation. Skilled in Python (pandas), SQL, and data visualization for decision support.</div>", unsafe_allow_html=True)
         st.markdown("\n")
-        st.markdown("<div class='card'><b>Contacts</b><br/>Email: (see Resume) · LinkedIn/GitHub: (see Resume)</div>", unsafe_allow_html=True)
+        st.markdown("<div class='card'><b>Contacts</b><br/>📧 Email: trinhanhtu01@gmail.com<br/>💼 LinkedIn: linkedin.com/tú-trịnh<br/>💻 GitHub: github.com/salaghati</div>", unsafe_allow_html=True)
     with c2:
         # avatar
         if os.path.exists(PROFILE_IMG_ABS_PATH):
@@ -214,19 +217,24 @@ def about_me_tab() -> None:
             st.markdown(f"<img class='avatar-round' src='data:image/*;base64,{b64_img}' alt='avatar' />", unsafe_allow_html=True)
             st.markdown("\n")
         st.markdown("<div class='card'><b>Resume (PDF)</b></div>", unsafe_allow_html=True)
-        # inline view (may be blocked by browser)
-        view_inline = st.checkbox("View resume inline (your browser may block it)", value=False, key="cv_inline_ck")
-        if view_inline:
-            _render_pdf_inline(CV_ABS_PATH, height=700)
+        
+        # Always show CV inline by default
         if os.path.exists(CV_ABS_PATH):
+            _render_pdf_inline(CV_ABS_PATH, height=600)
+            st.markdown("\n")
             with open(CV_ABS_PATH, "rb") as f:
                 st.download_button(
-                    label="Download Resume (PDF)",
+                    label="📄 Download Resume (PDF)",
                     data=f.read(),
                     file_name=os.path.basename(CV_ABS_PATH),
                     mime="application/pdf",
                     key="download_cv_main",
                 )
+        else:
+            st.warning("Resume file not found. Please add your CV file to the project directory.")
+            uploaded_cv = st.file_uploader("Upload your Resume (PDF)", type=["pdf"], key="cv_upload_main")
+            if uploaded_cv is not None:
+                _render_pdf_inline(uploaded_cv, height=600)
 
 
 def _about_me_sidebar_section() -> None:
