@@ -204,7 +204,7 @@ def about_me_tab() -> None:
     )
 
     st.markdown("\n")
-n    c1, c2 = st.columns([1, 1])
+    c1, c2 = st.columns([1, 1])
     with c1:
         st.markdown("<div class='card'><b>Summary</b><br/>Data Analyst focusing on analytical storytelling, dashboarding, and experimentation. Skilled in Python (pandas), SQL, and data visualization for decision support.</div>", unsafe_allow_html=True)
         st.markdown("\n")
