@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.DS_Store
+
+# Virtual env
+.venv/
+venv/
+.env
+
+# Streamlit
+.streamlit/
+
+# Notebooks
+**/.ipynb_checkpoints/**
+
+# OS/Editor
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Node (if any)
+node_modules/
+
+# Data caches
+*.sqlite3
+*.db
+
+
