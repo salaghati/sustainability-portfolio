@@ -249,8 +249,8 @@ def about_me_section() -> None:
             - Data Visualization (Altair/Matplotlib)
             - Python (Pandas, NumPy) & SQL
             """)
-            
-            with col2:
+
+    with col2:
         # Profile image with better styling
         if os.path.exists(PROFILE_IMG_PATH):
             with open(PROFILE_IMG_PATH, "rb") as f:
