@@ -70,19 +70,24 @@ st.markdown("""
     
     /* Professional cards */
     .card {
-        background: white;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
         border: none;
         border-radius: 15px;
         padding: 1.5rem;
         margin-bottom: 1rem;
-        box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-        border-left: 4px solid #667eea;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        border-left: 4px solid rgba(255,255,255,0.3);
+        color: white;
     }
     
     .card h3 {
-        color: #2d3748;
+        color: white;
         margin-bottom: 1rem;
         font-weight: 600;
+    }
+    
+    .card p {
+        color: rgba(255,255,255,0.9);
     }
     
     /* Contact buttons */
@@ -106,28 +111,30 @@ st.markdown("""
     
     /* Project cards */
     .project-card {
-        background: white;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
         border-radius: 15px;
         padding: 1.5rem;
         margin: 0.5rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        border: 1px solid rgba(255,255,255,0.2);
         transition: transform 0.2s;
+        color: white;
     }
     
     .project-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
     }
     
     .project-card h4 {
-        color: #2d3748;
+        color: white;
         margin-bottom: 0.5rem;
         font-weight: 600;
     }
     
     .project-card p {
-        color: #4a5568;
+        color: rgba(255,255,255,0.9);
         font-size: 0.9rem;
         line-height: 1.5;
     }
@@ -146,11 +153,13 @@ st.markdown("""
     
     /* Info box */
     .info-box {
-        background: #f7fafc;
-        border: 1px solid #e2e8f0;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7));
+        border: 1px solid rgba(255,255,255,0.2);
         border-radius: 10px;
         padding: 1rem;
         margin: 1rem 0;
+        color: white;
+        backdrop-filter: blur(10px);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -240,8 +249,8 @@ def about_me_section() -> None:
             - Data Visualization (Altair/Matplotlib)
             - Python (Pandas, NumPy) & SQL
             """)
-
-    with col2:
+            
+            with col2:
         # Profile image with better styling
         if os.path.exists(PROFILE_IMG_PATH):
             with open(PROFILE_IMG_PATH, "rb") as f:
@@ -280,7 +289,7 @@ def about_me_section() -> None:
     with cv_col2:
         if os.path.exists(CV_PATH):
             with open(CV_PATH, "rb") as f:
-                pdf_bytes = f.read()
+            pdf_bytes = f.read()
                 
             st.download_button(
                 "📄 Download Resume (PDF)",
@@ -397,7 +406,7 @@ def main() -> None:
     
     # Footer with better styling
     st.markdown("---")
-    st.markdown("""
+            st.markdown("""
     <div style="text-align: center; opacity: 0.7; padding: 2rem;">
         <p style="font-size: 0.9rem;">
             © 2024 Trinh Anh Tu | Built with ❤️ using Streamlit & Python | 
