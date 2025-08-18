@@ -5,12 +5,155 @@ import os
 import base64
 import streamlit as st
 
-# Page config
+# Page config with wide layout and custom theme
 st.set_page_config(
     page_title="Trinh Anh Tu - Data Analyst Portfolio",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Custom CSS for professional styling
+st.markdown("""
+<style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    /* Global styling */
+    .main {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Hero section */
+    .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        font-weight: 300;
+    }
+    
+    /* Skills badges */
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    .skill-badge {
+        background: rgba(255,255,255,0.2);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    /* Professional cards */
+    .card {
+        background: white;
+        border: none;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        border-left: 4px solid #667eea;
+    }
+    
+    .card h3 {
+        color: #2d3748;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+    
+    /* Contact buttons */
+    .contact-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        margin: 0.25rem;
+        transition: transform 0.2s;
+    }
+    
+    .contact-btn:hover {
+        transform: translateY(-2px);
+        text-decoration: none;
+        color: white;
+    }
+    
+    /* Project cards */
+    .project-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 0.5rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .project-card h4 {
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    
+    .project-card p {
+        color: #4a5568;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    /* Avatar styling */
+    .avatar {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #e2e8f0;
+        margin: 0 auto;
+        display: block;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    /* Info box */
+    .info-box {
+        background: #f7fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # File paths with relative path fallback for Streamlit Cloud
 CV_PATH = "[CV]-[Data Analyst]-[Trinh Anh Tu].pdf"
@@ -41,148 +184,114 @@ def render_pdf_inline(pdf_path: str, height: int = 900) -> None:
 
 
 def about_me_section() -> None:
-    """Render About Me section with profile, skills and resume."""
-    st.markdown(
-        """
-        <style>
-        .hero {
-            background: linear-gradient(90deg, #0ea5e9, #22c55e); 
-            padding: 24px; 
-            border-radius: 12px; 
-            color: white;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .hero h1 {
-            font-size: 28px; 
-            font-weight: 700; 
-            margin-bottom: 8px;
-        }
-        .hero p {
-            opacity: 0.9; 
-            font-size: 16px;
-        }
-        .skills {
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 8px; 
-            margin-top: 16px;
-            justify-content: center;
-        }
-        .skill {
-            background: rgba(255,255,255,0.2); 
-            color: white; 
-            padding: 6px 12px; 
-            border-radius: 20px; 
-            font-size: 12px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .card {
-            background: #ffffff; 
-            border: 1px solid #e5e7eb; 
-            border-radius: 12px; 
-            padding: 20px; 
-            margin-bottom: 1rem;
-            color: #0f172a;
-        }
-        .avatar {
-            width: 200px; 
-            height: 200px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 4px solid #e5e7eb;
-            margin: 0 auto;
-            display: block;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Hero section
-    st.markdown(
-        """
+    """Render About Me section with enhanced styling."""
+    
+    # Hero section with gradient background
+    st.markdown("""
         <div class="hero">
-            <h1>Trinh Anh Tu</h1>
-            <p>Data Analyst Portfolio - Social Media Analytics & Sustainability</p>
-            <div class="skills">
-                <span class="skill">Python</span>
-                <span class="skill">Pandas</span>
-                <span class="skill">SQL</span>
-                <span class="skill">Streamlit</span>
-                <span class="skill">Data Visualization</span>
-                <span class="skill">Altair</span>
-                <span class="skill">A/B Testing</span>
-            </div>
+        <h1>Trinh Anh Tu</h1>
+        <p>Data Analyst Portfolio - Social Media Analytics & Sustainability</p>
+        <div class="skills">
+            <span class="skill-badge">Python</span>
+            <span class="skill-badge">Pandas</span>
+            <span class="skill-badge">SQL</span>
+            <span class="skill-badge">Streamlit</span>
+            <span class="skill-badge">Data Visualization</span>
+            <span class="skill-badge">Altair</span>
+            <span class="skill-badge">A/B Testing</span>
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
+            </div>
+    """, unsafe_allow_html=True)
 
-    # Main content
-    col1, col2 = st.columns([1, 1])
+    # Quick intro with usage guide
+    st.info("👋 **Welcome!** Use the sidebar filters on each page to explore different aspects of the data. Click the buttons below to navigate between analysis pages.")
+
+    # Main content in columns
+    col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("### About Me")
-        st.write("""
-        Data Analyst specializing in social media data analysis, dashboard development and A/B testing. 
-        Experienced with Python (pandas), SQL, and data visualization to support business decision making.
-        """)
-        
-        st.markdown("#### Expertise")
+        # About me card
         st.markdown("""
-        - Social Media Analytics & Engagement Metrics
-        - Dashboard Development with Streamlit  
-        - Data Cleaning & Preprocessing
-        - Statistical Analysis & A/B Testing
-        - Data Visualization with Altair/Matplotlib
-        """)
+        <div class="card">
+            <h3>About Me</h3>
+            <p>Data Analyst specializing in social media data analysis, dashboard development and A/B testing. 
+            Experienced with Python (pandas), SQL, and data visualization to support business decision making.</p>
+        </div>
+        """, unsafe_allow_html=True)
         
-        st.markdown("### Contact")
-        st.markdown("""
-        **Email:** trinhanhtu01@gmail.com  
-        **LinkedIn:** linkedin.com/in/tú-trịnh  
-        **GitHub:** github.com/salaghati
-        """)
-
-    with col2:
-        # Profile image
+        # Expertise with better hierarchy
+        st.markdown("### Core Expertise")
+        
+        # Create expertise in cards
+        expertise_col1, expertise_col2 = st.columns(2)
+        
+        with expertise_col1:
+            st.markdown("""
+            **Analytics & Insights**
+            - Social Media Analytics & Engagement Metrics
+            - Statistical Analysis & A/B Testing  
+            - Data Cleaning & Preprocessing
+            """)
+        
+        with expertise_col2:
+            st.markdown("""
+            **Technical Skills**
+            - Dashboard Development with Streamlit
+            - Data Visualization (Altair/Matplotlib)
+            - Python (Pandas, NumPy) & SQL
+            """)
+            
+            with col2:
+        # Profile image with better styling
         if os.path.exists(PROFILE_IMG_PATH):
             with open(PROFILE_IMG_PATH, "rb") as f:
                 b64_img = base64.b64encode(f.read()).decode("utf-8")
             st.markdown(
                 f'<img class="avatar" src="data:image/*;base64,{b64_img}" alt="Trinh Anh Tu" />',
                 unsafe_allow_html=True
-            )
+                    )
         else:
-            st.markdown(
-                """
-                <div style="width:200px; height:200px; border-radius:50%; background:#0ea5e9; 
-                           display:flex; align-items:center; justify-content:center; 
-                           color:white; font-weight:bold; font-size:48px; margin:0 auto;">
-                    TA
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.markdown("""
+            <div style="width:180px; height:180px; border-radius:50%; background:linear-gradient(135deg, #667eea, #764ba2); 
+                       display:flex; align-items:center; justify-content:center; 
+                       color:white; font-weight:bold; font-size:2.5rem; margin:0 auto; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+                TA
+            </div>
+            """, unsafe_allow_html=True)
         
-        st.markdown("### Resume/CV")
-        st.write("Download my CV to see detailed experience and projects.")
+        st.markdown("<br>", unsafe_allow_html=True)
         
-        # CV section
+        # Contact section with CTA buttons
+        st.markdown("### Let's Connect")
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="mailto:trinhanhtu01@gmail.com" class="contact-btn">📧 Email Me</a><br>
+            <a href="https://linkedin.com/in/tú-trịnh" class="contact-btn" target="_blank">💼 LinkedIn</a><br>
+            <a href="https://github.com/salaghati" class="contact-btn" target="_blank">💻 GitHub</a>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # CV section with better layout
+    st.markdown("---")
+    st.markdown("### Resume & CV")
+    
+    cv_col1, cv_col2, cv_col3 = st.columns([1, 2, 1])
+    
+    with cv_col2:
         if os.path.exists(CV_PATH):
             with open(CV_PATH, "rb") as f:
-                pdf_bytes = f.read()
+            pdf_bytes = f.read()
                 
             st.download_button(
-                "Download Resume (PDF)",
+                "📄 Download Resume (PDF)",
                 data=pdf_bytes,
                 file_name="Resume_Trinh_Anh_Tu_Data_Analyst.pdf",
                 mime="application/pdf",
-                use_container_width=True
+                use_container_width=True,
+                type="primary"
             )
             
-            with st.expander("View CV online"):
+            with st.expander("👀 Preview CV online"):
                 render_pdf_inline(CV_PATH, height=600)
         else:
             st.warning("CV file not found.")
@@ -196,70 +305,106 @@ def about_me_section() -> None:
 
 
 def navigation_section() -> None:
-    """Render navigation to other pages."""
+    """Enhanced navigation section with project cards."""
     st.markdown("---")
-    st.subheader("Portfolio Project")
-    st.markdown(
-        """
-        Explore the social media data analysis dashboard about sustainability. 
-        This project demonstrates data analysis, visualization and Streamlit development skills.
-        """
-    )
+    st.header("Portfolio Project")
     
+    # Brief description with usage instructions
+    st.markdown("""
+    **🚀 Interactive Social Media Analytics Dashboard**
+    
+    Explore 3000+ sustainability-focused social media posts through interactive visualizations. 
+    Use filters to dive deep into engagement patterns, hashtag performance, and optimal posting strategies.
+    """)
+    
+    # Project cards in columns
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("#### Overview")
-        st.write("Key performance indicators, engagement trends and platform analysis")
-        if st.button("View Overview", use_container_width=True):
+        st.markdown("""
+        <div class="project-card">
+            <h4>📊 Overview Dashboard</h4>
+            <p>Key performance indicators, engagement trends, and platform analysis. Perfect starting point to understand the data landscape.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🔍 View Overview", use_container_width=True, type="primary"):
             st.switch_page("pages/01_Overview.py")
     
     with col2:
-        st.markdown("#### Trends Analysis")
-        st.write("Hashtag performance, time heatmap and CTA analysis")
-        if st.button("View Trends", use_container_width=True):
+        st.markdown("""
+        <div class="project-card">
+            <h4>📈 Trends Analysis</h4>
+            <p>Deep dive into hashtag performance, optimal posting times, and call-to-action effectiveness across platforms.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📊 View Trends", use_container_width=True, type="primary"):
             st.switch_page("pages/02_Trends.py")
     
     with col3:
-        st.markdown("#### Highlights")
         st.markdown("""
-        • 3000+ social media posts analyzed  
-        • Multiple platforms & metrics  
-        • Interactive filtering & export
+        <div class="project-card">
+            <h4>🎯 Key Highlights</h4>
+            <p><strong>3000+</strong> posts analyzed<br>
+            <strong>5</strong> social platforms<br>
+            <strong>Interactive</strong> filtering & export</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("*Explore the data above*")
+
+    # Technical details in expander
+    with st.expander("🔧 Technical Implementation Details"):
+        st.markdown("""
+        **Tech Stack:** Python, Streamlit, Pandas, Altair  
+        **Data Processing:** ETL pipeline with data validation  
+        **Visualizations:** Interactive charts with filtering  
+        **Deployment:** Streamlit Cloud with CI/CD  
+        **Performance:** Cached data loading, optimized queries  
         """)
 
 
 def main() -> None:
-    """Main application function."""
-    # Minimal sidebar
+    """Main application function with enhanced layout."""
+    # Sidebar with better styling
     with st.sidebar:
-        st.markdown("### Project Info")
-        st.info(
-            """
-            **Dataset**: 3000+ sustainability posts  
-            **Platforms**: Facebook, Instagram, LinkedIn, TikTok, X  
-            **Metrics**: Engagement rate, sentiment, topics  
-            **Tech Stack**: Python, Streamlit, Altair
-            """
-        )
+        st.markdown("### 🎯 Project Information")
+        st.markdown("""
+        <div class="info-box">
+            <strong>Dataset:</strong> 3000+ sustainability posts<br>
+            <strong>Platforms:</strong> Facebook, Instagram, LinkedIn, TikTok, X<br>
+            <strong>Metrics:</strong> Engagement rate, sentiment, topics<br>
+            <strong>Tech Stack:</strong> Python, Streamlit, Altair
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        st.markdown("### 💡 How to Use")
+        st.markdown("""
+        1. **Overview Page:** Start here for key metrics
+        2. **Trends Page:** Explore deeper insights  
+        3. **Use Filters:** Customize your analysis
+        4. **Export Data:** Download filtered results
+        """)
 
-    st.title("Data Analyst Portfolio")
-    st.caption("Welcome to Trinh Anh Tu's data analysis portfolio")
+    # Main title with better hierarchy
+    st.title("🚀 Data Analyst Portfolio")
+    st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
     
     about_me_section()
-    
     navigation_section()
     
+    # Footer with better styling
     st.markdown("---")
-    st.markdown(
-        """
-        <div style="text-align: center; opacity: 0.7; padding: 20px;">
-            <p>© 2024 Trinh Anh Tu | Built with Streamlit & Python | 
-            <a href="https://github.com/salaghati" target="_blank">GitHub</a></p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+            st.markdown("""
+    <div style="text-align: center; opacity: 0.7; padding: 2rem;">
+        <p style="font-size: 0.9rem;">
+            © 2024 Trinh Anh Tu | Built with ❤️ using Streamlit & Python | 
+            <a href="https://github.com/salaghati" target="_blank" style="color: #667eea;">View Source Code</a>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":

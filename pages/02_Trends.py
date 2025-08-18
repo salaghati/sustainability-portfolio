@@ -1,5 +1,5 @@
 """
-Trends page - Advanced analytics and deeper insights.
+Trends page - Advanced analytics with enhanced UI and deeper insights.
 """
 import streamlit as st
 import pandas as pd
@@ -9,11 +9,79 @@ from charts import (
     create_time_heatmap, create_cta_chart
 )
 
+# Enhanced CSS for trends page
+st.markdown("""
+<style>
+    /* Trend cards */
+    .trend-card {
+        background: linear-gradient(135deg, #ffffff, #f8fafc);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border-left: 4px solid #8b5cf6;
+    }
+    
+    .trend-card h4 {
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    
+    /* Metric badges */
+    .metric-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: 0.2rem;
+    }
+    
+    /* Insight panels */
+    .insight-panel {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-left: 3px solid #f59e0b;
+    }
+    
+    /* Time heatmap legend */
+    .heatmap-legend {
+        background: #f7fafc;
+        border-radius: 8px;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
+    }
+    
+    /* Advanced metric card */
+    .advanced-metric {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        border-top: 3px solid #10b981;
+    }
+    
+    .advanced-number {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #059669;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# Page config is handled by main app.py
+# Page header with better styling
+st.title("📈 Advanced Trends Analysis")
+st.markdown("### Deep Dive into Content Performance & Strategy Optimization")
 
-st.title("Trends Analysis")
-st.caption("Hashtag performance, topic insights, optimal posting times and CTA analysis")
+# Usage guide with actionable tips
+st.info("🎯 **Pro Tips:** Use platform-specific filters to find optimal posting times. Check hashtag performance to identify trending topics. Export insights for your content calendar!")
 
 # Load data
 @st.cache_data(show_spinner=False)
@@ -23,20 +91,22 @@ def load_cached_data():
 try:
     df = load_cached_data()
 except Exception as e:
-    st.error(f"Error loading data: {e}")
+    st.error(f"❌ Error loading data: {e}")
     st.stop()
 
-# Sidebar filters (same as Overview page)
+# Enhanced sidebar with better organization
 with st.sidebar:
-    st.header("Data Filters")
+    st.header("🎛️ Advanced Filters")
+    st.markdown("*Fine-tune your analysis*")
     
     # Platform filter
     if "platform" in df.columns:
         platforms = sorted(df["platform"].dropna().unique())
         platform_sel = st.multiselect(
-            "Platforms",
+            "📱 Platforms",
             options=platforms,
-            default=platforms
+            default=platforms,
+            help="Select platforms for detailed trend analysis"
         )
     else:
         platform_sel = []
@@ -45,30 +115,46 @@ with st.sidebar:
     if "post_sentiment" in df.columns:
         sentiments = sorted(df["post_sentiment"].dropna().unique())
         sentiment_sel = st.multiselect(
-            "Sentiment",
+            "😊 Sentiment",
             options=sentiments,
-            default=sentiments
+            default=sentiments,
+            help="Focus on specific emotional tones"
         )
     else:
         sentiment_sel = []
     
-    # Date range filter
+    # Date range
     if "post_date" in df.columns:
         min_date = df["post_date"].min().date()
         max_date = df["post_date"].max().date()
+        
+        st.markdown("📅 **Analysis Period**")
         date_range = st.date_input(
-            "Date Range",
+            "Select timeframe",
             value=(min_date, max_date),
             min_value=min_date,
-            max_value=max_date
+            max_value=max_date,
+            help="Choose time period for trend analysis"
         )
     else:
         date_range = None
     
     # Hashtag filter
     hashtag_filter = st.text_input(
-        "Search hashtags containing...",
-        value=""
+        "🏷️ Hashtag Focus",
+        value="",
+        placeholder="e.g., climatechange",
+        help="Analyze specific hashtag trends"
+    )
+    
+    # Analysis scope
+    st.markdown("---")
+    st.markdown("### 🔍 Analysis Scope")
+    
+    analysis_type = st.radio(
+        "Choose focus",
+        ["All Content", "High-Engagement Only", "Recent Posts Only"],
+        help="Adjust analysis scope based on your needs"
     )
 
 # Apply filters
@@ -80,22 +166,51 @@ filtered_df = apply_data_filters(
     hashtag_filter=hashtag_filter
 )
 
-st.info(f"Analyzing {len(filtered_df):,} posts from total {len(df):,} posts")
+# Apply analysis scope
+if analysis_type == "High-Engagement Only" and "engagement_rate" in filtered_df.columns:
+    threshold = filtered_df["engagement_rate"].quantile(0.7)
+    filtered_df = filtered_df[filtered_df["engagement_rate"] >= threshold]
+elif analysis_type == "Recent Posts Only" and "post_date" in filtered_df.columns:
+    recent_date = filtered_df["post_date"].max() - pd.Timedelta(days=30)
+    filtered_df = filtered_df[filtered_df["post_date"] >= recent_date]
 
-# Hashtag Analysis
-st.subheader("Top Hashtag Performance")
+# Results overview with insights
+result_col1, result_col2, result_col3 = st.columns(3)
 
-col1, col2 = st.columns([3, 1])
+with result_col1:
+    st.metric("📊 Posts Analyzed", f"{len(filtered_df):,}")
 
-with col1:
+with result_col2:
+    if len(filtered_df) > 0 and "post_date" in filtered_df.columns:
+        date_span = (filtered_df["post_date"].max() - filtered_df["post_date"].min()).days
+        st.metric("📅 Time Span", f"{date_span} days")
+    else:
+        st.metric("📅 Time Span", "N/A")
+
+with result_col3:
+    if "platform" in filtered_df.columns:
+        platform_count = filtered_df["platform"].nunique()
+        st.metric("📱 Platforms", platform_count)
+    else:
+        st.metric("📱 Platforms", "N/A")
+
+st.markdown("---")
+
+# Hashtag Performance Analysis
+st.subheader("🏷️ Hashtag Performance Intelligence")
+
+hashtag_col1, hashtag_col2 = st.columns([3, 1])
+
+with hashtag_col1:
     chart = create_hashtag_chart(filtered_df)
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("No hashtag data available to display")
+        st.warning("⚠️ No hashtag data available in current selection")
 
-with col2:
-    st.markdown("### Hashtag Insights")
+with hashtag_col2:
+    st.markdown("#### 🎯 Hashtag Insights")
+    
     if "hashtag" in filtered_df.columns:
         top_hashtags = (
             filtered_df.groupby("hashtag")
@@ -104,36 +219,49 @@ with col2:
             .head(5)
         )
         
-        st.markdown("**Top 5 Hashtags:**")
+        st.markdown("**🏆 Top Performers:**")
         for hashtag, row in top_hashtags.iterrows():
-            st.markdown(f"- **{hashtag}**: {row['posts']} posts (ER: {row['avg_er']:.2%})")
+            st.markdown(f"""
+            <div class="trend-card">
+                <strong>#{hashtag}</strong><br>
+                <span class="metric-badge">{row['posts']} posts</span>
+                <span class="metric-badge">{row['avg_er']:.2%} ER</span>
+            </div>
+            """, unsafe_allow_html=True)
     else:
-        st.info("No hashtag data available")
+        st.info("💡 Upload data with hashtag column for insights")
 
-with st.expander("Hashtag Analytics Explanation"):
+with st.expander("🚀 Hashtag Strategy Guide"):
     st.markdown("""
-    - **X-axis**: Number of posts using the hashtag
-    - **Color**: Average engagement rate
-    - **Purpose**: Find effective hashtags for content strategy
-    - **Note**: Balance between volume and engagement quality
+    **💡 Optimization Tips:**
+    - **High Volume + High ER**: Use frequently in content
+    - **High ER + Low Volume**: Niche hashtags for targeted reach  
+    - **Trending**: Monitor for emerging opportunities
+    - **Mix Strategy**: Combine popular and niche hashtags (80/20 rule)
+    
+    **🎯 Next Steps:**
+    - Test variations of top hashtags
+    - Track seasonal performance changes
+    - Monitor competitor hashtag usage
     """)
 
 st.markdown("---")
 
-# Climate Topics
-st.subheader("Sustainability Topics")
+# Topic Analysis
+st.subheader("🌍 Sustainability Topic Insights")
 
-col1, col2 = st.columns([3, 1])
+topic_col1, topic_col2 = st.columns([3, 1])
 
-with col1:
+with topic_col1:
     chart = create_topic_chart(filtered_df)
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("No topic data available to display")
+        st.warning("⚠️ No topic data available")
 
-with col2:
-    st.markdown("### Topic Insights")
+with topic_col2:
+    st.markdown("#### 📊 Topic Intelligence")
+    
     if "climate_topic" in filtered_df.columns:
         top_topics = (
             filtered_df.groupby("climate_topic")
@@ -142,144 +270,265 @@ with col2:
             .head(5)
         )
         
-        st.markdown("**Top 5 Topics:**")
+        st.markdown("**🌟 Trending Topics:**")
         for topic, row in top_topics.iterrows():
-            st.markdown(f"- **{topic}**: {row['posts']} posts (ER: {row['avg_er']:.2%})")
-    else:
-        st.info("No topic data available")
+            # Topic priority based on volume and engagement
+            priority = "🔥" if row['avg_er'] > 0.03 and row['posts'] > 50 else "⭐" if row['avg_er'] > 0.02 else "📌"
+            
+            st.markdown(f"""
+            <div class="insight-panel">
+                {priority} <strong>{topic}</strong><br>
+                {row['posts']} posts | {row['avg_er']:.2%} engagement
+            </div>
+            """, unsafe_allow_html=True)
 
-with st.expander("Climate Topics Explanation"):
+with st.expander("🌱 Content Strategy Recommendations"):
     st.markdown("""
-    - **Classification**: Sustainability topics like Waste Reduction, Energy Storage, etc.
-    - **Metrics**: Number of posts and average engagement rate
-    - **Strategy**: Focus on topics with high ER and appropriate volume
-    - **Trend**: Track shifts in public interest
+    **🎯 Content Planning:**
+    - **High-Impact Topics**: Create in-depth content series
+    - **Emerging Topics**: Early adoption advantage  
+    - **Seasonal Trends**: Plan content calendar around peaks
+    - **Cross-Platform**: Adapt topics for each platform's audience
+    
+    **📈 Growth Strategy:**
+    - Focus 60% effort on proven high-performers
+    - Test 40% on emerging/experimental topics
+    - Track topic lifecycle and plan accordingly
     """)
 
 st.markdown("---")
 
-# Time Heatmap Analysis
-st.subheader("Optimal Posting Time Analysis")
+# Time Optimization Analysis
+st.subheader("⏰ Optimal Posting Time Analysis")
 
 # Platform selector for heatmap
-if "platform" in filtered_df.columns:
-    platform_focus = st.selectbox(
-        "Select platform for heatmap analysis (or leave blank to view all)",
-        options=[None] + sorted(filtered_df["platform"].dropna().unique()),
-        index=0,
-        format_func=lambda x: "All platforms" if x is None else x
-    )
-else:
-    platform_focus = None
+time_col1, time_col2 = st.columns([3, 1])
 
-chart = create_time_heatmap(filtered_df, platform_focus)
-if chart:
-    st.altair_chart(chart, use_container_width=True)
-else:
-    st.info("No time data available to display heatmap")
+with time_col1:
+    if "platform" in filtered_df.columns:
+        platform_focus = st.selectbox(
+            "🎯 Focus Platform for Time Analysis",
+            options=[None] + sorted(filtered_df["platform"].dropna().unique()),
+            index=0,
+            format_func=lambda x: "🌐 All Platforms" if x is None else f"📱 {x}",
+            help="Select specific platform for detailed timing insights"
+        )
+    else:
+        platform_focus = None
+    
+    chart = create_time_heatmap(filtered_df, platform_focus)
+    if chart:
+        st.altair_chart(chart, use_container_width=True)
+    else:
+        st.warning("⚠️ Insufficient time data for heatmap")
 
-with st.expander("Time Heatmap Explanation"):
+with time_col2:
+    st.markdown("#### ⏰ Timing Insights")
+    
     st.markdown("""
-    - **X-axis**: Hour of day (0-23)
-    - **Y-axis**: Day of week
-    - **Color**: Average engagement rate (darker = higher)
-    - **Usage**: Find optimal times to post content
-    - **Platform**: May vary between different platforms
+    <div class="heatmap-legend">
+        <strong>🎨 Reading the Heatmap:</strong><br>
+        🟦 Lower engagement<br>
+        🟨 Moderate engagement<br>  
+        🟥 High engagement<br><br>
+        <strong>💡 Look for:</strong><br>
+        • Dark spots = Prime time<br>
+        • Patterns = Audience habits<br>
+        • Platform differences
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Timing recommendations based on common patterns
+    st.markdown("#### 📅 General Best Practices")
+    
+    timing_tips = {
+        "LinkedIn": "🕘 9 AM, 🕐 1 PM, 🕔 5 PM (Weekdays)",
+        "Instagram": "🕙 10 AM, 🕐 1 PM, 🕖 7 PM", 
+        "Facebook": "🕘 9 AM, 🕐 1 PM, 🕕 6 PM",
+        "Twitter": "🕘 9 AM, 🕐 1 PM, 🕔 5 PM",
+        "TikTok": "🕙 10 AM, 🕖 7 PM, 🕘 9 PM"
+    }
+    
+    selected_platform = platform_focus if platform_focus else "General"
+    if selected_platform in timing_tips:
+        st.success(f"📍 **{selected_platform}**: {timing_tips[selected_platform]}")
+
+with st.expander("📅 Advanced Timing Strategy"):
+    st.markdown("""
+    **🔍 Analysis Approach:**
+    1. **Platform-Specific**: Each platform has unique peak times
+    2. **Audience Geography**: Consider time zones of your audience
+    3. **Content Type**: Video vs. image vs. text perform differently
+    4. **Seasonal Variations**: Adjust for holidays, events, trends
+    
+    **🚀 Implementation:**
+    - Schedule posts during identified peak hours
+    - Test different times and measure results  
+    - Use platform analytics to validate findings
+    - Create content calendar based on optimal times
     """)
 
 st.markdown("---")
 
-# CTA Analysis
-st.subheader("Call-to-Action Performance")
+# CTA Performance Analysis
+st.subheader("📢 Call-to-Action Effectiveness")
 
-chart = create_cta_chart(filtered_df)
-if chart:
-    st.altair_chart(chart, use_container_width=True)
+cta_chart = create_cta_chart(filtered_df)
+if cta_chart:
+    st.altair_chart(cta_chart, use_container_width=True)
     
-    with st.expander("CTA Analytics Explanation"):
+    with st.expander("🎯 CTA Optimization Guide"):
         st.markdown("""
-        - **X-axis**: Average shares + comments (interaction proxy)
-        - **Y-axis**: Call-to-action types
-        - **Color**: Average engagement rate
-        - **Purpose**: Find most effective CTAs to drive action
-        - **Strategy**: Optimize messaging based on performance data
+        **🔍 Understanding CTA Performance:**
+        - **X-axis**: Average interactions (shares + comments)
+        - **Color**: Engagement rate intensity
+        - **Position**: Higher = more action-driving
+        
+        **💡 Optimization Strategies:**
+        - **High-Performing CTAs**: Use more frequently
+        - **Action-Oriented**: "Share", "Tag", "Comment" work well
+        - **Value Proposition**: Clear benefit for user action
+        - **Urgency**: Time-sensitive language drives action
+        
+        **📊 Testing Framework:**
+        - A/B test different CTA phrasings
+        - Monitor conversion rates by CTA type
+        - Adapt based on platform behavior
         """)
 else:
-    st.info("Insufficient CTA data for analysis (requires call_to_action, engagement_shares, engagement_comments columns)")
+    st.info("💡 **CTA Analysis**: Requires call_to_action, engagement_shares, and engagement_comments data columns for detailed analysis.")
 
 st.markdown("---")
 
-# Advanced Metrics
-st.subheader("Advanced Metrics")
+# Advanced Performance Metrics
+st.subheader("📊 Advanced Performance Metrics")
 
-col1, col2, col3 = st.columns(3)
+metrics_col1, metrics_col2, metrics_col3 = st.columns(3)
 
-with col1:
-    st.markdown("### Content Quality")
-    if "engagement_rate" in filtered_df.columns:
-        high_er_posts = len(filtered_df[filtered_df["engagement_rate"] > filtered_df["engagement_rate"].quantile(0.8)])
+with metrics_col1:
+    st.markdown("""
+    <div class="advanced-metric">
+        <div class="advanced-number">Content Quality Score</div>
+    """, unsafe_allow_html=True)
+    
+    if "engagement_rate" in filtered_df.columns and len(filtered_df) > 0:
+        high_quality_posts = len(filtered_df[filtered_df["engagement_rate"] > filtered_df["engagement_rate"].quantile(0.8)])
         total_posts = len(filtered_df)
-        quality_rate = high_er_posts / total_posts if total_posts > 0 else 0
+        quality_score = (high_quality_posts / total_posts * 100) if total_posts > 0 else 0
         
-        st.metric("High-ER Posts", f"{high_er_posts:,}", f"{quality_rate:.1%} of total")
-        st.caption("Posts with ER > 80th percentile")
+        st.markdown(f"""
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <span style="font-size: 2rem; font-weight: bold; color: #059669;">{quality_score:.1f}%</span><br>
+            <small>{high_quality_posts:,} high-quality posts</small>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        st.info("Requires engagement_rate data")
+        st.markdown('<div style="text-align: center;">N/A</div>', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
-with col2:
-    st.markdown("### Platform Diversity")
-    if "platform" in filtered_df.columns:
+with metrics_col2:
+    st.markdown("""
+    <div class="advanced-metric">
+        <div class="advanced-number">Platform Diversity</div>
+    """, unsafe_allow_html=True)
+    
+    if "platform" in filtered_df.columns and len(filtered_df) > 0:
         platform_count = filtered_df["platform"].nunique()
+        total_platforms = 5  # Assuming 5 major platforms
+        diversity_score = (platform_count / total_platforms * 100)
         most_used = filtered_df["platform"].mode().iloc[0] if len(filtered_df) > 0 else "N/A"
         
-        st.metric("Platforms", platform_count)
-        st.caption(f"Most used: {most_used}")
+        st.markdown(f"""
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <span style="font-size: 2rem; font-weight: bold; color: #059669;">{platform_count}</span><br>
+            <small>platforms ({diversity_score:.0f}% coverage)</small><br>
+            <small>Leader: {most_used}</small>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        st.info("Requires platform data")
+        st.markdown('<div style="text-align: center;">N/A</div>', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
-with col3:
-    st.markdown("### Posting Frequency")
-    if "post_date" in filtered_df.columns:
+with metrics_col3:
+    st.markdown("""
+    <div class="advanced-metric">
+        <div class="advanced-number">Content Velocity</div>
+    """, unsafe_allow_html=True)
+    
+    if "post_date" in filtered_df.columns and len(filtered_df) > 0:
         date_range_days = (filtered_df["post_date"].max() - filtered_df["post_date"].min()).days
         posts_per_day = len(filtered_df) / date_range_days if date_range_days > 0 else 0
         
-        st.metric("Posts per day", f"{posts_per_day:.1f}")
-        st.caption(f"Over {date_range_days} days")
+        st.markdown(f"""
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <span style="font-size: 2rem; font-weight: bold; color: #059669;">{posts_per_day:.1f}</span><br>
+            <small>posts per day</small><br>
+            <small>Over {date_range_days:,} days</small>
+        </div>
+        """, unsafe_allow_html=True)
     else:
-        st.info("Requires post_date data")
+        st.markdown('<div style="text-align: center;">N/A</div>', unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# Data export
+# Export section with enhanced options
 st.markdown("---")
-st.subheader("Export Data")
+st.subheader("💾 Export Analysis Results")
 
-export_col1, export_col2 = st.columns(2)
+export_row1 = st.columns(3)
 
-with export_col1:
-    # Full filtered data
+with export_row1[0]:
     csv_full = filtered_df.to_csv(index=False).encode("utf-8")
     st.download_button(
-        "Download full filtered data",
+        "📥 Download Analysis Data",
         data=csv_full,
-        file_name="sustainability_trends_analysis.csv",
-        mime="text/csv"
+        file_name="trends_analysis_detailed.csv",
+        mime="text/csv",
+        help="Complete filtered dataset with all metrics",
+        use_container_width=True,
+        type="primary"
     )
 
-with export_col2:
-    # Summary statistics
+with export_row1[1]:
     if "engagement_rate" in filtered_df.columns and "platform" in filtered_df.columns:
         summary = (
             filtered_df.groupby("platform")
             .agg({
                 "engagement_rate": ["mean", "median", "std"],
-                "post_id": "count",
+                "post_id": "count", 
                 "engagement_total": "sum"
             })
             .round(4)
         )
         summary_csv = summary.to_csv().encode("utf-8")
         st.download_button(
-            "Download summary statistics",
+            "📊 Platform Summary Stats",
             data=summary_csv,
-            file_name="platform_summary_stats.csv",
-            mime="text/csv"
+            file_name="platform_performance_summary.csv",
+            mime="text/csv",
+            help="Aggregated metrics by platform",
+            use_container_width=True
         )
+
+with export_row1[2]:
+    st.markdown("""
+    **📈 Analysis Summary:**  
+    ✅ Performance trends identified  
+    ✅ Optimal timing analyzed  
+    ✅ Content strategy insights  
+    ✅ Ready for implementation  
+    """)
+
+# Action items and next steps
+st.markdown("---")
+st.success("""
+🚀 **Ready to Optimize?** 
+- Use timing insights for content scheduling
+- Implement top-performing hashtags in new posts  
+- Test different CTAs based on performance data
+- Monitor trends and adjust strategy monthly
+""")
+
+st.info("💡 **Pro Tip**: Bookmark this analysis and return monthly to track performance changes and identify new trends!")
