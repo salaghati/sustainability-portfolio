@@ -10,12 +10,7 @@ from charts import (
 )
 
 
-# Page config
-st.set_page_config(
-    page_title="Trends - Social Media Analytics", 
-    layout="wide",
-    page_icon="📈"
-)
+# Page config is handled by main app.py
 
 st.title("📈 Phân tích Xu hướng")
 st.caption("Hashtag, chủ đề, thời gian đăng và CTA performance")

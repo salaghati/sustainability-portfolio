@@ -7,12 +7,7 @@ from utils import load_data_with_uploader, calculate_kpis, apply_data_filters
 from charts import create_timeseries_chart, create_platform_chart, create_sentiment_chart
 
 
-# Page config
-st.set_page_config(
-    page_title="Overview - Social Media Analytics", 
-    layout="wide",
-    page_icon="📊"
-)
+# Page config is handled by main app.py
 
 st.title("📊 Tổng quan Dashboard")
 st.caption("KPI chính và xu hướng tương tác mạng xã hội về sustainability")
