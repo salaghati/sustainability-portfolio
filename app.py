@@ -7,9 +7,8 @@ import streamlit as st
 
 # Page config
 st.set_page_config(
-    page_title="Trịnh Anh Tú - Data Analyst Portfolio",
+    page_title="Trinh Anh Tu - Data Analyst Portfolio",
     layout="wide",
-    page_icon="👨‍💼",
     initial_sidebar_state="expanded"
 )
 
@@ -37,8 +36,8 @@ def render_pdf_inline(pdf_path: str, height: int = 900) -> None:
         html = f'<iframe src="data:application/pdf;base64,{b64_pdf}" width="100%" height="{height}" type="application/pdf"></iframe>'
         st.components.v1.html(html, height=height, scrolling=True)
     except Exception as e:
-        st.error(f"Không thể hiển thị PDF: {e}")
-        st.info("Trình duyệt có thể chặn hiển thị PDF. Thử download file thay thế.")
+        st.error(f"Cannot display PDF: {e}")
+        st.info("Your browser may block PDF display. Try downloading the file instead.")
 
 
 def about_me_section() -> None:
@@ -104,8 +103,8 @@ def about_me_section() -> None:
     st.markdown(
         """
         <div class="hero">
-            <h1>👨‍💼 Trịnh Anh Tú</h1>
-            <p>Data Analyst Portfolio · Social Media Analytics & Sustainability</p>
+            <h1>Trinh Anh Tu</h1>
+            <p>Data Analyst Portfolio - Social Media Analytics & Sustainability</p>
             <div class="skills">
                 <span class="skill">Python</span>
                 <span class="skill">Pandas</span>
@@ -124,22 +123,22 @@ def about_me_section() -> None:
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        st.markdown("### 📊 Về tôi")
+        st.markdown("### About Me")
         st.write("""
-        Data Analyst chuyên về phân tích dữ liệu mạng xã hội, xây dựng dashboard và thử nghiệm A/B testing. 
-        Có kinh nghiệm với Python (pandas), SQL, và data visualization để hỗ trợ ra quyết định kinh doanh.
+        Data Analyst specializing in social media data analysis, dashboard development and A/B testing. 
+        Experienced with Python (pandas), SQL, and data visualization to support business decision making.
         """)
         
-        st.markdown("#### 🎯 Chuyên môn")
+        st.markdown("#### Expertise")
         st.markdown("""
         - Social Media Analytics & Engagement Metrics
-        - Dashboard Development với Streamlit  
+        - Dashboard Development with Streamlit  
         - Data Cleaning & Preprocessing
         - Statistical Analysis & A/B Testing
-        - Data Visualization với Altair/Matplotlib
+        - Data Visualization with Altair/Matplotlib
         """)
         
-        st.markdown("### 📧 Liên hệ")
+        st.markdown("### Contact")
         st.markdown("""
         **Email:** trinhanhtu01@gmail.com  
         **LinkedIn:** linkedin.com/in/tú-trịnh  
@@ -152,7 +151,7 @@ def about_me_section() -> None:
             with open(PROFILE_IMG_PATH, "rb") as f:
                 b64_img = base64.b64encode(f.read()).decode("utf-8")
             st.markdown(
-                f'<img class="avatar" src="data:image/*;base64,{b64_img}" alt="Trịnh Anh Tú" />',
+                f'<img class="avatar" src="data:image/*;base64,{b64_img}" alt="Trinh Anh Tu" />',
                 unsafe_allow_html=True
             )
         else:
@@ -167,8 +166,8 @@ def about_me_section() -> None:
                 unsafe_allow_html=True
             )
         
-        st.markdown("### 📄 Resume/CV")
-        st.write("Tải xuống CV của tôi để xem chi tiết kinh nghiệm và dự án.")
+        st.markdown("### Resume/CV")
+        st.write("Download my CV to see detailed experience and projects.")
         
         # CV section
         if os.path.exists(CV_PATH):
@@ -176,21 +175,21 @@ def about_me_section() -> None:
                 pdf_bytes = f.read()
                 
             st.download_button(
-                "📥 Tải Resume (PDF)",
+                "Download Resume (PDF)",
                 data=pdf_bytes,
                 file_name="Resume_Trinh_Anh_Tu_Data_Analyst.pdf",
                 mime="application/pdf",
                 use_container_width=True
             )
             
-            with st.expander("👀 Xem CV trực tuyến"):
+            with st.expander("View CV online"):
                 render_pdf_inline(CV_PATH, height=600)
         else:
-            st.warning("File CV không tìm thấy.")
+            st.warning("CV file not found.")
             uploaded_cv = st.file_uploader(
                 "Upload CV (PDF)", 
                 type=["pdf"], 
-                help="Upload file CV để hiển thị"
+                help="Upload CV file to display"
             )
             if uploaded_cv is not None:
                 render_pdf_inline(uploaded_cv, height=600)
@@ -199,30 +198,30 @@ def about_me_section() -> None:
 def navigation_section() -> None:
     """Render navigation to other pages."""
     st.markdown("---")
-    st.subheader("🚀 Dự án Portfolio")
+    st.subheader("Portfolio Project")
     st.markdown(
         """
-        Khám phá dashboard phân tích dữ liệu mạng xã hội về sustainability. 
-        Project này thể hiện kỹ năng data analysis, visualization và Streamlit development.
+        Explore the social media data analysis dashboard about sustainability. 
+        This project demonstrates data analysis, visualization and Streamlit development skills.
         """
     )
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("#### 📊 Overview")
-        st.write("KPI tổng quan, xu hướng engagement và phân tích nền tảng")
-        if st.button("👀 Xem Overview", use_container_width=True):
-            st.switch_page("components/01_Overview.py")
+        st.markdown("#### Overview")
+        st.write("Key performance indicators, engagement trends and platform analysis")
+        if st.button("View Overview", use_container_width=True):
+            st.switch_page("pages/01_Overview.py")
     
     with col2:
-        st.markdown("#### 📈 Trends Analysis")
-        st.write("Hashtag performance, time heatmap và CTA analysis")
-        if st.button("📈 Xem Trends", use_container_width=True):
-            st.switch_page("components/02_Trends.py")
+        st.markdown("#### Trends Analysis")
+        st.write("Hashtag performance, time heatmap and CTA analysis")
+        if st.button("View Trends", use_container_width=True):
+            st.switch_page("pages/02_Trends.py")
     
     with col3:
-        st.markdown("#### 💡 Highlights")
+        st.markdown("#### Highlights")
         st.markdown("""
         • 3000+ social media posts analyzed  
         • Multiple platforms & metrics  
@@ -234,7 +233,7 @@ def main() -> None:
     """Main application function."""
     # Minimal sidebar
     with st.sidebar:
-        st.markdown("### 🎯 Project Info")
+        st.markdown("### Project Info")
         st.info(
             """
             **Dataset**: 3000+ sustainability posts  
@@ -244,8 +243,8 @@ def main() -> None:
             """
         )
 
-    st.title("👨‍💼 Data Analyst Portfolio")
-    st.caption("Chào mừng đến với portfolio data analysis của Trịnh Anh Tú")
+    st.title("Data Analyst Portfolio")
+    st.caption("Welcome to Trinh Anh Tu's data analysis portfolio")
     
     about_me_section()
     
@@ -255,7 +254,7 @@ def main() -> None:
     st.markdown(
         """
         <div style="text-align: center; opacity: 0.7; padding: 20px;">
-            <p>© 2024 Trịnh Anh Tú | Built with Streamlit & Python | 
+            <p>© 2024 Trinh Anh Tu | Built with Streamlit & Python | 
             <a href="https://github.com/salaghati" target="_blank">GitHub</a></p>
         </div>
         """,

@@ -12,8 +12,8 @@ from charts import (
 
 # Page config is handled by main app.py
 
-st.title("📈 Phân tích Xu hướng")
-st.caption("Hashtag, chủ đề, thời gian đăng và CTA performance")
+st.title("Trends Analysis")
+st.caption("Hashtag performance, topic insights, optimal posting times and CTA analysis")
 
 # Load data
 @st.cache_data(show_spinner=False)
@@ -23,18 +23,18 @@ def load_cached_data():
 try:
     df = load_cached_data()
 except Exception as e:
-    st.error(f"Lỗi khi tải dữ liệu: {e}")
+    st.error(f"Error loading data: {e}")
     st.stop()
 
 # Sidebar filters (same as Overview page)
 with st.sidebar:
-    st.header("🔍 Bộ lọc dữ liệu")
+    st.header("Data Filters")
     
     # Platform filter
     if "platform" in df.columns:
         platforms = sorted(df["platform"].dropna().unique())
         platform_sel = st.multiselect(
-            "Nền tảng",
+            "Platforms",
             options=platforms,
             default=platforms
         )
@@ -57,7 +57,7 @@ with st.sidebar:
         min_date = df["post_date"].min().date()
         max_date = df["post_date"].max().date()
         date_range = st.date_input(
-            "Khoảng thời gian",
+            "Date Range",
             value=(min_date, max_date),
             min_value=min_date,
             max_value=max_date
@@ -67,7 +67,7 @@ with st.sidebar:
     
     # Hashtag filter
     hashtag_filter = st.text_input(
-        "Tìm hashtag chứa...",
+        "Search hashtags containing...",
         value=""
     )
 
@@ -80,10 +80,10 @@ filtered_df = apply_data_filters(
     hashtag_filter=hashtag_filter
 )
 
-st.info(f"Phân tích {len(filtered_df):,} bài đăng từ tổng số {len(df):,} bài")
+st.info(f"Analyzing {len(filtered_df):,} posts from total {len(df):,} posts")
 
 # Hashtag Analysis
-st.subheader("🏷️ Top Hashtag Performance")
+st.subheader("Top Hashtag Performance")
 
 col1, col2 = st.columns([3, 1])
 
@@ -92,10 +92,10 @@ with col1:
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("Không có dữ liệu hashtag để hiển thị")
+        st.info("No hashtag data available to display")
 
 with col2:
-    st.markdown("### 📊 Hashtag Insights")
+    st.markdown("### Hashtag Insights")
     if "hashtag" in filtered_df.columns:
         top_hashtags = (
             filtered_df.groupby("hashtag")
@@ -104,24 +104,24 @@ with col2:
             .head(5)
         )
         
-        st.markdown("**Top 5 Hashtag:**")
+        st.markdown("**Top 5 Hashtags:**")
         for hashtag, row in top_hashtags.iterrows():
-            st.markdown(f"- **{hashtag}**: {row['posts']} bài (ER: {row['avg_er']:.2%})")
+            st.markdown(f"- **{hashtag}**: {row['posts']} posts (ER: {row['avg_er']:.2%})")
     else:
-        st.info("Không có dữ liệu hashtag")
+        st.info("No hashtag data available")
 
-with st.expander("ℹ️ Giải thích Hashtag Analytics"):
+with st.expander("Hashtag Analytics Explanation"):
     st.markdown("""
-    - **Trục X**: Số lượng bài đăng sử dụng hashtag
-    - **Màu sắc**: Engagement rate trung bình
-    - **Mục đích**: Tìm hashtag hiệu quả cho strategy content
-    - **Lưu ý**: Cân bằng giữa volume và engagement quality
+    - **X-axis**: Number of posts using the hashtag
+    - **Color**: Average engagement rate
+    - **Purpose**: Find effective hashtags for content strategy
+    - **Note**: Balance between volume and engagement quality
     """)
 
 st.markdown("---")
 
 # Climate Topics
-st.subheader("🌍 Chủ đề Sustainability")
+st.subheader("Sustainability Topics")
 
 col1, col2 = st.columns([3, 1])
 
@@ -130,10 +130,10 @@ with col1:
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("Không có dữ liệu chủ đề để hiển thị")
+        st.info("No topic data available to display")
 
 with col2:
-    st.markdown("### 📈 Topic Insights")
+    st.markdown("### Topic Insights")
     if "climate_topic" in filtered_df.columns:
         top_topics = (
             filtered_df.groupby("climate_topic")
@@ -142,32 +142,32 @@ with col2:
             .head(5)
         )
         
-        st.markdown("**Top 5 Chủ đề:**")
+        st.markdown("**Top 5 Topics:**")
         for topic, row in top_topics.iterrows():
-            st.markdown(f"- **{topic}**: {row['posts']} bài (ER: {row['avg_er']:.2%})")
+            st.markdown(f"- **{topic}**: {row['posts']} posts (ER: {row['avg_er']:.2%})")
     else:
-        st.info("Không có dữ liệu chủ đề")
+        st.info("No topic data available")
 
-with st.expander("ℹ️ Giải thích Climate Topics"):
+with st.expander("Climate Topics Explanation"):
     st.markdown("""
-    - **Phân loại**: Các chủ đề sustainability như Waste Reduction, Energy Storage, etc.
-    - **Metric**: Số bài và engagement rate trung bình
-    - **Strategy**: Focus vào topics có ER cao và volume phù hợp
-    - **Trend**: Theo dõi shift của public interest
+    - **Classification**: Sustainability topics like Waste Reduction, Energy Storage, etc.
+    - **Metrics**: Number of posts and average engagement rate
+    - **Strategy**: Focus on topics with high ER and appropriate volume
+    - **Trend**: Track shifts in public interest
     """)
 
 st.markdown("---")
 
 # Time Heatmap Analysis
-st.subheader("⏰ Phân tích Thời gian Tối ưu")
+st.subheader("Optimal Posting Time Analysis")
 
 # Platform selector for heatmap
 if "platform" in filtered_df.columns:
     platform_focus = st.selectbox(
-        "Chọn nền tảng để phân tích heatmap (hoặc để trống để xem tất cả)",
+        "Select platform for heatmap analysis (or leave blank to view all)",
         options=[None] + sorted(filtered_df["platform"].dropna().unique()),
         index=0,
-        format_func=lambda x: "Tất cả nền tảng" if x is None else x
+        format_func=lambda x: "All platforms" if x is None else x
     )
 else:
     platform_focus = None
@@ -176,81 +176,81 @@ chart = create_time_heatmap(filtered_df, platform_focus)
 if chart:
     st.altair_chart(chart, use_container_width=True)
 else:
-    st.info("Không có dữ liệu thời gian để hiển thị heatmap")
+    st.info("No time data available to display heatmap")
 
-with st.expander("ℹ️ Giải thích Time Heatmap"):
+with st.expander("Time Heatmap Explanation"):
     st.markdown("""
-    - **Trục X**: Giờ trong ngày (0-23)
-    - **Trục Y**: Thứ trong tuần
-    - **Màu sắc**: Engagement rate trung bình (tối hơn = cao hơn)
-    - **Sử dụng**: Tìm thời điểm tối ưu để post content
-    - **Platform**: Có thể khác nhau giữa các nền tảng
+    - **X-axis**: Hour of day (0-23)
+    - **Y-axis**: Day of week
+    - **Color**: Average engagement rate (darker = higher)
+    - **Usage**: Find optimal times to post content
+    - **Platform**: May vary between different platforms
     """)
 
 st.markdown("---")
 
 # CTA Analysis
-st.subheader("📢 Call-to-Action Performance")
+st.subheader("Call-to-Action Performance")
 
 chart = create_cta_chart(filtered_df)
 if chart:
     st.altair_chart(chart, use_container_width=True)
     
-    with st.expander("ℹ️ Giải thích CTA Analytics"):
+    with st.expander("CTA Analytics Explanation"):
         st.markdown("""
-        - **Trục X**: Shares + Comments trung bình (proxy cho interaction)
-        - **Trục Y**: Các loại Call-to-Action
-        - **Màu sắc**: Engagement rate trung bình
-        - **Mục đích**: Tìm CTA hiệu quả nhất để drive action
-        - **Strategy**: Optimize messaging dựa trên performance data
+        - **X-axis**: Average shares + comments (interaction proxy)
+        - **Y-axis**: Call-to-action types
+        - **Color**: Average engagement rate
+        - **Purpose**: Find most effective CTAs to drive action
+        - **Strategy**: Optimize messaging based on performance data
         """)
 else:
-    st.info("Không có đủ dữ liệu CTA để phân tích (cần cột call_to_action, engagement_shares, engagement_comments)")
+    st.info("Insufficient CTA data for analysis (requires call_to_action, engagement_shares, engagement_comments columns)")
 
 st.markdown("---")
 
 # Advanced Metrics
-st.subheader("📊 Metrics Nâng cao")
+st.subheader("Advanced Metrics")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.markdown("### 💡 Content Quality")
+    st.markdown("### Content Quality")
     if "engagement_rate" in filtered_df.columns:
         high_er_posts = len(filtered_df[filtered_df["engagement_rate"] > filtered_df["engagement_rate"].quantile(0.8)])
         total_posts = len(filtered_df)
         quality_rate = high_er_posts / total_posts if total_posts > 0 else 0
         
         st.metric("High-ER Posts", f"{high_er_posts:,}", f"{quality_rate:.1%} of total")
-        st.caption("Bài có ER > percentile 80")
+        st.caption("Posts with ER > 80th percentile")
     else:
-        st.info("Cần dữ liệu engagement_rate")
+        st.info("Requires engagement_rate data")
 
 with col2:
-    st.markdown("### 📱 Platform Diversity")
+    st.markdown("### Platform Diversity")
     if "platform" in filtered_df.columns:
         platform_count = filtered_df["platform"].nunique()
         most_used = filtered_df["platform"].mode().iloc[0] if len(filtered_df) > 0 else "N/A"
         
-        st.metric("Số nền tảng", platform_count)
-        st.caption(f"Chủ yếu: {most_used}")
+        st.metric("Platforms", platform_count)
+        st.caption(f"Most used: {most_used}")
     else:
-        st.info("Cần dữ liệu platform")
+        st.info("Requires platform data")
 
 with col3:
-    st.markdown("### 🗓️ Posting Frequency")
+    st.markdown("### Posting Frequency")
     if "post_date" in filtered_df.columns:
         date_range_days = (filtered_df["post_date"].max() - filtered_df["post_date"].min()).days
         posts_per_day = len(filtered_df) / date_range_days if date_range_days > 0 else 0
         
-        st.metric("Bài/ngày TB", f"{posts_per_day:.1f}")
-        st.caption(f"Trong {date_range_days} ngày")
+        st.metric("Posts per day", f"{posts_per_day:.1f}")
+        st.caption(f"Over {date_range_days} days")
     else:
-        st.info("Cần dữ liệu post_date")
+        st.info("Requires post_date data")
 
 # Data export
 st.markdown("---")
-st.subheader("💾 Export Dữ liệu")
+st.subheader("Export Data")
 
 export_col1, export_col2 = st.columns(2)
 
@@ -258,7 +258,7 @@ with export_col1:
     # Full filtered data
     csv_full = filtered_df.to_csv(index=False).encode("utf-8")
     st.download_button(
-        "📥 Tải toàn bộ dữ liệu đã lọc",
+        "Download full filtered data",
         data=csv_full,
         file_name="sustainability_trends_analysis.csv",
         mime="text/csv"
@@ -278,7 +278,7 @@ with export_col2:
         )
         summary_csv = summary.to_csv().encode("utf-8")
         st.download_button(
-            "📊 Tải summary thống kê",
+            "Download summary statistics",
             data=summary_csv,
             file_name="platform_summary_stats.csv",
             mime="text/csv"

@@ -9,8 +9,8 @@ from charts import create_timeseries_chart, create_platform_chart, create_sentim
 
 # Page config is handled by main app.py
 
-st.title("📊 Tổng quan Dashboard")
-st.caption("KPI chính và xu hướng tương tác mạng xã hội về sustainability")
+st.title("Dashboard Overview")
+st.caption("Key performance indicators and social media engagement trends for sustainability")
 
 # Load data
 @st.cache_data(show_spinner=False)
@@ -20,21 +20,21 @@ def load_cached_data():
 try:
     df = load_cached_data()
 except Exception as e:
-    st.error(f"Lỗi khi tải dữ liệu: {e}")
+    st.error(f"Error loading data: {e}")
     st.stop()
 
 # Sidebar filters
 with st.sidebar:
-    st.header("🔍 Bộ lọc dữ liệu")
+    st.header("Data Filters")
     
     # Platform filter
     if "platform" in df.columns:
         platforms = sorted(df["platform"].dropna().unique())
         platform_sel = st.multiselect(
-            "Nền tảng",
+            "Platforms",
             options=platforms,
             default=platforms,
-            help="Chọn nền tảng để phân tích"
+            help="Select platforms to analyze"
         )
     else:
         platform_sel = []
@@ -46,7 +46,7 @@ with st.sidebar:
             "Sentiment",
             options=sentiments,
             default=sentiments,
-            help="Chọn cảm xúc bài đăng"
+            help="Select post sentiment"
         )
     else:
         sentiment_sel = []
@@ -56,20 +56,20 @@ with st.sidebar:
         min_date = df["post_date"].min().date()
         max_date = df["post_date"].max().date()
         date_range = st.date_input(
-            "Khoảng thời gian",
+            "Date Range",
             value=(min_date, max_date),
             min_value=min_date,
             max_value=max_date,
-            help="Chọn khoảng thời gian phân tích"
+            help="Select analysis time period"
         )
     else:
         date_range = None
     
     # Hashtag filter
     hashtag_filter = st.text_input(
-        "Tìm hashtag chứa...",
+        "Search hashtags containing...",
         value="",
-        help="Lọc theo hashtag (không phân biệt hoa thường)"
+        help="Filter by hashtag (case insensitive)"
     )
 
 # Apply filters
@@ -82,32 +82,32 @@ filtered_df = apply_data_filters(
 )
 
 # Show filter results
-st.info(f"Hiển thị {len(filtered_df):,} bài đăng từ tổng số {len(df):,} bài (sau khi lọc)")
+st.info(f"Showing {len(filtered_df):,} posts from total {len(df):,} posts (after filtering)")
 
 # KPIs section
-st.subheader("📈 Chỉ số chính (KPI)")
+st.subheader("Key Performance Indicators (KPIs)")
 
 kpis = calculate_kpis(filtered_df)
 
 col1, col2, col3 = st.columns(3)
 with col1:
     st.metric(
-        "Tổng số bài", 
+        "Total Posts", 
         f"{kpis['total_posts']:,}",
-        help="Tổng số bài đăng trong dataset"
+        help="Total number of posts in dataset"
     )
 with col2:
     avg_er = kpis['avg_engagement_rate']
     st.metric(
-        "Engagement Rate TB", 
+        "Avg Engagement Rate", 
         f"{avg_er:.2%}" if not pd.isna(avg_er) else "N/A",
-        help="Engagement rate trung bình = (likes+shares+comments)/followers"
+        help="Average engagement rate = (likes+shares+comments)/followers"
     )
 with col3:
     st.metric(
-        "Tổng Engagement", 
+        "Total Engagement", 
         f"{kpis['total_engagement']:,}",
-        help="Tổng số likes + shares + comments"
+        help="Total likes + shares + comments"
     )
 
 st.markdown("---")
@@ -116,41 +116,41 @@ st.markdown("---")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("📅 Xu hướng theo thời gian")
+    st.subheader("Time Trend")
     
     chart = create_timeseries_chart(filtered_df)
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("Không có dữ liệu thời gian để hiển thị")
+        st.info("No time data available to display")
     
-    with st.expander("ℹ️ Giải thích"):
+    with st.expander("Explanation"):
         st.markdown("""
-        - **Trục X**: Ngày đăng bài
-        - **Trục Y**: Tổng engagement (likes + shares + comments)
-        - **Mục đích**: Xem xu hướng tương tác theo thời gian, phát hiện peak/drop
+        - **X-axis**: Post date
+        - **Y-axis**: Total engagement (likes + shares + comments)
+        - **Purpose**: View engagement trends over time, detect peaks/drops
         """)
 
 with col2:
-    st.subheader("🏗️ Hiệu suất theo nền tảng")
+    st.subheader("Platform Performance")
     
     chart = create_platform_chart(filtered_df)
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("Không có dữ liệu nền tảng để hiển thị")
+        st.info("No platform data available to display")
     
-    with st.expander("ℹ️ Giải thích"):
+    with st.expander("Explanation"):
         st.markdown("""
-        - **Trục X**: Nền tảng mạng xã hội
-        - **Trục Y**: Engagement rate trung bình
-        - **Mục đích**: So sánh hiệu quả các nền tảng để tối ưu strategy
+        - **X-axis**: Social media platform
+        - **Y-axis**: Average engagement rate
+        - **Purpose**: Compare platform effectiveness to optimize strategy
         """)
 
 st.markdown("---")
 
 # Sentiment analysis
-st.subheader("🎭 Phân tích Sentiment")
+st.subheader("Sentiment Analysis")
 
 col1, col2 = st.columns([2, 1])
 
@@ -159,32 +159,32 @@ with col1:
     if chart:
         st.altair_chart(chart, use_container_width=True)
     else:
-        st.info("Không có dữ liệu sentiment để hiển thị")
+        st.info("No sentiment data available to display")
 
 with col2:
     st.markdown("### Insights")
     if "post_sentiment" in filtered_df.columns:
         sentiment_counts = filtered_df["post_sentiment"].value_counts()
-        st.markdown("**Phân bố Sentiment:**")
+        st.markdown("**Sentiment Distribution:**")
         for sentiment, count in sentiment_counts.items():
             percentage = count / len(filtered_df) * 100
-            st.markdown(f"- **{sentiment}**: {count:,} bài ({percentage:.1f}%)")
+            st.markdown(f"- **{sentiment}**: {count:,} posts ({percentage:.1f}%)")
     else:
-        st.info("Không có dữ liệu sentiment")
+        st.info("No sentiment data available")
 
-with st.expander("ℹ️ Giải thích Sentiment"):
+with st.expander("Sentiment Explanation"):
     st.markdown("""
-    - **Positive**: Bài đăng tích cực, lạc quan
-    - **Neutral**: Bài đăng trung tính, thông tin
-    - **Negative**: Bài đăng tiêu cực, báo động
-    - **Phân tích**: Giúp hiểu tone messaging và adjust content strategy
+    - **Positive**: Optimistic, encouraging posts
+    - **Neutral**: Informational, factual posts
+    - **Negative**: Concerning, alarming posts
+    - **Analysis**: Helps understand messaging tone and adjust content strategy
     """)
 
 # Data table
 st.markdown("---")
-st.subheader("📋 Dữ liệu chi tiết")
+st.subheader("Data Details")
 
-with st.expander("Xem bảng dữ liệu"):
+with st.expander("View data table"):
     st.dataframe(
         filtered_df[["post_date", "platform", "post_sentiment", "hashtag", 
                     "engagement_total", "engagement_rate", "user_followers"]].head(100),
@@ -194,7 +194,7 @@ with st.expander("Xem bảng dữ liệu"):
     # Download button
     csv = filtered_df.to_csv(index=False).encode("utf-8")
     st.download_button(
-        "📥 Tải CSV đã lọc",
+        "Download filtered CSV",
         data=csv,
         file_name="sustainability_posts_filtered.csv",
         mime="text/csv"
