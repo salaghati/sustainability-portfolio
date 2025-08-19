@@ -289,8 +289,8 @@ def about_me_section() -> None:
     with cv_col2:
         if os.path.exists(CV_PATH):
             with open(CV_PATH, "rb") as f:
-            pdf_bytes = f.read()
-                
+                pdf_bytes = f.read()
+
             st.download_button(
                 "📄 Download Resume (PDF)",
                 data=pdf_bytes,
@@ -406,7 +406,7 @@ def main() -> None:
     
     # Footer with better styling
     st.markdown("---")
-            st.markdown("""
+    st.markdown("""
     <div style="text-align: center; opacity: 0.7; padding: 2rem;">
         <p style="font-size: 0.9rem;">
             © 2024 Trinh Anh Tu | Built with ❤️ using Streamlit & Python | 
