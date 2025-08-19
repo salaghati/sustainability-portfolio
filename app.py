@@ -70,7 +70,7 @@ st.markdown("""
     
     /* Professional cards */
     .card {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+        background: linear-gradient(135deg, rgba(0, 64, 128, 0.9), rgba(0, 48, 96, 0.9));
         border: none;
         border-radius: 15px;
         padding: 1.5rem;
@@ -111,7 +111,7 @@ st.markdown("""
     
     /* Project cards */
     .project-card {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+        background: linear-gradient(135deg, rgba(0, 64, 128, 0.8), rgba(0, 48, 96, 0.8));
         border-radius: 15px;
         padding: 1.5rem;
         margin: 0.5rem 0;
@@ -124,7 +124,7 @@ st.markdown("""
     .project-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+        background: linear-gradient(135deg, rgba(0, 64, 128, 0.9), rgba(0, 48, 96, 0.9));
     }
     
     .project-card h4 {
@@ -153,7 +153,7 @@ st.markdown("""
     
     /* Info box */
     .info-box {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.7), rgba(118, 75, 162, 0.7));
+        background: linear-gradient(135deg, rgba(0, 64, 128, 0.7), rgba(0, 48, 96, 0.7));
         border: 1px solid rgba(255,255,255,0.2);
         border-radius: 10px;
         padding: 1rem;
@@ -213,7 +213,7 @@ def about_me_section() -> None:
     """, unsafe_allow_html=True)
 
     # Quick intro with usage guide
-    st.info("👋 **Welcome!** Use the sidebar filters on each page to explore different aspects of the data. Click the buttons below to navigate between analysis pages.")
+    st.info("**Welcome!** Use the sidebar filters on each page to explore different aspects of the data. Click the buttons below to navigate between analysis pages.")
 
     # Main content in columns
     col1, col2 = st.columns([2, 1])
@@ -292,7 +292,7 @@ def about_me_section() -> None:
                 pdf_bytes = f.read()
 
             st.download_button(
-                "📄 Download Resume (PDF)",
+                "Download Resume (PDF)",
                 data=pdf_bytes,
                 file_name="Resume_Trinh_Anh_Tu_Data_Analyst.pdf",
                 mime="application/pdf",
@@ -300,7 +300,7 @@ def about_me_section() -> None:
                 type="primary"
             )
             
-            with st.expander("👀 Preview CV online"):
+            with st.expander("Preview CV online"):
                 render_pdf_inline(CV_PATH, height=600)
         else:
             st.warning("CV file not found.")
@@ -320,7 +320,7 @@ def navigation_section() -> None:
     
     # Brief description with usage instructions
     st.markdown("""
-    **🚀 Interactive Social Media Analytics Dashboard**
+    **Interactive Social Media Analytics Dashboard**
     
     Explore 3000+ sustainability-focused social media posts through interactive visualizations. 
     Use filters to dive deep into engagement patterns, hashtag performance, and optimal posting strategies.
@@ -332,29 +332,29 @@ def navigation_section() -> None:
     with col1:
         st.markdown("""
         <div class="project-card">
-            <h4>📊 Overview Dashboard</h4>
+            <h4>Overview Dashboard</h4>
             <p>Key performance indicators, engagement trends, and platform analysis. Perfect starting point to understand the data landscape.</p>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("🔍 View Overview", use_container_width=True, type="primary"):
+        if st.button("View Overview", use_container_width=True, type="primary"):
             st.switch_page("pages/01_Overview.py")
     
     with col2:
         st.markdown("""
         <div class="project-card">
-            <h4>📈 Trends Analysis</h4>
+            <h4>Trends Analysis</h4>
             <p>Deep dive into hashtag performance, optimal posting times, and call-to-action effectiveness across platforms.</p>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("📊 View Trends", use_container_width=True, type="primary"):
+        if st.button("View Trends", use_container_width=True, type="primary"):
             st.switch_page("pages/02_Trends.py")
     
     with col3:
         st.markdown("""
         <div class="project-card">
-            <h4>🎯 Key Highlights</h4>
+            <h4>Key Highlights</h4>
             <p><strong>3000+</strong> posts analyzed<br>
             <strong>5</strong> social platforms<br>
             <strong>Interactive</strong> filtering & export</p>
@@ -364,7 +364,7 @@ def navigation_section() -> None:
         st.markdown("*Explore the data above*")
 
     # Technical details in expander
-    with st.expander("🔧 Technical Implementation Details"):
+    with st.expander("Technical Implementation Details"):
         st.markdown("""
         **Tech Stack:** Python, Streamlit, Pandas, Altair  
         **Data Processing:** ETL pipeline with data validation  
@@ -378,7 +378,7 @@ def main() -> None:
     """Main application function with enhanced layout."""
     # Sidebar with better styling
     with st.sidebar:
-        st.markdown("### 🎯 Project Information")
+        st.markdown("### Project Information")
         st.markdown("""
         <div class="info-box">
             <strong>Dataset:</strong> 3000+ sustainability posts<br>
@@ -389,7 +389,7 @@ def main() -> None:
         """, unsafe_allow_html=True)
         
         st.markdown("---")
-        st.markdown("### 💡 How to Use")
+        st.markdown("### How to Use")
         st.markdown("""
         1. **Overview Page:** Start here for key metrics
         2. **Trends Page:** Explore deeper insights  
@@ -398,7 +398,7 @@ def main() -> None:
         """)
 
     # Main title with better hierarchy
-    st.title("🚀 Data Analyst Portfolio")
+    st.title("Data Analyst Portfolio")
     st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
     
     about_me_section()
@@ -409,7 +409,7 @@ def main() -> None:
     st.markdown("""
     <div style="text-align: center; opacity: 0.7; padding: 2rem;">
         <p style="font-size: 0.9rem;">
-            © 2024 Trinh Anh Tu | Built with ❤️ using Streamlit & Python | 
+            © 2024 Trinh Anh Tu | Built with Streamlit & Python | 
             <a href="https://github.com/salaghati" target="_blank" style="color: #667eea;">View Source Code</a>
         </p>
     </div>
