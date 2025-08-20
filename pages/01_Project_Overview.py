@@ -232,86 +232,66 @@ st.markdown("---")
 # Charts section with better layout
 st.subheader("📊 Data Visualizations")
 
-# Chart columns
-chart_col1, chart_col2 = st.columns(2)
-
-with chart_col1:
-    st.markdown("#### 📈 Engagement Trends Over Time")
-    
+with st.expander("📈 Engagement Trends Over Time", expanded=True):
     chart = create_timeseries_chart(filtered_df)
     if chart:
-        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
         st.altair_chart(chart, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
     else:
         st.warning("⚠️ No time data available to display trends")
     
-    with st.expander("📖 How to Read This Chart"):
-        st.markdown("""
-        - **X-axis**: Days when posts were published
-        - **Y-axis**: Total engagement (likes + shares + comments)
-        - **Peaks**: High-performing days or viral content
-        - **Patterns**: Weekly cycles, seasonal trends
-        
-        💡 **Insight**: Look for patterns to optimize posting schedule
-        """)
+    st.markdown("""
+    **How to Read This Chart:**
+    - **X-axis**: Days when posts were published
+    - **Y-axis**: Total engagement (likes + shares + comments)
+    - **Insight**: Look for patterns to optimize posting schedule
+    """)
 
-with chart_col2:
-    st.markdown("#### 🏆 Platform Performance Comparison")
-    
+with st.expander("🏆 Platform Performance Comparison", expanded=True):
     chart = create_platform_chart(filtered_df)
     if chart:
-        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
         st.altair_chart(chart, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
     else:
         st.warning("⚠️ No platform data available")
-    
-    with st.expander("📖 Platform Analysis Guide"):
-        st.markdown("""
-        - **Height**: Average engagement rate per platform
-        - **Color**: Visual distinction between platforms
-        - **Comparison**: Which platforms drive the most engagement
         
-        💡 **Strategy**: Focus content efforts on top-performing platforms
-        """)
+    st.markdown("""
+    **Platform Analysis Guide:**
+    - **Height**: Average engagement rate per platform
+    - **Strategy**: Focus content efforts on top-performing platforms
+    """)
 
 st.markdown("---")
 
 # Sentiment analysis with enhanced layout
 st.subheader("🎭 Sentiment Analysis")
 
-sent_col1, sent_col2 = st.columns([2, 1])
+with st.expander("🎭 Sentiment Distribution", expanded=True):
+    sent_col1, sent_col2 = st.columns([2, 1])
 
-with sent_col1:
-    chart = create_sentiment_chart(filtered_df)
-    if chart:
-        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-        st.altair_chart(chart, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-    else:
-        st.warning("⚠️ No sentiment data available")
+    with sent_col1:
+        chart = create_sentiment_chart(filtered_df)
+        if chart:
+            st.altair_chart(chart, use_container_width=True)
+        else:
+            st.warning("⚠️ No sentiment data available")
 
-with sent_col2:
-    st.markdown("#### 💭 Sentiment Insights")
-    
-    if "post_sentiment" in filtered_df.columns:
-        sentiment_counts = filtered_df["post_sentiment"].value_counts()
+    with sent_col2:
+        st.markdown("#### 💭 Sentiment Insights")
         
-        for sentiment, count in sentiment_counts.items():
-            percentage = count / len(filtered_df) * 100
+        if "post_sentiment" in filtered_df.columns:
+            sentiment_counts = filtered_df["post_sentiment"].value_counts()
             
-            # Color-coded sentiment
-            color = {"Positive": "#22c55e", "Neutral": "#6b7280", "Negative": "#ef4444"}.get(sentiment, "#667eea")
-            
-            st.markdown(f"""
-            <div class="insight-card">
-                <span style="color: {color}; font-weight: bold;">{sentiment}</span><br>
-                <strong>{count:,} posts</strong> ({percentage:.1f}%)
-            </div>
-            """, unsafe_allow_html=True)
-    else:
-        st.info("💡 No sentiment data in current selection")
+            for sentiment, count in sentiment_counts.items():
+                percentage = count / len(filtered_df) * 100
+                color = {"Positive": "#22c55e", "Neutral": "#6b7280", "Negative": "#ef4444"}.get(sentiment, "#667eea")
+                
+                st.markdown(f"""
+                <div class="insight-card">
+                    <span style="color: {color}; font-weight: bold;">{sentiment}</span><br>
+                    <strong>{count:,} posts</strong> ({percentage:.1f}%)
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.info("💡 No sentiment data in current selection")
 
 with st.expander("🎭 Sentiment Analysis Guide"):
     st.markdown("""
