@@ -326,6 +326,10 @@ def navigation_section() -> None:
     Use filters to dive deep into engagement patterns, hashtag performance, and optimal posting strategies.
     """)
     
+    # Add screenshot
+    if os.path.exists("dashboard_screenshot.png"):
+        st.image("dashboard_screenshot.png", caption="Dashboard Preview", use_column_width=True)
+    
     # Project cards in columns
     col1, col2, col3 = st.columns(3)
     
@@ -377,40 +381,13 @@ def navigation_section() -> None:
 def main() -> None:
     """Main application function with enhanced layout."""
     
-    st.sidebar.title("Navigation")
-    app_mode = st.sidebar.radio(
-        "Choose a section to view",
-        ["About Me", "Portfolio Project"]
-    )
-
-    if app_mode == "About Me":
-        st.title("Data Analyst Portfolio")
-        st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
-        about_me_section()
+    # Main title with better hierarchy
+    st.title("Data Analyst Portfolio")
+    st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
     
-    elif app_mode == "Portfolio Project":
-        with st.sidebar:
-            st.markdown("### Project Information")
-            st.markdown("""
-            <div class="info-box">
-                <strong>Dataset:</strong> 3000+ sustainability posts<br>
-                <strong>Platforms:</strong> Facebook, Instagram, LinkedIn, TikTok, X<br>
-                <strong>Metrics:</strong> Engagement rate, sentiment, topics<br>
-                <strong>Tech Stack:</strong> Python, Streamlit, Altair
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("---")
-            st.markdown("### How to Use")
-            st.markdown("""
-            1. **Overview Page:** Start here for key metrics
-            2. **Trends Page:** Explore deeper insights  
-            3. **Use Filters:** Customize your analysis
-            4. **Export Data:** Download filtered results
-            """)
-        
-        navigation_section()
-
+    about_me_section()
+    navigation_section()
+    
     # Footer with better styling
     st.markdown("---")
     st.markdown("""
