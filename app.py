@@ -274,9 +274,9 @@ def about_me_section() -> None:
         st.markdown("### Let's Connect")
         st.markdown("""
         <div style="text-align: center;">
-            <a href="mailto:trinhanhtu01@gmail.com" class="contact-btn">📧 Email Me</a><br>
-            <a href="https://linkedin.com/in/tú-trịnh" class="contact-btn" target="_blank">💼 LinkedIn</a><br>
-            <a href="https://github.com/salaghati" class="contact-btn" target="_blank">💻 GitHub</a>
+            <a href="mailto:trinhanhtu01@gmail.com" class="contact-btn">Email Me</a><br>
+            <a href="https://linkedin.com/in/tú-trịnh" class="contact-btn" target="_blank">LinkedIn</a><br>
+            <a href="https://github.com/salaghati" class="contact-btn" target="_blank">GitHub</a>
         </div>
         """, unsafe_allow_html=True)
 
@@ -338,7 +338,7 @@ def navigation_section() -> None:
         """, unsafe_allow_html=True)
         
         if st.button("View Overview", use_container_width=True, type="primary"):
-            st.switch_page("pages/01_Overview.py")
+            st.switch_page("pages/01_Project_Overview.py")
     
     with col2:
         st.markdown("""
@@ -376,34 +376,41 @@ def navigation_section() -> None:
 
 def main() -> None:
     """Main application function with enhanced layout."""
-    # Sidebar with better styling
-    with st.sidebar:
-        st.markdown("### Project Information")
-        st.markdown("""
-        <div class="info-box">
-            <strong>Dataset:</strong> 3000+ sustainability posts<br>
-            <strong>Platforms:</strong> Facebook, Instagram, LinkedIn, TikTok, X<br>
-            <strong>Metrics:</strong> Engagement rate, sentiment, topics<br>
-            <strong>Tech Stack:</strong> Python, Streamlit, Altair
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("---")
-        st.markdown("### How to Use")
-        st.markdown("""
-        1. **Overview Page:** Start here for key metrics
-        2. **Trends Page:** Explore deeper insights  
-        3. **Use Filters:** Customize your analysis
-        4. **Export Data:** Download filtered results
-        """)
+    
+    st.sidebar.title("Navigation")
+    app_mode = st.sidebar.radio(
+        "Choose a section to view",
+        ["About Me", "Portfolio Project"]
+    )
 
-    # Main title with better hierarchy
-    st.title("Data Analyst Portfolio")
-    st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
+    if app_mode == "About Me":
+        st.title("Data Analyst Portfolio")
+        st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
+        about_me_section()
     
-    about_me_section()
-    navigation_section()
-    
+    elif app_mode == "Portfolio Project":
+        with st.sidebar:
+            st.markdown("### Project Information")
+            st.markdown("""
+            <div class="info-box">
+                <strong>Dataset:</strong> 3000+ sustainability posts<br>
+                <strong>Platforms:</strong> Facebook, Instagram, LinkedIn, TikTok, X<br>
+                <strong>Metrics:</strong> Engagement rate, sentiment, topics<br>
+                <strong>Tech Stack:</strong> Python, Streamlit, Altair
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("---")
+            st.markdown("### How to Use")
+            st.markdown("""
+            1. **Overview Page:** Start here for key metrics
+            2. **Trends Page:** Explore deeper insights  
+            3. **Use Filters:** Customize your analysis
+            4. **Export Data:** Download filtered results
+            """)
+        
+        navigation_section()
+
     # Footer with better styling
     st.markdown("---")
     st.markdown("""
