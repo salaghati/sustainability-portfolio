@@ -383,7 +383,7 @@ def main() -> None:
     
     # Main title with better hierarchy
     st.title("Data Analyst Portfolio")
-    st.markdown("### *Trinh Anh Tu - Social Media Analytics Specialist*")
+    st.markdown("### *Trinh Anh Tu - Data-Social Media Analytics Specialist*")
     
     about_me_section()
     navigation_section()
