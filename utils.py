@@ -138,7 +138,7 @@ def apply_data_filters(df: pd.DataFrame,
                       platforms: list = None,
                       sentiments: list = None, 
                       date_range: tuple = None,
-                      hashtag_filter: str = "") -> pd.DataFrame:
+                      hashtags: list = None) -> pd.DataFrame:
     """
     Apply filters to the dataset.
     
@@ -147,7 +147,7 @@ def apply_data_filters(df: pd.DataFrame,
         platforms: List of platforms to filter
         sentiments: List of sentiments to filter
         date_range: Tuple of (start_date, end_date)
-        hashtag_filter: String to search in hashtags
+        hashtags: List of hashtags to filter
         
     Returns:
         Filtered DataFrame
@@ -165,7 +165,7 @@ def apply_data_filters(df: pd.DataFrame,
         mask = (filtered["post_date"] >= start) & (filtered["post_date"] <= end)
         filtered = filtered[mask]
         
-    if hashtag_filter and "hashtag" in filtered.columns:
-        filtered = filtered[filtered["hashtag"].str.contains(hashtag_filter.strip().lower(), na=False)]
+    if hashtags and "hashtag" in filtered.columns:
+        filtered = filtered[filtered["hashtag"].isin(hashtags)]
     
     return filtered

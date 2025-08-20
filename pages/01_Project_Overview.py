@@ -113,29 +113,47 @@ with st.sidebar:
         max_date = df["post_date"].max().date()
         
         st.markdown("📅 **Date Range**")
+
+        # Date presets
+        preset_col1, preset_col2 = st.columns(2)
+        if preset_col1.button("Last 7 Days", use_container_width=True):
+            st.session_state.date_range = (max_date - pd.Timedelta(days=7), max_date)
+        if preset_col2.button("Last 30 Days", use_container_width=True):
+            st.session_state.date_range = (max_date - pd.Timedelta(days=30), max_date)
+
+        if 'date_range' not in st.session_state:
+            st.session_state.date_range = (min_date, max_date)
+            
         date_range = st.date_input(
             "Select time period",
-            value=[min_date, max_date],
+            value=st.session_state.date_range,
             min_value=min_date,
             max_value=max_date,
-            help=f"Filter posts from {min_date} to {max_date}"
+            help=f"Filter posts from {min_date} to {max_date}",
+            key="date_range_selector"
         )
+        st.session_state.date_range = date_range
+
     else:
         date_range = None
     
-    # Hashtag search
-    hashtag_filter = st.text_input(
-        "🏷️ Hashtag Search",
-        value="",
-        placeholder="e.g., sustainability, green",
-        help="Search for posts containing specific hashtags (case insensitive)"
-    )
+    # Hashtag search with multiselect
+    if "hashtag" in df.columns:
+        hashtags = sorted(df["hashtag"].dropna().unique())
+        hashtag_sel = st.multiselect(
+            "🏷️ Hashtag Search",
+            options=hashtags,
+            default=[],
+            help="Select one or more hashtags to focus the analysis"
+        )
+    else:
+        hashtag_sel = []
     
     # Filter summary
     with st.expander("📋 Active Filters Summary"):
         st.write(f"**Platforms:** {len(platform_sel) if platform_sel else 'All'}")
         st.write(f"**Sentiments:** {len(sentiment_sel) if sentiment_sel else 'All'}")
-        st.write(f"**Hashtag:** {hashtag_filter if hashtag_filter else 'None'}")
+        st.write(f"**Hashtags:** {len(hashtag_sel) if hashtag_sel else 'All'}")
 
 # Apply filters
 filtered_df = apply_data_filters(
@@ -143,7 +161,7 @@ filtered_df = apply_data_filters(
     platforms=platform_sel,
     sentiments=sentiment_sel,
     date_range=date_range,
-    hashtag_filter=hashtag_filter
+    hashtags=hashtag_sel
 )
 
 # Handle empty data case

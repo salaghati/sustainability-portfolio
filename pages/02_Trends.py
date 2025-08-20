@@ -129,23 +129,40 @@ with st.sidebar:
         max_date = df["post_date"].max().date()
         
         st.markdown("📅 **Analysis Period**")
+        
+        # Date presets
+        preset_col1, preset_col2 = st.columns(2)
+        if preset_col1.button("Last 7 Days", use_container_width=True, key="trends_7_days"):
+            st.session_state.trends_date_range = (max_date - pd.Timedelta(days=7), max_date)
+        if preset_col2.button("Last 30 Days", use_container_width=True, key="trends_30_days"):
+            st.session_state.trends_date_range = (max_date - pd.Timedelta(days=30), max_date)
+
+        if 'trends_date_range' not in st.session_state:
+            st.session_state.trends_date_range = (min_date, max_date)
+
         date_range = st.date_input(
             "Select timeframe",
-            value=[min_date, max_date],
+            value=st.session_state.trends_date_range,
             min_value=min_date,
             max_value=max_date,
-            help="Choose time period for trend analysis"
+            help="Choose time period for trend analysis",
+            key="trends_date_range_selector"
         )
+        st.session_state.trends_date_range = date_range
     else:
         date_range = None
     
     # Hashtag filter
-    hashtag_filter = st.text_input(
-        "🏷️ Hashtag Focus",
-        value="",
-        placeholder="e.g., climatechange",
-        help="Analyze specific hashtag trends"
-    )
+    if "hashtag" in df.columns:
+        hashtags = sorted(df["hashtag"].dropna().unique())
+        hashtag_sel = st.multiselect(
+            "🏷️ Hashtag Focus",
+            options=hashtags,
+            default=[],
+            help="Analyze specific hashtag trends"
+        )
+    else:
+        hashtag_sel = []
     
     # Analysis scope
     st.markdown("---")
@@ -163,7 +180,7 @@ filtered_df = apply_data_filters(
     platforms=platform_sel,
     sentiments=sentiment_sel,
     date_range=date_range,
-    hashtag_filter=hashtag_filter
+    hashtags=hashtag_sel
 )
 
 # Handle empty data case
