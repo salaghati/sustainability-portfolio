@@ -115,7 +115,7 @@ with st.sidebar:
         st.markdown("📅 **Date Range**")
         date_range = st.date_input(
             "Select time period",
-            value=(min_date, max_date),
+            value=[min_date, max_date],
             min_value=min_date,
             max_value=max_date,
             help=f"Filter posts from {min_date} to {max_date}"
@@ -145,6 +145,11 @@ filtered_df = apply_data_filters(
     date_range=date_range,
     hashtag_filter=hashtag_filter
 )
+
+# Handle empty data case
+if filtered_df.empty:
+    st.warning("Không có dữ liệu phù hợp với bộ lọc đã chọn. Vui lòng thử lại.")
+    st.stop()
 
 # Results summary with better styling
 filter_col1, filter_col2 = st.columns([3, 1])
@@ -303,6 +308,14 @@ with st.expander("🎭 Sentiment Analysis Guide"):
     - Neutral content builds trust and authority
     """)
 
+st.markdown("---")
+st.subheader("📝 Key Insights Summary")
+st.info("""
+- **Platform Focus:** Identify which 1-2 platforms deliver the highest engagement rate and concentrate content efforts there.
+- **Sentiment Strategy:** Positive and neutral content generally performs best. Use sentiment analysis to guide your content's emotional tone.
+- **Engagement Peaks:** Look for recurring peaks in the engagement trend chart to identify the best days of the week to post.
+""")
+
 # Data export section
 st.markdown("---")
 st.subheader("💾 Export & Download")
@@ -312,7 +325,7 @@ export_col1, export_col2, export_col3 = st.columns(3)
 with export_col1:
     csv = filtered_df.to_csv(index=False).encode("utf-8")
     st.download_button(
-        "📥 Download Filtered Data",
+        f"📥 Download Filtered Data ({len(filtered_df)} rows)",
         data=csv,
         file_name="social_media_analysis_filtered.csv",
         mime="text/csv",

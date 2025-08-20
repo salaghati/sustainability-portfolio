@@ -131,7 +131,7 @@ with st.sidebar:
         st.markdown("📅 **Analysis Period**")
         date_range = st.date_input(
             "Select timeframe",
-            value=(min_date, max_date),
+            value=[min_date, max_date],
             min_value=min_date,
             max_value=max_date,
             help="Choose time period for trend analysis"
@@ -165,6 +165,11 @@ filtered_df = apply_data_filters(
     date_range=date_range,
     hashtag_filter=hashtag_filter
 )
+
+# Handle empty data case
+if filtered_df.empty:
+    st.warning("Không có dữ liệu phù hợp với bộ lọc đã chọn. Vui lòng thử lại.")
+    st.stop()
 
 # Apply analysis scope
 if analysis_type == "High-Engagement Only" and "engagement_rate" in filtered_df.columns:
@@ -482,7 +487,7 @@ export_row1 = st.columns(3)
 with export_row1[0]:
     csv_full = filtered_df.to_csv(index=False).encode("utf-8")
     st.download_button(
-        "📥 Download Analysis Data",
+        f"📥 Download Analysis Data ({len(filtered_df)} rows)",
         data=csv_full,
         file_name="trends_analysis_detailed.csv",
         mime="text/csv",
@@ -504,7 +509,7 @@ with export_row1[1]:
         )
         summary_csv = summary.to_csv().encode("utf-8")
         st.download_button(
-            "📊 Platform Summary Stats",
+            f"📊 Platform Summary Stats ({len(summary)} rows)",
             data=summary_csv,
             file_name="platform_performance_summary.csv",
             mime="text/csv",
@@ -529,6 +534,14 @@ st.success("""
 - Implement top-performing hashtags in new posts  
 - Test different CTAs based on performance data
 - Monitor trends and adjust strategy monthly
+""")
+
+st.markdown("---")
+st.subheader("📝 Key Insights Summary")
+st.success("""
+- **Hashtag Strategy:** Combine high-volume, high-engagement hashtags with niche ones to maximize reach and relevance.
+- **Optimal Timing:** Use the heatmap to identify the best day and hour to post for each key platform, adapting to your audience's online behavior.
+- **Content is King:** Topics related to 'Renewable Energy' and 'Policy' tend to generate high engagement. Focus content creation around these themes.
 """)
 
 st.info("💡 **Pro Tip**: Bookmark this analysis and return monthly to track performance changes and identify new trends!")
