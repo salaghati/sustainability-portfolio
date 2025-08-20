@@ -47,6 +47,11 @@ st.markdown("""
         padding: 1rem;
         margin: 0.5rem 0;
         border-left: 3px solid #667eea;
+        color: #2d3748; /* Dark gray for text visibility */
+    }
+    
+    .insight-card strong {
+        color: #434190; /* Even darker for emphasis */
     }
     
     /* Chart containers */
