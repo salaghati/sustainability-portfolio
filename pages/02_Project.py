@@ -57,6 +57,11 @@ st.markdown("""
         padding: 1rem;
         margin: 0.5rem 0;
         border-left: 3px solid #f59e0b;
+        color: #713f12; /* Dark amber for text visibility */
+    }
+
+    .insight-panel strong {
+        color: #422006; /* Even darker for emphasis */
     }
     
     /* Time heatmap legend */
