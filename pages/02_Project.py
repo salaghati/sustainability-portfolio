@@ -20,6 +20,16 @@ st.markdown("""
         margin: 1rem 0;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         border-left: 4px solid #8b5cf6;
+        color: #2d3748; /* Added for text visibility */
+    }
+    
+    .trend-card strong {
+        color: #4c51bf; /* Darker color for hashtag */
+    }
+
+    .trend-card .metric-badge {
+        background-color: #e9d5ff; /* Lighter purple */
+        color: #5b21b6; /* Darker purple text */
     }
     
     .trend-card h4 {
