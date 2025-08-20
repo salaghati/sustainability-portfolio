@@ -71,6 +71,7 @@ st.markdown("""
         padding: 0.8rem;
         margin: 0.5rem 0;
         font-size: 0.9rem;
+        color: #2d3748; /* Dark gray for text visibility */
     }
     
     /* Advanced metric card */
