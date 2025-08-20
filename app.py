@@ -25,7 +25,7 @@ st.markdown("""
     
     /* Hero section */
     .hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #004080 0%, #003060 100%);
         padding: 3rem 2rem;
         border-radius: 20px;
         color: white;
@@ -342,18 +342,18 @@ def navigation_section() -> None:
         """, unsafe_allow_html=True)
         
         if st.button("View Overview", use_container_width=True, type="primary"):
-            st.switch_page("pages/01_Project_Overview.py")
+            st.switch_page("pages/01_Overview.py")
     
     with col2:
         st.markdown("""
         <div class="project-card">
-            <h4>Trends Analysis</h4>
+            <h4>Project Analysis</h4>
             <p>Deep dive into hashtag performance, optimal posting times, and call-to-action effectiveness across platforms.</p>
         </div>
         """, unsafe_allow_html=True)
         
-        if st.button("View Trends", use_container_width=True, type="primary"):
-            st.switch_page("pages/02_Trends.py")
+        if st.button("View Project", use_container_width=True, type="primary"):
+            st.switch_page("pages/02_Project.py")
     
     with col3:
         st.markdown("""
