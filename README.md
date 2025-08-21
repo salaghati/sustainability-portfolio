@@ -183,3 +183,4 @@ streamlit run app.py --server.port 8501 --server.headless true
 ---
 
 *Portfolio này được xây dựng để thể hiện kỹ năng phân tích dữ liệu, xây dựng dashboard và triển khai ứng dụng web với Python & Streamlit.*
+# Trigger for Streamlit Cloud sync
