@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # --- Main Portfolio Page ---
-st.title("Trinh Anh Tu - Data Analyst Portfolio")
+st.title("Trinh Anh Tu - My Portfolio")
 st.markdown("""
 Welcome! This application showcases my data analysis projects. Each project demonstrates a complete workflow from data fetching and cleaning to interactive visualization and insight generation. 
 **Please use the sidebar to navigate through the projects.**
