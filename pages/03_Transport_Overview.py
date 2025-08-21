@@ -4,7 +4,7 @@ from modules.transport.utils import load_and_clean_transport_data
 from modules.transport.charts import kpi_card, trend_chart, top_n_chart, distribution_chart, pie_chart
 
 st.title("📊 Transport Insights - Enhanced Overview")
-st.markdown("An in-depth look at NYC Green Taxi trips, focusing on key metrics and operational insights.")
+st.markdown("An in-depth look at NYC Green Taxi trips, focusing on key metrics and operational patterns.")
 
 df = load_and_clean_transport_data()
 
@@ -39,9 +39,6 @@ with kpi_cols[3]:
     avg_duration = filtered_df['trip_duration_mins'].mean()
     kpi_card("Avg. Duration (min)", f"{avg_duration:.2f}", "Average trip duration in minutes.")
 
-st.info("""
-**💡 Insight:** The key metrics provide a high-level snapshot of the taxi service's performance. A high trip count and revenue indicate strong demand, while average fare and duration offer insights into typical trip characteristics.
-""", icon="✅")
 st.markdown("---")
 
 # --- Trip Characteristics Analysis ---
@@ -49,13 +46,10 @@ st.header("Trip Characteristics")
 dist_cols = st.columns(2)
 with dist_cols[0]:
     st.altair_chart(distribution_chart(filtered_df, 'trip_distance', 'Trip Distance Distribution', 'Distance (miles)'), use_container_width=True)
+    st.caption("Distribution of trip distances, showing the frequency of short vs. long trips.")
 with dist_cols[1]:
     st.altair_chart(distribution_chart(filtered_df, 'trip_duration_mins', 'Trip Duration Distribution', 'Duration (minutes)'), use_container_width=True)
-
-st.info("""
-**💡 Insight:** The distribution charts reveal that the vast majority of taxi trips are short-distance (under 3 miles) and brief (under 15 minutes). 
-This suggests the service primarily caters to short, quick urban journeys rather than long-distance travel.
-""", icon="✅")
+    st.caption("Distribution of trip durations, showing how long trips typically last.")
 st.markdown("---")
 
 # --- Operational Analysis ---
@@ -63,23 +57,15 @@ st.header("Operational Analysis")
 op_cols = st.columns(2)
 with op_cols[0]:
     st.altair_chart(pie_chart(filtered_df, 'payment_type_name', 'Payment Type Distribution'), use_container_width=True)
+    st.caption("Breakdown of payment methods used by passengers.")
 with op_cols[1]:
     st.altair_chart(top_n_chart(filtered_df, 'passengers', n=6), use_container_width=True)
-
-st.info("""
-**💡 Insight & Conclusion:**
-- **Payment:** Credit card is the dominant payment method, highlighting the importance of reliable electronic payment systems.
-- **Passengers:** The most common trips are for a single passenger. This could inform marketing strategies or vehicle size considerations for the fleet.
-""", icon="✅")
+    st.caption("Frequency of trips based on the number of passengers.")
 st.markdown("---")
-
 
 # --- Trend & Route Analysis ---
 st.header("Trend and Route Analysis")
 st.altair_chart(trend_chart(filtered_df), use_container_width=True)
+st.caption("Daily trip volumes over the selected date range.")
 st.altair_chart(top_n_chart(filtered_df, 'route', 10), use_container_width=True)
-st.info("""
-**💡 Insight:**
-- **Trend:** The daily trip trend chart helps identify weekly patterns, such as potential dips on weekends or peaks during weekdays.
-- **Routes:** The top routes highlight the most critical high-traffic corridors. This information is valuable for driver allocation, understanding demand hotspots, and city planning.
-""", icon="✅")
+st.caption("Top 10 most frequent trip routes (Pickup ID -> Dropoff ID).")
