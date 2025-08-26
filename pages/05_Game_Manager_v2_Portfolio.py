@@ -6,42 +6,42 @@ st.set_page_config(page_title="Game Manager System v2 Portfolio", layout="wide")
 st.title("Project Portfolio: Game Manager System v2")
 st.markdown("---")
 
-st.header("A. Mô tả dự án và bối cảnh")
+st.header("A. Project Description and Context")
 st.markdown("""
-Hệ thống **Game Manager v2** là một ứng dụng quản lý máy game được thiết kế để hoạt động trên nhiều chi nhánh.
-- **Công nghệ:**
+The **Game Manager v2** system is an application designed to manage gaming machines across multiple branches.
+- **Technology Stack:**
     - **Back-end:** Node.js / Express.js
-    - **Cơ sở dữ liệu:** SQLite / Sequelize ORM
+    - **Database:** SQLite / Sequelize ORM
     - **Front-end:** React.js / Bootstrap
-- **Chức năng chính:**
-    - Quản lý thông tin máy (tên, mã máy, chi nhánh, loại máy).
-    - Nhập và chỉnh sửa giao dịch điểm hàng ngày.
-    - Xem lịch sử giao dịch và thống kê.
-- **Các tính năng nổi bật:**
-    - **Xóa mềm (Soft Delete):** Dữ liệu không bị xóa vĩnh viễn, dễ dàng khôi phục.
-    - **Tính toán số dư tự động:** Số dư (balance) được tính toán dựa trên giao dịch mới nhất, đảm bảo tính chính xác.
-    - **Quản lý tỷ lệ (Rate Management):** Cho phép thiết lập và thay đổi tỷ lệ quy đổi điểm.
-    - **Chế độ Demo:** Cho phép ghi đè dữ liệu để thử nghiệm mà không ảnh hưởng đến dữ liệu thật (Production).
-    - **Kiểm soát nhập liệu:** Cảnh báo và chặn ghi đè dữ liệu khi nhập trùng ngày (ở môi trường Production), chỉ cho phép sửa giao dịch gần nhất.
-    - **Lịch sử thay đổi:** Lưu lại lịch sử thay đổi dữ liệu theo từng chi nhánh.
-    - **Bảo mật:** Sử dụng JWT (JSON Web Token) để xác thực và phân quyền theo vai trò (Admin/User) và theo chi nhánh.
-- **API Endpoints:** Cung cấp các API chính cho việc đăng nhập, CRUD cho máy, chi nhánh, giao dịch điểm và xem lịch sử.
+- **Core Functionality:**
+    - Manage machine information (name, machine code, branch, type).
+    - Enter and edit daily point transactions.
+    - View transaction history and statistics.
+- **Key Features:**
+    - **Soft Delete:** Data is never permanently deleted, allowing for easy recovery.
+    - **Automatic Balance Calculation:** The balance is calculated based on the latest transaction, ensuring accuracy.
+    - **Rate Management:** Allows for setting and changing point conversion rates.
+    - **Demo Mode:** Permits data overwriting for testing purposes without affecting production data.
+    - **Data Entry Control:** Prevents and warns against data overwriting for duplicate dates (in Production mode) and only allows the most recent transaction to be edited.
+    - **Change History:** Logs data changes on a per-branch basis.
+    - **Security:** Utilizes JWT (JSON Web Token) for authentication and role-based (Admin/User) and branch-based authorization.
+- **API Endpoints:** Provides key APIs for login, CRUD operations for machines, branches, point transactions, and history viewing.
 """)
 
-st.header("B. Vai trò của Business Analyst (BA)")
+st.header("B. Role of the Business Analyst (BA)")
 st.markdown("""
-Trong dự án này, tôi đóng vai trò là Business Analyst, chịu trách nhiệm cho các công việc sau:
-- **Thu thập và phân tích yêu cầu:** Làm việc với các bên liên quan để xác định vấn đề cốt lõi như dữ liệu bị ghi đè, khó khăn trong việc theo dõi số dư, và nhu cầu cần một lịch sử giao dịch rõ ràng, minh bạch.
-- **Xác định các bên liên quan (Stakeholders):**
-    - **Admin:** Quản lý toàn bộ hệ thống.
-    - **Nhân viên chi nhánh (Staff):** Người dùng cuối, trực tiếp nhập liệu hàng ngày.
-    - **Kế toán (Accountant):** Theo dõi và kiểm tra số liệu.
-- **Đề xuất giải pháp:** Dựa trên các vấn đề đã phân tích, tôi đã đề xuất các giải pháp kỹ thuật và quy trình nghiệp vụ như cơ chế chống ghi đè, chế độ demo, và luồng sửa đổi dữ liệu.
-- **Tài liệu hóa:** Xây dựng bộ tài liệu nghiệp vụ hoàn chỉnh để đội phát triển và các bên liên quan có cùng một cách hiểu về hệ thống.
+In this project, I served as the Business Analyst, with the following responsibilities:
+- **Requirements Gathering and Analysis:** Worked with stakeholders to identify core problems such as data overwriting, difficulty in tracking balances, and the need for a clear, transparent transaction history.
+- **Stakeholder Identification:**
+    - **Admin:** Manages the entire system.
+    - **Branch Staff:** End-users responsible for daily data entry.
+    - **Accountant:** Monitors and audits the data.
+- **Solution Proposal:** Based on the analysis, I proposed technical solutions and business processes, such as the anti-overwrite mechanism, a demo mode, and the data modification workflow.
+- **Documentation:** Created a complete set of business documents to ensure the development team and stakeholders had a shared understanding of the system.
 """)
 
 st.markdown("---")
-st.header("C. Bộ tài liệu dự án")
+st.header("C. Project Documentation")
 
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     "BRD/SRS", "User Stories & AC", "Use Case Diagram",
@@ -50,130 +50,130 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 
 with tab1:
     st.subheader("1. Business Requirements Document (BRD) / Software Requirements Specification (SRS)")
-    st.markdown("#### 1.1. Mục tiêu dự án")
+    st.markdown("#### 1.1. Project Objectives")
     st.markdown("""
-    - **Giảm sai lệch dữ liệu:** Giảm thiểu sai sót về điểm số do việc nhập trùng hoặc ghi đè dữ liệu không kiểm soát.
-    - **Quản lý số dư chính xác:** Đảm bảo số dư (balance) của từng máy được tính toán và cập nhật một cách chính xác theo thời gian thực.
-    - **Truy vết lịch sử:** Cung cấp khả năng truy vết lịch sử giao dịch và các thay đổi dữ liệu một cách rõ ràng, minh bạch.
+    - **Reduce Data Discrepancies:** Minimize point discrepancies caused by duplicate entries or uncontrolled data overwrites.
+    - **Ensure Accurate Balance Management:** Guarantee that each machine's balance is calculated and updated accurately in real-time.
+    - **Provide Traceable History:** Offer the ability to clearly and transparently trace transaction history and data changes.
     """)
-    st.markdown("#### 1.2. Phạm vi dự án")
+    st.markdown("#### 1.2. Project Scope")
     st.markdown("""
-    - **Trong phạm vi (In-scope):**
-        - Quản lý máy và chi nhánh (Thêm, sửa, xóa mềm).
-        - Nhập và chỉnh sửa giao dịch điểm.
-        - Phân quyền người dùng theo vai trò và chi nhánh.
-        - Tính năng xóa mềm cho các thực thể chính.
-        - Chế độ Demo/Production để kiểm soát ghi đè dữ liệu.
-    - **Ngoài phạm vi (Out-of-scope):**
-        - Tích hợp với các hệ thống kế toán bên ngoài.
-        - Báo cáo tài chính chi tiết.
-        - Quản lý kho vật tư đi kèm máy.
+    - **In-scope:**
+        - Machine and branch management (Add, Edit, Soft Delete).
+        - Point transaction entry and editing.
+        - Role-based and branch-based user authorization.
+        - Soft delete functionality for key entities.
+        - Demo/Production modes to control data overwriting.
+    - **Out-of-scope:**
+        - Integration with external accounting systems.
+        - Detailed financial reporting.
+        - Inventory management for machine-related supplies.
     """)
-    st.markdown("#### 1.3. Các giả định")
+    st.markdown("#### 1.3. Assumptions")
     st.markdown("""
-    - Mỗi máy chỉ thuộc về duy nhất một chi nhánh tại một thời điểm.
-    - Người dùng chỉ được phép chỉnh sửa giao dịch điểm mới nhất của một máy.
-    - Dữ liệu quan trọng (máy, chi nhánh, giao dịch) không bị xóa vĩnh viễn khỏi hệ thống (áp dụng xóa mềm).
-    - Hệ thống có kết nối mạng ổn định để đồng bộ dữ liệu giữa client và server.
+    - Each machine belongs to only one branch at any given time.
+    - Users are only allowed to edit the most recent point transaction for a machine.
+    - Critical data (machines, branches, transactions) is not permanently deleted from the system (soft delete is applied).
+    - The system requires a stable network connection to synchronize data between the client and server.
     """)
-    st.markdown("#### 1.4. Yêu cầu chức năng (Functional Requirements)")
+    st.markdown("#### 1.4. Functional Requirements")
     st.markdown("""
-    - **FR1: Xác thực và phân quyền:**
-        - Hệ thống phải cho phép người dùng đăng nhập bằng username và password.
-        - Hệ thống phải phân quyền dựa trên vai trò (Admin, User) và chi nhánh. Admin có toàn quyền, User chỉ thao tác được trên chi nhánh của mình.
-    - **FR2: Quản lý chi nhánh (Admin):**
-        - Admin có thể thêm, xem, sửa, và xóa mềm chi nhánh.
-    - **FR3: Quản lý máy (Admin):**
-        - Admin có thể thêm, xem, sửa, xóa mềm máy và gán máy vào một chi nhánh.
-    - **FR4: Quản lý giao dịch điểm (User):**
-        - User có thể nhập điểm (points_in, points_out) cho một máy tại chi nhánh của mình theo ngày.
-        - Hệ thống phải tự động tính toán số dư (`current_balance`) và điểm trong ngày (`daily_point`).
-    - **FR5: Kiểm soát ghi đè:**
-        - Ở chế độ Production, hệ thống phải chặn người dùng nhập giao dịch cho một ngày đã có dữ liệu và hiển thị cảnh báo.
-        - Ở chế độ Demo, hệ thống cho phép ghi đè.
-    - **FR6: Chỉnh sửa giao dịch:**
-        - User chỉ được phép chỉnh sửa giao dịch gần nhất của một máy.
-    - **FR7: Xem lịch sử:**
-        - Cả Admin và User đều có thể xem lịch sử giao dịch của các máy (User chỉ xem được máy trong chi nhánh của mình).
+    - **FR1: Authentication and Authorization:**
+        - The system must allow users to log in with a username and password.
+        - The system must enforce permissions based on roles (Admin, User) and branch. Admins have full access; Users can only operate within their assigned branch.
+    - **FR2: Branch Management (Admin):**
+        - Admins can add, view, edit, and soft-delete branches.
+    - **FR3: Machine Management (Admin):**
+        - Admins can add, view, edit, soft-delete machines, and assign them to a branch.
+    - **FR4: Point Transaction Management (User):**
+        - Users can enter points (points_in, points_out) for a machine in their branch by date.
+        - The system must automatically calculate the `current_balance` and `daily_point`.
+    - **FR5: Overwrite Control:**
+        - In Production mode, the system must prevent users from entering a transaction on a date that already has data and must display a warning.
+        - In Demo mode, the system allows data overwriting.
+    - **FR6: Transaction Editing:**
+        - Users are only allowed to edit the most recent transaction for a machine.
+    - **FR7: History Viewing:**
+        - Both Admins and Users can view the transaction history for machines (Users can only see machines in their own branch).
     """)
-    st.markdown("#### 1.5. Yêu cầu phi chức năng (Non-Functional Requirements)")
+    st.markdown("#### 1.5. Non-Functional Requirements")
     st.markdown("""
-    - **NFR1: Bảo mật:**
-        - Mật khẩu người dùng phải được băm (hashed) trước khi lưu vào CSDL.
-        - Mọi request đến API phải được xác thực bằng JWT.
-    - **NFR2: Hiệu năng:**
-        - Thời gian phản hồi của API cho các thao tác CRUD cơ bản phải dưới 500ms.
-        - Giao diện người dùng phải tải xong trong vòng 3 giây.
-    - **NFR3: Khả năng phục hồi:**
-        - Tính năng xóa mềm phải cho phép khôi phục lại dữ liệu đã xóa một cách dễ dàng.
-    - **NFR4: Tính khả dụng:**
-        - Hệ thống phải hoạt động 99% thời gian (trừ thời gian bảo trì theo kế hoạch).
+    - **NFR1: Security:**
+        - User passwords must be hashed before being stored in the database.
+        - All API requests must be authenticated using JWT.
+    - **NFR2: Performance:**
+        - API response time for basic CRUD operations must be under 500ms.
+        - The user interface must load within 3 seconds.
+    - **NFR3: Recoverability:**
+        - The soft delete feature must allow for easy restoration of deleted data.
+    - **NFR4: Availability:**
+        - The system must be operational 99% of the time (excluding planned maintenance).
     """)
 
 with tab2:
     st.subheader("2. User Stories & Acceptance Criteria (AC)")
 
-    st.info("Role: Nhân viên chi nhánh (Staff)")
+    st.info("Role: Branch Staff")
     st.markdown("""
-    > **As a**- Nhân viên chi nhánh,
-    > **I want to**- nhập điểm cuối ngày cho các máy thuộc chi nhánh của tôi,
-    - **So that**- tôi có thể lưu lại kết quả kinh doanh và hệ thống tự động tính toán số dư.
+    > **As a**- Branch Staff member,
+    > **I want to**- enter end-of-day points for the machines in my branch,
+    - **So that**- I can record business results and have the system automatically calculate the balance.
     """)
     st.text("""
-    AC 1: Given môi trường hệ thống là "Production",
-    When tôi nhập điểm cho một máy vào một ngày đã có dữ liệu,
-    Then hệ thống phải hiển thị cảnh báo "Dữ liệu cho ngày này đã tồn tại" và không cho phép lưu.
+    AC 1: Given the system environment is "Production",
+    When I enter points for a machine on a date that already has data,
+    Then the system must display a warning "Data for this date already exists" and prevent saving.
 
-    AC 2: Given môi trường hệ thống là "Demo",
-    When tôi nhập điểm cho một máy vào một ngày đã có dữ liệu,
-    Then hệ thống phải cho phép ghi đè dữ liệu cũ và lưu lại giao dịch mới.
+    AC 2: Given the system environment is "Demo",
+    When I enter points for a machine on a date that already has data,
+    Then the system must allow overwriting the old data and save the new transaction.
 
-    AC 3: Given tôi đang chỉnh sửa một giao dịch,
-    When giao dịch đó không phải là giao dịch mới nhất của máy,
-    Then hệ thống phải vô hiệu hóa nút "Lưu" và hiển thị thông báo "Chỉ được phép sửa giao dịch mới nhất".
+    AC 3: Given I am editing a transaction,
+    When that transaction is not the latest one for the machine,
+    Then the system must disable the "Save" button and display the message "Only the latest transaction can be edited".
     """)
 
-    st.info("Role: Quản trị viên (Admin)")
+    st.info("Role: Administrator")
     st.markdown("""
-    > **As an**- Admin,
-    > **I want to**- xem lịch sử giao dịch điểm của tất cả các máy trên toàn hệ thống,
-    - **So that**- tôi có thể kiểm tra, đối chiếu và giám sát hoạt động của tất cả các chi nhánh.
+    > **As an**- Administrator,
+    > **I want to**- view the point transaction history for all machines across the entire system,
+    - **So that**- I can check, reconcile, and monitor the operations of all branches.
     """)
     st.text("""
-    AC 1: Given tôi đã đăng nhập với vai trò Admin,
-    When tôi truy cập trang Lịch sử,
-    Then hệ thống phải hiển thị một bảng dữ liệu chứa tất cả giao dịch từ mọi chi nhánh.
+    AC 1: Given I am logged in as an Admin,
+    When I access the History page,
+    Then the system must display a data table containing all transactions from every branch.
 
-    AC 2: Given tôi đang xem trang Lịch sử,
-    When tôi sử dụng bộ lọc theo chi nhánh hoặc theo máy,
-    Then bảng dữ liệu phải được cập nhật tương ứng với lựa chọn của tôi.
+    AC 2: Given I am viewing the History page,
+    When I use the filter by branch or by machine,
+    Then the data table must update according to my selection.
     """)
 
-    st.info("Role: Kế toán (Accountant)")
+    st.info("Role: Accountant")
     st.markdown("""
     > **As an**- Accountant,
-    > **I want to**- xem báo cáo số dư cuối ngày của tất cả các máy,
-    - **So that**- tôi có thể thực hiện công việc đối soát tài chính.
+    > **I want to**- view the end-of-day balance report for all machines,
+    - **So that**- I can perform financial reconciliation tasks.
     """)
     st.text("""
-    AC 1: Given tôi đã đăng nhập với vai trò Kế toán,
-    When tôi truy cập trang Báo cáo,
-    Then hệ thống phải hiển thị số dư (`current_balance`) gần nhất của tất cả các máy đang hoạt động.
+    AC 1: Given I am logged in as an Accountant,
+    When I access the Reports page,
+    Then the system must display the latest `current_balance` for all active machines.
     """)
 
 with tab3:
     st.subheader("3. Use Case Diagram")
-    st.markdown("Sơ đồ mô tả các hành động chính mà các tác nhân (actors) có thể thực hiện trên hệ thống.")
+    st.markdown("This diagram describes the main actions that actors can perform on the system.")
     st.code("""
     mermaid
     graph TD
         subgraph "Game Manager System v2"
-            UC1(Đăng nhập)
-            UC2(Quản lý Chi nhánh)
-            UC3(Quản lý Máy)
-            UC4(Nhập Giao dịch Điểm)
-            UC5(Sửa Giao dịch Điểm)
-            UC6(Xem Lịch sử)
+            UC1(Login)
+            UC2(Manage Branches)
+            UC3(Manage Machines)
+            UC4(Enter Point Transaction)
+            UC5(Edit Point Transaction)
+            UC6(View History)
         end
 
         Admin --o UC1
@@ -181,7 +181,7 @@ with tab3:
         Admin --o UC3
         Admin --o UC6
 
-        Staff[Nhân viên Chi nhánh] --o UC1
+        Staff[Branch Staff] --o UC1
         Staff --o UC4
         Staff --o UC5
         Staff --o UC6
@@ -197,29 +197,29 @@ with tab3:
     """, language='mermaid')
 
 with tab4:
-    st.subheader("4. BPMN/Flowchart: Quy trình Nhập/Sửa Giao dịch Điểm")
-    st.markdown("Lưu đồ mô tả quy trình nghiệp vụ từ lúc nhân viên bắt đầu nhập liệu cho đến khi hệ thống lưu lại giao dịch.")
+    st.subheader("4. BPMN/Flowchart: Point Transaction Entry/Edit Process")
+    st.markdown("This flowchart describes the business process from when a staff member starts data entry until the system saves the transaction.")
     st.code("""
     mermaid
     graph TD
-        A[Bắt đầu] --> B{Nhân viên Đăng nhập};
-        B --> C[Chọn máy cần nhập điểm];
-        C --> D[Nhập điểm IN/OUT và chọn ngày];
-        D --> E{Kiểm tra ngày đã có dữ liệu?};
-        E -- Có --> F{Chế độ DEMO?};
-        F -- Không (Production) --> G[Hiển thị cảnh báo ghi đè];
-        G --> Z[Kết thúc];
-        F -- Có --> H[Cho phép ghi đè];
-        E -- Không --> H;
-        H --> I[Tính Daily Point & Cập nhật Balance];
-        I --> J[Lưu Transaction & History];
+        A[Start] --> B{Staff Logs In};
+        B --> C[Select machine for point entry];
+        C --> D[Enter IN/OUT points and select date];
+        D --> E{Check if date already has data?};
+        E -- Yes --> F{DEMO mode?};
+        F -- No (Production) --> G[Display overwrite warning];
+        G --> Z[End];
+        F -- Yes --> H[Allow overwrite];
+        E -- No --> H;
+        H --> I[Calculate Daily Point & Update Balance];
+        I --> J[Save Transaction & History];
         J --> Z;
 
-        subgraph Sửa Transaction
-            K[Chọn sửa transaction] --> L{Transaction mới nhất?};
-            L -- Có --> M[Cho phép sửa];
+        subgraph Edit Transaction
+            K[Select to edit transaction] --> L{Is it the latest transaction?};
+            L -- Yes --> M[Allow editing];
             M --> I;
-            L -- Không --> N[Hiển thị cảnh báo & Chặn sửa];
+            L -- No --> N[Display warning & Block edit];
             N --> Z;
         end
         
@@ -228,7 +228,7 @@ with tab4:
 
 with tab5:
     st.subheader("5. Entity Relationship Diagram (ERD)")
-    st.markdown("Sơ đồ mô tả cấu trúc và mối quan hệ giữa các bảng trong cơ sở dữ liệu.")
+    st.markdown("This diagram describes the structure and relationships between the tables in the database.")
     st.code("""
     mermaid
     erDiagram
@@ -287,76 +287,76 @@ with tab5:
     """, language='mermaid')
 
 with tab6:
-    st.subheader("6. Wireframe (Mô tả giao diện người dùng)")
-    st.markdown("#### Màn hình Danh sách máy")
+    st.subheader("6. Wireframe (User Interface Description)")
+    st.markdown("#### Machine List Screen")
     st.markdown("""
-    - **Component:** Bảng (Table).
-    - **Các cột:** `Mã máy`, `Tên máy`, `Chi nhánh`, `Số dư hiện tại`, `Tỷ lệ`, `Hành động`.
-    - **Tính năng:**
-        - Nút "Thêm máy mới".
-        - Phân trang nếu danh sách dài.
-        - Cột "Hành động" có các nút "Sửa" và "Xóa" (mềm).
-        - Thanh tìm kiếm để lọc máy theo tên hoặc mã.
+    - **Component:** Table.
+    - **Columns:** `Machine Code`, `Machine Name`, `Branch`, `Current Balance`, `Rate`, `Actions`.
+    - **Features:**
+        - "Add New Machine" button.
+        - Pagination for long lists.
+        - "Actions" column with "Edit" and "Delete" (soft) buttons.
+        - Search bar to filter machines by name or code.
     """)
 
-    st.markdown("#### Form Nhập/Sửa điểm")
+    st.markdown("#### Point Entry/Edit Form")
     st.markdown("""
-    - **Component:** Formulaire.
-    - **Các trường:**
-        - `Dropdown` để chọn máy (chỉ hiển thị máy trong chi nhánh của user).
-        - `Input number` cho `Điểm IN`.
-        - `Input number` cho `Điểm OUT`.
-        - `Date picker` để chọn ngày giao dịch.
-        - `Toggle switch` để bật/tắt chế độ `Demo`.
+    - **Component:** Form.
+    - **Fields:**
+        - `Dropdown` to select a machine (shows only machines in the user's branch).
+        - `Input number` for `Points IN`.
+        - `Input number` for `Points OUT`.
+        - `Date picker` to select the transaction date.
+        - `Toggle switch` to enable/disable `Demo` mode.
     - **Logic:**
-        - Khi chọn một ngày đã có giao dịch, một thông báo cảnh báo sẽ hiện ra bên dưới `Date picker` nếu chế độ `Demo` đang tắt.
-        - Nút "Lưu" sẽ bị vô hiệu hóa nếu có lỗi validation.
+        - When a date with an existing transaction is selected, a warning message appears below the `Date picker` if `Demo` mode is off.
+        - The "Save" button is disabled if there are validation errors.
     """)
 
-    st.markdown("#### Màn hình Lịch sử Giao dịch")
+    st.markdown("#### Transaction History Screen")
     st.markdown("""
-    - **Component:** Bảng (Table).
-    - **Các cột:** `Ngày`, `Mã máy`, `Điểm IN`, `Điểm OUT`, `Điểm trong ngày`, `Số dư cuối`, `Người nhập`, `Chi nhánh`.
-    - **Tính năng:**
-        - Bộ lọc theo khoảng thời gian.
-        - Bộ lọc theo chi nhánh (chỉ dành cho Admin).
-        - Bộ lọc theo máy.
-        - Nút "Export to CSV".
+    - **Component:** Table.
+    - **Columns:** `Date`, `Machine Code`, `Points IN`, `Points OUT`, `Daily Points`, `Final Balance`, `User`, `Branch`.
+    - **Features:**
+        - Filter by date range.
+        - Filter by branch (for Admins only).
+        - Filter by machine.
+        - "Export to CSV" button.
     """)
 
-    st.subheader("7. KPIs và Báo cáo")
-    st.markdown("Các chỉ số dùng để đo lường hiệu quả của hệ thống sau khi triển khai:")
+    st.subheader("7. KPIs and Reports")
+    st.markdown("Metrics to measure the system's effectiveness post-deployment:")
     
     kpi_data = {
         'KPI': [
-            "Số lượng giao dịch bị chặn ghi đè",
-            "Tỷ lệ sai lệch số dư",
-            "Thời gian nhập liệu trung bình",
-            "Số lượng máy hoạt động theo chi nhánh",
-            "Tỷ lệ chỉnh sửa giao dịch"
+            "Number of Overwrite-Blocked Transactions",
+            "Balance Discrepancy Rate",
+            "Average Data Entry Time",
+            "Active Machines per Branch",
+            "Transaction Edit Rate"
         ],
-        'Mô tả': [
-            "Đo lường hiệu quả của tính năng chống ghi đè ở môi trường Production.",
-            "So sánh số dư trên hệ thống và số dư thực tế, kỳ vọng giảm theo thời gian.",
-            "Thời gian trung bình một nhân viên cần để hoàn thành việc nhập điểm cho một máy.",
-            "Thống kê số máy có giao dịch phát sinh trong tháng, theo từng chi nhánh.",
-            "Số lần một giao dịch bị chỉnh sửa. Tỷ lệ cao có thể chỉ ra quy trình nhập liệu có vấn đề."
+        'Description': [
+            "Measures the effectiveness of the anti-overwrite feature in the Production environment.",
+            "Compares system balance with actual balance, expected to decrease over time.",
+            "The average time a staff member needs to complete point entry for one machine.",
+            "Tracks the number of machines with transactions in a month, broken down by branch.",
+            "The number of times a transaction is edited. A high rate may indicate issues in the data entry process."
         ],
-        'Mục tiêu': [
-            "Tăng lên (chứng tỏ tính năng hiệu quả)",
-            "Giảm > 90%",
-            "Giảm 50% (so với làm thủ công)",
+        'Target': [
+            "Increase (proves feature effectiveness)",
+            "Decrease by >90%",
+            "Decrease by 50% (vs. manual process)",
             "N/A",
-            "Giảm thiểu"
+            "Minimize"
         ]
     }
     kpi_df = pd.DataFrame(kpi_data)
     st.table(kpi_df)
 
 st.markdown("---")
-st.header("D. Bài học rút ra")
+st.header("D. Skills Acquired")
 st.success("""
-- **Tầm quan trọng của việc xác định đúng "pain point":** Việc tập trung giải quyết vấn đề cốt lõi (ghi đè dữ liệu) đã mang lại giá trị lớn nhất cho người dùng cuối.
-- **Phân tách môi trường Demo và Production là cần thiết:** Giải pháp này giúp dung hòa giữa nhu cầu đào tạo, thử nghiệm của người dùng mới và yêu cầu về tính toàn vẹn dữ liệu của hệ thống.
-- **Tài liệu hóa rõ ràng giúp giảm thiểu hiểu lầm:** Bộ tài liệu chi tiết (BRD, Use Case, BPMN...) đã giúp đội phát triển và các bên liên quan có chung một cách hiểu, giảm thời gian trao đổi và sửa lỗi không cần thiết.
+- **Business Problem Analysis:** Successfully identified and addressed the core user pain point (data overwriting), which delivered the highest value to end-users and guaranteed data integrity.
+- **Solution Design & Requirements Management:** Designed a practical solution by separating Demo and Production environments. This approach balanced user training needs with the critical requirement for data integrity.
+- **Technical Documentation & Communication:** Authored comprehensive documentation (BRD, Use Cases, BPMN, ERD) that fostered a shared understanding between stakeholders and the development team, significantly reducing ambiguity and rework.
 """)
