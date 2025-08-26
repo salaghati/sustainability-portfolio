@@ -4,6 +4,19 @@ from modules.transport.utils import load_and_clean_transport_data
 from modules.transport.charts import kpi_card, trend_chart, top_n_chart, distribution_chart, pie_chart
 
 st.title("📊 Transport Insights - Enhanced Overview")
+
+with st.expander("📖 Project Background & Objectives", expanded=True):
+    st.markdown("""
+        **Bối cảnh:** Dữ liệu di chuyển trong đô thị là một nguồn thông tin quý giá để hiểu về hành vi đi lại, nhu cầu và các điểm nóng giao thông. Dự án này tập trung vào dữ liệu của các chuyến taxi Xanh tại New York.
+        
+        **Mục tiêu:**
+        - **Phân tích Đặc điểm Chuyến đi:** Hiểu các đặc điểm vận hành chính như quãng đường, thời gian, và chi phí trung bình của một chuyến đi.
+        - **Xác định Xu hướng:** Tìm ra các mẫu hình về thời gian (giờ cao điểm, ngày trong tuần) và các tuyến đường phổ biến.
+        - **Đưa ra Quyết định:** Cung cấp các insight dựa trên dữ liệu để hỗ trợ việc ra quyết định trong vận hành, như phân bổ tài xế hoặc tối ưu hóa giá cả.
+        
+        **Dataset:** Phân tích dựa trên bộ dữ liệu `NYC Green Taxi trips` cho tháng 1 năm 2020.
+    """)
+
 st.markdown("An in-depth look at NYC Green Taxi trips, focusing on key metrics and operational patterns.")
 
 df = load_and_clean_transport_data()

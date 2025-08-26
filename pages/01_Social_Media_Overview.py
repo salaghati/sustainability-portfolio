@@ -65,9 +65,19 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Page header with better hierarchy
-st.title("📊 Dashboard Overview")
-st.markdown("### Key Performance Indicators & Engagement Analysis")
+st.title("📈 Social Media Analytics - Overview")
+
+with st.expander("📖 Project Background & Objectives", expanded=True):
+    st.markdown("""
+        **Bối cảnh:** Trong bối cảnh các vấn đề về bền vững ngày càng được quan tâm, các thương hiệu và tổ chức cần hiểu rõ hơn về cách công chúng tương tác với các nội dung liên quan trên mạng xã hội.
+        
+        **Mục tiêu:**
+        - **Phân tích hiệu suất:** Đánh giá mức độ tương tác (engagement) trên các nền tảng khác nhau (Facebook, Instagram, etc.).
+        - **Tìm kiếm Insight:** Xác định các chủ đề (topics), hashtags, và loại nội dung nào tạo ra sự tương tác cao nhất.
+        - **Đề xuất chiến lược:** Đưa ra các gợi ý về chiến lược nội dung và thời điểm đăng bài tối ưu dựa trên dữ liệu.
+        
+        **Dataset:** Phân tích dựa trên bộ dữ liệu `sustainability_social_media_posts.csv` với hơn 3,000 bài đăng.
+    """)
 
 # Quick usage guide
 st.info("💡 **Quick Start:** Use the sidebar filters to customize your analysis. Start with platform selection to compare performance across social media channels.")
