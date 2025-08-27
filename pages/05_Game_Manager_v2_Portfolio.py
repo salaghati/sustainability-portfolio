@@ -164,37 +164,7 @@ with tab2:
 with tab3:
     st.subheader("3. Use Case Diagram")
     st.markdown("This diagram describes the main actions that actors can perform on the system.")
-    st.code("""
-    mermaid
-    graph TD
-        subgraph "Game Manager System v2"
-            UC1(Login)
-            UC2(Manage Branches)
-            UC3(Manage Machines)
-            UC4(Enter Point Transaction)
-            UC5(Edit Point Transaction)
-            UC6(View History)
-        end
-
-        Admin --o UC1
-        Admin --o UC2
-        Admin --o UC3
-        Admin --o UC6
-
-        Staff[Branch Staff] --o UC1
-        Staff --o UC4
-        Staff --o UC5
-        Staff --o UC6
-
-        System --|> UC1 : include
-        System --|> UC4 : include
-        System --|> UC5 : include
-
-        UC2 --|> Admin
-        UC3 --|> Admin
-        UC4 --|> Staff
-        UC5 --|> Staff
-    """, language='mermaid')
+    st.image("assets/use_case_diagram.png", caption="Use Case Diagram for Game Manager System v2")
 
 with tab4:
     st.subheader("4. BPMN/Flowchart: Point Transaction Entry/Edit Process")
