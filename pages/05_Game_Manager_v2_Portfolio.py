@@ -169,32 +169,7 @@ with tab3:
 with tab4:
     st.subheader("4. BPMN/Flowchart: Point Transaction Entry/Edit Process")
     st.markdown("This flowchart describes the business process from when a staff member starts data entry until the system saves the transaction.")
-    st.code("""
-    mermaid
-    graph TD
-        A[Start] --> B{Staff Logs In};
-        B --> C[Select machine for point entry];
-        C --> D[Enter IN/OUT points and select date];
-        D --> E{Check if date already has data?};
-        E -- Yes --> F{DEMO mode?};
-        F -- No (Production) --> G[Display overwrite warning];
-        G --> Z[End];
-        F -- Yes --> H[Allow overwrite];
-        E -- No --> H;
-        H --> I[Calculate Daily Point & Update Balance];
-        I --> J[Save Transaction & History];
-        J --> Z;
-
-        subgraph Edit Transaction
-            K[Select to edit transaction] --> L{Is it the latest transaction?};
-            L -- Yes --> M[Allow editing];
-            M --> I;
-            L -- No --> N[Display warning & Block edit];
-            N --> Z;
-        end
-        
-        C --> K
-    """, language='mermaid')
+    st.image("assets/flowchart.png", caption="BPMN Flowchart for the Transaction Process")
 
 with tab5:
     st.subheader("5. Entity Relationship Diagram (ERD)")
@@ -202,7 +177,7 @@ with tab5:
     st.code("""
     mermaid
     erDiagram
-      Branchs {
+    Branchs {
         int id PK
         string name
         string address
@@ -210,36 +185,35 @@ with tab5:
         string manager_name
         datetime created_at
         boolean is_deleted
-      }
-      Machines {
+    }
+    Machines {
         int id PK
         string machine_code
         string name
         int branch_id FK
-        int current_points
         float rate
         string type
         int standard_quantity
-        int product_id
+        int product_id FK
         int current_quantity
         datetime created_at
         boolean is_deleted
-      }
-      Users {
+    }
+    Users {
         int id PK
         string username
-        string password_hash
-        string role "Enum: 'admin', 'user'"
+        string password
+        string full_name
         int branch_id FK
-        boolean is_active
+        int role_id
+        int debt_amount
         datetime created_at
-      }
-      PointTransactions {
+    }
+    PointTransactions {
         int id PK
         int machine_id FK
         int user_id FK
         int branch_id FK
-        string transaction_type
         int points_in
         int points_out
         int previous_balance
@@ -249,11 +223,23 @@ with tab5:
         int daily_point
         int final_amount
         float rate
-      }
-      Branchs ||--o{ Machines : "has"
-      Branchs ||--o{ Users : "has"
-      Machines ||--o{ PointTransactions : "has"
-      Users ||--o{ PointTransactions : "creates"
+    }
+    TransactionEditLog {
+        int id PK
+        int transaction_id FK "FK to PointTransactions"
+        int editor_id FK "FK to Users"
+        string editor_name
+        string field
+        string old_value
+        string new_value
+        datetime edited_at
+    }
+    Branchs ||--o{ Machines : "has"
+    Branchs ||--o{ Users : "has"
+    Machines ||--o{ PointTransactions : "has"
+    Users ||--o{ PointTransactions : "creates"
+    PointTransactions ||--o{ TransactionEditLog : "logs"
+    Users ||--o{ TransactionEditLog : "edits"
     """, language='mermaid')
 
 with tab6:
