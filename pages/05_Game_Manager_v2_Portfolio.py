@@ -167,9 +167,24 @@ with tab3:
     st.image("assets/use_case_diagram.png", caption="Use Case Diagram for Game Manager System v2")
 
 with tab4:
-    st.subheader("4. BPMN/Flowchart: Point Transaction Entry/Edit Process")
-    st.markdown("This flowchart describes the business process from when a staff member starts data entry until the system saves the transaction.")
-    st.image("assets/flowchart.png", caption="BPMN Flowchart for the Transaction Process")
+    st.subheader("4. BPMN/Flowcharts")
+    st.markdown("This section illustrates the key business processes within the Game Manager system.")
+
+    # Create navigation tabs for different flowcharts
+    bpmn_tab1, bpmn_tab2 = st.tabs([
+        "Point Transaction Process", 
+        "Machine Management Process"
+    ])
+
+    with bpmn_tab1:
+        st.markdown("##### Process: Entering and Editing Point Transactions")
+        st.markdown("This flowchart describes the core daily operation: how a staff member inputs or edits point data, and how the system validates and processes it, including handling Demo vs. Production modes.")
+        st.image("assets/flowchart.png", caption="BPMN Flowchart for the Transaction Process")
+
+    with bpmn_tab2:
+        st.markdown("##### Process: Machine Creation, Update, and Deletion")
+        st.markdown("This flowchart outlines the administrative task of managing machines. It shows the workflow for an Admin to create, modify, or soft-delete a machine, including system validation steps.")
+        st.image("assets/process_Machinemanagement.png", caption="BPMN Flowchart for the Machine Management Process")
 
 with tab5:
     st.subheader("5. Entity Relationship Diagram (ERD)")
