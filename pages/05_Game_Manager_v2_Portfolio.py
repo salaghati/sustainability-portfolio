@@ -173,74 +173,8 @@ with tab4:
 
 with tab5:
     st.subheader("5. Entity Relationship Diagram (ERD)")
-    st.markdown("This diagram describes the structure and relationships between the tables in the database.")
-    st.code("""
-    mermaid
-    erDiagram
-    Branchs {
-        int id PK
-        string name
-        string address
-        string phone
-        string manager_name
-        datetime created_at
-        boolean is_deleted
-    }
-    Machines {
-        int id PK
-        string machine_code
-        string name
-        int branch_id FK
-        float rate
-        string type
-        int standard_quantity
-        int product_id FK
-        int current_quantity
-        datetime created_at
-        boolean is_deleted
-    }
-    Users {
-        int id PK
-        string username
-        string password
-        string full_name
-        int branch_id FK
-        int role_id
-        int debt_amount
-        datetime created_at
-    }
-    PointTransactions {
-        int id PK
-        int machine_id FK
-        int user_id FK
-        int branch_id FK
-        int points_in
-        int points_out
-        int previous_balance
-        int current_balance
-        date transaction_date
-        datetime created_at
-        int daily_point
-        int final_amount
-        float rate
-    }
-    TransactionEditLog {
-        int id PK
-        int transaction_id FK "FK to PointTransactions"
-        int editor_id FK "FK to Users"
-        string editor_name
-        string field
-        string old_value
-        string new_value
-        datetime edited_at
-    }
-    Branchs ||--o{ Machines : "has"
-    Branchs ||--o{ Users : "has"
-    Machines ||--o{ PointTransactions : "has"
-    Users ||--o{ PointTransactions : "creates"
-    PointTransactions ||--o{ TransactionEditLog : "logs"
-    Users ||--o{ TransactionEditLog : "edits"
-    """, language='mermaid')
+    st.markdown("This diagram describes the complete data structure, including tables for products and edit logs, and shows the relationships between them.")
+    st.image("assets/ERD.png", caption="Complete Entity Relationship Diagram for Game Manager v2")
 
 with tab6:
     st.subheader("6. Wireframe (User Interface Description)")
