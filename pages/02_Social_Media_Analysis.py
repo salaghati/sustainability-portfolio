@@ -201,7 +201,7 @@ filtered_df = apply_data_filters(
 
 # Handle empty data case
 if filtered_df.empty:
-    st.warning("Không có dữ liệu phù hợp với bộ lọc đã chọn. Vui lòng thử lại.")
+    st.warning("No data matches the selected filters. Please try again.")
     st.stop()
 
 # Apply analysis scope

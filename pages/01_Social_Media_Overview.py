@@ -69,14 +69,14 @@ st.title("📈 Social Media Analytics - Overview")
 
 with st.expander("📖 Project Background & Objectives", expanded=True):
     st.markdown("""
-        **Bối cảnh:** Trong bối cảnh các vấn đề về bền vững ngày càng được quan tâm, các thương hiệu và tổ chức cần hiểu rõ hơn về cách công chúng tương tác với các nội dung liên quan trên mạng xã hội.
+        **Context:** As sustainability issues gain prominence, brands and organizations need to better understand how the public engages with related content on social media.
         
-        **Mục tiêu:**
-        - **Phân tích hiệu suất:** Đánh giá mức độ tương tác (engagement) trên các nền tảng khác nhau (Facebook, Instagram, etc.).
-        - **Tìm kiếm Insight:** Xác định các chủ đề (topics), hashtags, và loại nội dung nào tạo ra sự tương tác cao nhất.
-        - **Đề xuất chiến lược:** Đưa ra các gợi ý về chiến lược nội dung và thời điểm đăng bài tối ưu dựa trên dữ liệu.
+        **Objectives:**
+        - **Performance Analysis:** Evaluate engagement levels across different platforms (Facebook, Instagram, etc.).
+        - **Insight Discovery:** Identify which topics, hashtags, and content types generate the highest interaction.
+        - **Strategy Recommendations:** Provide data-driven suggestions for content strategy and optimal posting times.
         
-        **Dataset:** Phân tích dựa trên bộ dữ liệu `sustainability_social_media_posts.csv` với hơn 3,000 bài đăng.
+        **Dataset:** The analysis is based on the `sustainability_social_media_posts.csv` dataset, containing over 3,000 posts.
     """)
 
 # Quick usage guide
@@ -181,7 +181,7 @@ filtered_df = apply_data_filters(
 
 # Handle empty data case
 if filtered_df.empty:
-    st.warning("Không có dữ liệu phù hợp với bộ lọc đã chọn. Vui lòng thử lại.")
+    st.warning("No data matches the selected filters. Please try again.")
     st.stop()
 
 # Results summary with better styling

@@ -20,8 +20,8 @@ st.markdown("---")
 # --- About Me Section ---
 st.header("About Me")
 st.markdown("""
-    Chào mừng bạn đến với portfolio của tôi! Tôi là một sinh viên vừa tốt nghiệp ngành Hệ thống Thông tin tại trường Đại học Công nghệ Thông tin - ĐHQG TP.HCM. 
-    Với tư duy ham học hỏi và thái độ cầu tiến, tôi đặc biệt quan tâm đến việc phân tích dữ liệu để giải quyết các vấn đề thực tế và hỗ trợ ra quyết định thông minh.
+    Welcome to my portfolio! I am a recent Information Systems graduate from the University of Information Technology - VNU-HCM.
+    With a curious mindset and a proactive attitude, I am passionate about leveraging data analysis to solve real-world problems and support intelligent decision-making.
 """)
 
 # --- Work Experience & Education ---
@@ -41,7 +41,7 @@ with col2:
     st.markdown("""
         **RioTech .,JSC**
         - **Data Analyst Intern** (Sep 2023 - Dec 2023)
-        - *Phát triển dashboard, phân tích dữ liệu bán hàng để tìm ra xu hướng và hỗ trợ làm sạch, chuyển đổi dữ liệu.*
+        - *Developed dashboards and analyzed sales data to identify trends. Supported data cleaning and transformation processes.*
     """)
 
 st.markdown("---")
@@ -54,14 +54,14 @@ proj_col1, proj_col2 = st.columns(2)
 with proj_col1:
     st.subheader("Retail Analysis - Contoso Dataset")
     st.markdown("""
-    *Phân tích hơn 100,000 giao dịch bán lẻ bằng SQL nâng cao (CTEs, Window Functions) để phân khúc khách hàng và xác định các nhóm giá trị cao. Xây dựng báo cáo doanh thu cho thấy sự tăng trưởng và các mẫu hình theo mùa.*
+    *Analyzed over 100,000 retail transactions using advanced SQL (CTEs, Window Functions) to segment customers and identify high-value groups. Built revenue reports showing growth and seasonal patterns.*
     - **Tech Stack:** `PostgreSQL`, `DBeaver`, `Advanced SQL`
     """)
 
 with proj_col2:
     st.subheader("Thesis: ML for Love Factors")
     st.markdown("""
-    *Thiết kế khảo sát, thu thập và làm sạch dữ liệu từ 196 người trẻ. Sử dụng các mô hình Machine Learning (Random Forest, Logistic Regression, SVM) để xác định các yếu tố quan trọng trong một mối quan hệ lâu dài.*
+    *Designed a survey, collected, and cleaned data from 196 young individuals. Used Machine Learning models (Random Forest, Logistic Regression, SVM) to identify key factors in long-term relationships.*
     - **Tech Stack:** `Python`, `Scikit-learn`, `Pandas`
     - [Link to Report](https://github.com/salaghati/sustainability-portfolio/blob/main/Thesis.pdf)
     """)

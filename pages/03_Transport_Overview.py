@@ -7,14 +7,14 @@ st.title("📊 Transport Insights - Enhanced Overview")
 
 with st.expander("📖 Project Background & Objectives", expanded=True):
     st.markdown("""
-        **Bối cảnh:** Dữ liệu di chuyển trong đô thị là một nguồn thông tin quý giá để hiểu về hành vi đi lại, nhu cầu và các điểm nóng giao thông. Dự án này tập trung vào dữ liệu của các chuyến taxi Xanh tại New York.
+        **Context:** Urban mobility data is a valuable source for understanding travel behavior, demand, and traffic hotspots. This project focuses on data from NYC Green Taxis.
         
-        **Mục tiêu:**
-        - **Phân tích Đặc điểm Chuyến đi:** Hiểu các đặc điểm vận hành chính như quãng đường, thời gian, và chi phí trung bình của một chuyến đi.
-        - **Xác định Xu hướng:** Tìm ra các mẫu hình về thời gian (giờ cao điểm, ngày trong tuần) và các tuyến đường phổ biến.
-        - **Đưa ra Quyết định:** Cung cấp các insight dựa trên dữ liệu để hỗ trợ việc ra quyết định trong vận hành, như phân bổ tài xế hoặc tối ưu hóa giá cả.
+        **Objectives:**
+        - **Trip Characteristic Analysis:** Understand key operational metrics like average trip distance, duration, and cost.
+        - **Trend Identification:** Uncover patterns related to timing (peak hours, days of the week) and popular routes.
+        - **Decision Support:** Provide data-driven insights to support operational decisions, such as driver allocation or price optimization.
         
-        **Dataset:** Phân tích dựa trên bộ dữ liệu `NYC Green Taxi trips` cho tháng 1 năm 2020.
+        **Dataset:** The analysis is based on the `NYC Green Taxi trips` dataset for January 2020.
     """)
 
 st.markdown("An in-depth look at NYC Green Taxi trips, focusing on key metrics and operational patterns.")
