@@ -208,11 +208,11 @@ with tab6:
         - Thanh tìm kiếm để lọc máy theo tên hoặc mã
     """)
     
-    # Hiển thị hình ảnh nếu file tồn tại
+    # Hiển thị hình ảnh với tên file mới
     try:
-        st.image("assets/machine_list_screen.png", caption="Machine List Screen - Giao diện thực tế", use_container_width=True)
+        st.image("assets/machine_list_interface.png", caption="Machine List Screen - Giao diện thực tế", use_container_width=True)
     except:
-        st.info("📸 Hãy chụp screenshot màn hình Machine List và lưu với tên 'machine_list_screen.png' vào thư mục assets/")
+        st.info("📸 Hãy chụp screenshot màn hình Machine List và lưu với tên 'machine_list_interface.png' vào thư mục assets/")
 
     st.markdown("---")
 
