@@ -233,9 +233,9 @@ with tab6:
     """)
     
     try:
-        st.image("assets/point_entry_form.png", caption="Point Entry Form - Giao diện thực tế", use_container_width=True)
+        st.image("assets/point_entry_form_interface.png", caption="Point Entry Form - Giao diện thực tế", use_container_width=True)
     except:
-        st.info("📸 Hãy chụp screenshot màn hình Point Entry/Edit Form và lưu với tên 'point_entry_form.png' vào thư mục assets/")
+        st.info("📸 Hãy chụp screenshot màn hình Point Entry/Edit Form và lưu với tên 'point_entry_form_interface.png' vào thư mục assets/")
 
     st.markdown("---")
 
@@ -253,9 +253,9 @@ with tab6:
     """)
     
     try:
-        st.image("assets/transaction_history_screen.png", caption="Transaction History Screen - Giao diện thực tế", use_container_width=True)
+        st.image("assets/transaction_history_interface.png", caption="Transaction History Screen - Giao diện thực tế", use_container_width=True)
     except:
-        st.info("📸 Hãy chụp screenshot màn hình Transaction History và lưu với tên 'transaction_history_screen.png' vào thư mục assets/")
+        st.info("📸 Hãy chụp screenshot màn hình Transaction History và lưu với tên 'transaction_history_interface.png' vào thư mục assets/")
 
     st.markdown("---")
 
@@ -267,9 +267,9 @@ with tab6:
     with col1:
         st.markdown("**Login Screen**")
         try:
-            st.image("assets/login_screen.png", caption="Login Screen", use_container_width=True)
+            st.image("assets/login_screen_interface.png", caption="Login Screen - Giao diện thực tế", use_container_width=True)
         except:
-            st.info("📸 Screenshot màn hình đăng nhập (login_screen.png)")
+            st.info("📸 Screenshot màn hình đăng nhập (login_screen_interface.png)")
     
     with col2:
         st.markdown("**Dashboard/Home Screen**")
