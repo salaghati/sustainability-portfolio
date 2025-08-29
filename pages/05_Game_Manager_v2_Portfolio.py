@@ -259,24 +259,76 @@ with tab6:
 
     st.markdown("---")
 
-    # Optional: Login và Dashboard screens
-    st.markdown("#### 6.4. Các màn hình bổ sung (Tùy chọn)")
+    # Login Screen
+    st.markdown("#### 6.4. Login Screen (Màn hình Đăng nhập)")
+    st.markdown("""
+    **Mô tả chức năng:**
+    - **Component:** Form đăng nhập với authentication
+    - **Fields:** Username, Password, Branch selection
+    - **Features:**
+        - JWT authentication
+        - Role-based access (Admin/User)
+        - Branch-based authorization
+        - Remember login session
+    """)
+    
+    try:
+        st.image("assets/login_screen_interface.png", caption="Login Screen - Giao diện thực tế", use_container_width=True)
+    except:
+        st.info("📸 Screenshot màn hình đăng nhập (login_screen_interface.png)")
+
+    st.markdown("---")
+
+    # Additional Management Screens
+    st.markdown("#### 6.5. Các màn hình quản lý bổ sung")
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("**Login Screen**")
+        st.markdown("##### Quản lý Sản phẩm")
+        st.markdown("""
+        - CRUD operations cho sản phẩm
+        - Quản lý thông tin giải thưởng
+        - Thiết lập số lượng và giá trị
+        """)
         try:
-            st.image("assets/login_screen_interface.png", caption="Login Screen - Giao diện thực tế", use_container_width=True)
+            st.image("assets/product_management_interface.png", caption="Product Management", use_container_width=True)
         except:
-            st.info("📸 Screenshot màn hình đăng nhập (login_screen_interface.png)")
+            st.info("🛍️ Screenshot quản lý sản phẩm")
+        
+        st.markdown("##### Kiểm kê Hàng ngày")  
+        st.markdown("""
+        - Kiểm kê số lượng sản phẩm
+        - Ghi nhận thực tế vs hệ thống
+        - Báo cáo chênh lệch
+        """)
+        try:
+            st.image("assets/daily_audit_interface.png", caption="Daily Audit", use_container_width=True)
+        except:
+            st.info("📊 Screenshot kiểm kê hàng ngày")
     
     with col2:
-        st.markdown("**Dashboard/Home Screen**")
+        st.markdown("##### Quản lý Kho")
+        st.markdown("""
+        - Quản lý stock sản phẩm
+        - Nhập/xuất kho
+        - Cảnh báo hết hàng
+        """)
         try:
-            st.image("assets/dashboard_screen.png", caption="Dashboard Screen", use_container_width=True) 
+            st.image("assets/warehouse_management_interface.png", caption="Warehouse Management", use_container_width=True)
         except:
-            st.info("📸 Screenshot màn hình tổng quan (dashboard_screen.png)")
+            st.info("📦 Screenshot quản lý kho")
+        
+        st.markdown("##### Báo cáo & Tạm ứng")
+        st.markdown("""
+        - **Báo cáo:** Doanh thu, thống kê theo chi nhánh
+        - **Tạm ứng/Thanh toán:** Quản lý advance transactions
+        - Export dữ liệu CSV/Excel
+        """)
+        try:
+            st.image("assets/reports_advance_interface.png", caption="Reports & Advance Payments", use_container_width=True)
+        except:
+            st.info("💰 Screenshot báo cáo & tạm ứng")
 
     st.subheader("7. KPIs and Reports")
     st.markdown("Metrics to measure the system's effectiveness post-deployment:")
