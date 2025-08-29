@@ -192,42 +192,91 @@ with tab5:
     st.image("assets/ERD.png", caption="Complete Entity Relationship Diagram for Game Manager v2")
 
 with tab6:
-    st.subheader("6. Wireframe (User Interface Description)")
-    st.markdown("#### Machine List Screen")
-    st.markdown("""
-    - **Component:** Table.
-    - **Columns:** `Machine Code`, `Machine Name`, `Branch`, `Current Balance`, `Rate`, `Actions`.
-    - **Features:**
-        - "Add New Machine" button.
-        - Pagination for long lists.
-        - "Actions" column with "Edit" and "Delete" (soft) buttons.
-        - Search bar to filter machines by name or code.
-    """)
+    st.subheader("6. Wireframes - App Screenshots")
+    st.markdown("Dưới đây là giao diện thực tế của ứng dụng Game Manager System v2 đã được phát triển:")
 
-    st.markdown("#### Point Entry/Edit Form")
+    # Machine List Screen
+    st.markdown("#### 6.1. Machine List Screen (Màn hình Danh sách Máy)")
     st.markdown("""
-    - **Component:** Form.
+    **Mô tả chức năng:**
+    - **Component:** Table hiển thị danh sách các máy game
+    - **Columns:** `Machine Code`, `Machine Name`, `Branch`, `Current Balance`, `Rate`, `Actions`
+    - **Features:**
+        - Nút "Add New Machine" để thêm máy mới
+        - Phân trang cho danh sách dài
+        - Cột "Actions" với các nút "Edit" và "Delete" (soft delete)
+        - Thanh tìm kiếm để lọc máy theo tên hoặc mã
+    """)
+    
+    # Hiển thị hình ảnh nếu file tồn tại
+    try:
+        st.image("assets/machine_list_screen.png", caption="Machine List Screen - Giao diện thực tế", use_container_width=True)
+    except:
+        st.info("📸 Hãy chụp screenshot màn hình Machine List và lưu với tên 'machine_list_screen.png' vào thư mục assets/")
+
+    st.markdown("---")
+
+    # Point Entry/Edit Form  
+    st.markdown("#### 6.2. Point Entry/Edit Form (Form Nhập/Sửa Điểm)")
+    st.markdown("""
+    **Mô tả chức năng:**
+    - **Component:** Form nhập liệu điểm số hàng ngày
     - **Fields:**
-        - `Dropdown` to select a machine (shows only machines in the user's branch).
-        - `Input number` for `Points IN`.
-        - `Input number` for `Points OUT`.
-        - `Date picker` to select the transaction date.
-        - `Toggle switch` to enable/disable `Demo` mode.
-    - **Logic:**
-        - When a date with an existing transaction is selected, a warning message appears below the `Date picker` if `Demo` mode is off.
-        - The "Save" button is disabled if there are validation errors.
+        - `Dropdown` để chọn máy (chỉ hiển thị máy trong chi nhánh của user)
+        - `Input number` cho `Points IN` (điểm vào)
+        - `Input number` cho `Points OUT` (điểm ra)  
+        - `Date picker` để chọn ngày giao dịch
+        - `Toggle switch` để bật/tắt chế độ `Demo`
+    - **Business Logic:**
+        - Khi chọn ngày đã có giao dịch, hiển thị cảnh báo nếu tắt chế độ `Demo`
+        - Nút "Save" bị vô hiệu hóa nếu có lỗi validation
     """)
+    
+    try:
+        st.image("assets/point_entry_form.png", caption="Point Entry Form - Giao diện thực tế", use_container_width=True)
+    except:
+        st.info("📸 Hãy chụp screenshot màn hình Point Entry/Edit Form và lưu với tên 'point_entry_form.png' vào thư mục assets/")
 
-    st.markdown("#### Transaction History Screen")
+    st.markdown("---")
+
+    # Transaction History Screen
+    st.markdown("#### 6.3. Transaction History Screen (Màn hình Lịch sử Giao dịch)")
     st.markdown("""
-    - **Component:** Table.
-    - **Columns:** `Date`, `Machine Code`, `Points IN`, `Points OUT`, `Daily Points`, `Final Balance`, `User`, `Branch`.
+    **Mô tả chức năng:**
+    - **Component:** Table hiển thị lịch sử các giao dịch điểm
+    - **Columns:** `Date`, `Machine Code`, `Points IN`, `Points OUT`, `Daily Points`, `Final Balance`, `User`, `Branch`
     - **Features:**
-        - Filter by date range.
-        - Filter by branch (for Admins only).
-        - Filter by machine.
-        - "Export to CSV" button.
+        - Lọc theo khoảng thời gian
+        - Lọc theo chi nhánh (chỉ dành cho Admin)
+        - Lọc theo máy cụ thể
+        - Nút "Export to CSV" để xuất dữ liệu
     """)
+    
+    try:
+        st.image("assets/transaction_history_screen.png", caption="Transaction History Screen - Giao diện thực tế", use_container_width=True)
+    except:
+        st.info("📸 Hãy chụp screenshot màn hình Transaction History và lưu với tên 'transaction_history_screen.png' vào thư mục assets/")
+
+    st.markdown("---")
+
+    # Optional: Login và Dashboard screens
+    st.markdown("#### 6.4. Các màn hình bổ sung (Tùy chọn)")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("**Login Screen**")
+        try:
+            st.image("assets/login_screen.png", caption="Login Screen", use_container_width=True)
+        except:
+            st.info("📸 Screenshot màn hình đăng nhập (login_screen.png)")
+    
+    with col2:
+        st.markdown("**Dashboard/Home Screen**")
+        try:
+            st.image("assets/dashboard_screen.png", caption="Dashboard Screen", use_container_width=True) 
+        except:
+            st.info("📸 Screenshot màn hình tổng quan (dashboard_screen.png)")
 
     st.subheader("7. KPIs and Reports")
     st.markdown("Metrics to measure the system's effectiveness post-deployment:")
