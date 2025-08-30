@@ -34,26 +34,24 @@ st.markdown("*Featured projects showcased in this application*")
 
 # Highlight Game Manager v2
 st.markdown("### 🎮 **Game Manager System v2** ⭐")
-st.markdown("""
-<div style="background-color: #f0f2f6; padding: 20px; border-radius: 10px; border-left: 4px solid #ff6b6b;">
-    <strong>Full-stack Business Management System</strong><br/>
-    <em>Complete web application for managing gaming machines across multiple branches with comprehensive business analytics and reporting.</em>
-    
-    <br/><br/>
-    <strong>🎯 Key Features:</strong>
-    <ul>
-        <li><strong>Machine Management:</strong> CRUD operations, soft delete, branch assignment</li>
-        <li><strong>Point Transactions:</strong> Daily data entry with automatic balance calculation</li>
-        <li><strong>User Management:</strong> Role-based (Admin/User) and branch-based authorization</li>
-        <li><strong>Business Intelligence:</strong> Comprehensive reporting and audit trails</li>
-        <li><strong>Product & Warehouse:</strong> Inventory management and daily auditing</li>
-    </ul>
-    
-    <strong>💻 Tech Stack:</strong> <code>Node.js</code>, <code>React.js</code>, <code>SQLite</code>, <code>Bootstrap</code>, <code>JWT Authentication</code><br/>
-    <strong>👨‍💼 Role:</strong> Business Analyst & System Designer<br/>
-    <strong>📋 Navigate:</strong> See <code>Game Manager v2 Portfolio</code> page for complete documentation and wireframes.
-</div>
-""", unsafe_allow_html=True)
+st.info("""
+**Full-stack Business Management System**
+
+*Complete web application for managing gaming machines across multiple branches with comprehensive business analytics and reporting.*
+
+**🎯 Key Features:**
+- **Machine Management:** CRUD operations, soft delete, branch assignment
+- **Point Transactions:** Daily data entry with automatic balance calculation  
+- **User Management:** Role-based (Admin/User) and branch-based authorization
+- **Business Intelligence:** Comprehensive reporting and audit trails
+- **Product & Warehouse:** Inventory management and daily auditing
+
+**💻 Tech Stack:** `Node.js`, `React.js`, `SQLite`, `Bootstrap`, `JWT Authentication`
+
+**👨‍💼 Role:** Business Analyst & System Designer
+
+**📋 Navigate:** See `Game Manager v2 Portfolio` page for complete documentation and wireframes.
+""")
 
 st.markdown("### 📊 **Data Analysis Projects**")
 col1, col2 = st.columns(2)
