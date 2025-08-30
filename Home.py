@@ -30,8 +30,32 @@ st.header("Projects")
 
 # Portfolio Projects
 st.subheader("📊 Portfolio Projects")
-st.markdown("*Interactive dashboards and analysis showcased in this application*")
+st.markdown("*Featured projects showcased in this application*")
 
+# Highlight Game Manager v2
+st.markdown("### 🎮 **Game Manager System v2** ⭐")
+st.markdown("""
+<div style="background-color: #f0f2f6; padding: 20px; border-radius: 10px; border-left: 4px solid #ff6b6b;">
+    <strong>Full-stack Business Management System</strong><br/>
+    <em>Complete web application for managing gaming machines across multiple branches with comprehensive business analytics and reporting.</em>
+    
+    <br/><br/>
+    <strong>🎯 Key Features:</strong>
+    <ul>
+        <li><strong>Machine Management:</strong> CRUD operations, soft delete, branch assignment</li>
+        <li><strong>Point Transactions:</strong> Daily data entry with automatic balance calculation</li>
+        <li><strong>User Management:</strong> Role-based (Admin/User) and branch-based authorization</li>
+        <li><strong>Business Intelligence:</strong> Comprehensive reporting and audit trails</li>
+        <li><strong>Product & Warehouse:</strong> Inventory management and daily auditing</li>
+    </ul>
+    
+    <strong>💻 Tech Stack:</strong> <code>Node.js</code>, <code>React.js</code>, <code>SQLite</code>, <code>Bootstrap</code>, <code>JWT Authentication</code><br/>
+    <strong>👨‍💼 Role:</strong> Business Analyst & System Designer<br/>
+    <strong>📋 Navigate:</strong> See <code>Game Manager v2 Portfolio</code> page for complete documentation and wireframes.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("### 📊 **Data Analysis Projects**")
 col1, col2 = st.columns(2)
 
 with col1:
@@ -80,12 +104,11 @@ with proj_col2:
     """)
 
 with proj_col3:
-    st.markdown("**🎮 Game Manager System v2**")
+    st.markdown("**📚 Academic Research**")
     st.markdown("""
-    *Full-stack web application for managing gaming machines across multiple branches. Features include point transactions, user management, and comprehensive reporting.*
-    - **Tech Stack:** `Node.js`, `React.js`, `SQLite`, `Bootstrap`
-    - **Role:** Business Analyst & System Designer
-    - **Navigate:** See `Game Manager v2 Portfolio` page for complete documentation.
+    *Research projects and academic work completed during university studies and internships.*
+    - **Focus Areas:** `Machine Learning`, `Data Mining`, `Statistical Analysis`
+    - **Applications:** `Social Research`, `Predictive Modeling`, `Business Intelligence`
     """)
 
 # --- Work Experience & Education ---
