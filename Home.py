@@ -24,19 +24,43 @@ st.header("About Me")
 about_col1, about_col2 = st.columns([1, 3])
 
 with about_col1:
-    # Placeholder for profile image - can be added later
+    # Profile image with styling
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #667eea, #764ba2); 
-                border-radius: 15px; 
-                padding: 2rem; 
-                text-align: center; 
-                color: white;
-                margin-bottom: 1rem;">
-        <div style="font-size: 3rem;">👨‍💻</div>
-        <div style="font-size: 1.2rem; font-weight: 600;">Trinh Anh Tu</div>
-        <div style="font-size: 0.9rem; opacity: 0.9;">Business & Data Analyst</div>
-    </div>
+    <div style="text-align: center; margin-bottom: 1rem;">
     """, unsafe_allow_html=True)
+    
+    try:
+        st.image("assets/image.png", 
+                width=200, 
+                caption="")
+        
+        # Add name and title below image
+        st.markdown("""
+        <div style="text-align: center; 
+                    background: linear-gradient(135deg, #667eea, #764ba2); 
+                    border-radius: 10px; 
+                    padding: 1rem; 
+                    color: white;
+                    margin-top: 1rem;">
+            <div style="font-size: 1.2rem; font-weight: 600;">Trinh Anh Tu</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">Business & Data Analyst</div>
+        </div>
+        """, unsafe_allow_html=True)
+    except:
+        # Fallback to original placeholder if image fails to load
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #667eea, #764ba2); 
+                    border-radius: 15px; 
+                    padding: 2rem; 
+                    text-align: center; 
+                    color: white;">
+            <div style="font-size: 3rem;">👨‍💻</div>
+            <div style="font-size: 1.2rem; font-weight: 600;">Trinh Anh Tu</div>
+            <div style="font-size: 0.9rem; opacity: 0.9;">Business & Data Analyst</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
 with about_col2:
     st.markdown("""
