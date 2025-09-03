@@ -193,77 +193,77 @@ with tab5:
 
 with tab6:
     st.subheader("6. Wireframes - App Screenshots")
-    st.markdown("Dưới đây là giao diện thực tế của ứng dụng Game Manager System v2 đã được phát triển:")
+    st.markdown("Below are the actual interfaces of the developed Game Manager System v2 application:")
 
     # Machine List Screen
-    st.markdown("#### 6.1. Machine List Screen (Màn hình Danh sách Máy)")
+    st.markdown("#### 6.1. Machine List Screen")
     st.markdown("""
-    **Mô tả chức năng:**
-    - **Component:** Table hiển thị danh sách các máy game
+    **Functional Description:**
+    - **Component:** Table displaying list of gaming machines
     - **Columns:** `Machine Code`, `Machine Name`, `Branch`, `Current Balance`, `Rate`, `Actions`
     - **Features:**
-        - Nút "Add New Machine" để thêm máy mới
-        - Phân trang cho danh sách dài
-        - Cột "Actions" với các nút "Edit" và "Delete" (soft delete)
-        - Thanh tìm kiếm để lọc máy theo tên hoặc mã
+        - "Add New Machine" button to add new machines
+        - Pagination for long lists
+        - "Actions" column with "Edit" and "Delete" (soft delete) buttons
+        - Search bar to filter machines by name or code
     """)
     
     # Hiển thị hình ảnh mới nhất
     try:
-        st.image("assets/machine_list_new_interface.png", caption="Machine List Screen - Giao diện thực tế", use_container_width=True)
+        st.image("assets/machine_list_new_interface.png", caption="Machine List Screen - Actual Interface", use_container_width=True)
     except:
-        st.info("📸 Hãy chụp screenshot màn hình Machine List và lưu với tên 'machine_list_new_interface.png' vào thư mục assets/")
+        st.info("📸 Please capture screenshot of Machine List screen and save as 'machine_list_new_interface.png' in assets/ folder")
 
     st.markdown("---")
 
     # Point Entry/Edit Form  
-    st.markdown("#### 6.2. Point Entry/Edit Form (Form Nhập/Sửa Điểm)")
+    st.markdown("#### 6.2. Point Entry/Edit Form")
     st.markdown("""
-    **Mô tả chức năng:**
-    - **Component:** Form nhập liệu điểm số hàng ngày
+    **Functional Description:**
+    - **Component:** Daily point data entry form
     - **Fields:**
-        - `Dropdown` để chọn máy (chỉ hiển thị máy trong chi nhánh của user)
-        - `Input number` cho `Points IN` (điểm vào)
-        - `Input number` cho `Points OUT` (điểm ra)  
-        - `Date picker` để chọn ngày giao dịch
-        - `Toggle switch` để bật/tắt chế độ `Demo`
+        - `Dropdown` to select machine (shows only machines in user's branch)
+        - `Input number` for `Points IN`
+        - `Input number` for `Points OUT`  
+        - `Date picker` to select transaction date
+        - `Toggle switch` to enable/disable `Demo` mode
     - **Business Logic:**
-        - Khi chọn ngày đã có giao dịch, hiển thị cảnh báo nếu tắt chế độ `Demo`
-        - Nút "Save" bị vô hiệu hóa nếu có lỗi validation
+        - When selecting a date with existing transaction, shows warning if `Demo` mode is off
+        - "Save" button is disabled if there are validation errors
     """)
     
     try:
-        st.image("assets/point_entry_form_interface.png", caption="Point Entry Form - Giao diện thực tế", use_container_width=True)
+        st.image("assets/point_entry_form_interface.png", caption="Point Entry Form - Actual Interface", use_container_width=True)
     except:
-        st.info("📸 Hãy chụp screenshot màn hình Point Entry/Edit Form và lưu với tên 'point_entry_form_interface.png' vào thư mục assets/")
+        st.info("📸 Please capture screenshot of Point Entry/Edit Form screen and save as 'point_entry_form_interface.png' in assets/ folder")
 
     st.markdown("---")
 
     # Transaction History Screen
-    st.markdown("#### 6.3. Transaction History Screen (Màn hình Lịch sử Giao dịch)")
+    st.markdown("#### 6.3. Transaction History Screen")
     st.markdown("""
-    **Mô tả chức năng:**
-    - **Component:** Table hiển thị lịch sử các giao dịch điểm
+    **Functional Description:**
+    - **Component:** Table displaying point transaction history
     - **Columns:** `Date`, `Machine Code`, `Points IN`, `Points OUT`, `Daily Points`, `Final Balance`, `User`, `Branch`
     - **Features:**
-        - Lọc theo khoảng thời gian
-        - Lọc theo chi nhánh (chỉ dành cho Admin)
-        - Lọc theo máy cụ thể
-        - Nút "Export to CSV" để xuất dữ liệu
+        - Filter by date range
+        - Filter by branch (Admin only)
+        - Filter by specific machine
+        - "Export to CSV" button to export data
     """)
     
     try:
-        st.image("assets/transaction_history_interface.png", caption="Transaction History Screen - Giao diện thực tế", use_container_width=True)
+        st.image("assets/transaction_history_interface.png", caption="Transaction History Screen - Actual Interface", use_container_width=True)
     except:
-        st.info("📸 Hãy chụp screenshot màn hình Transaction History và lưu với tên 'transaction_history_interface.png' vào thư mục assets/")
+        st.info("📸 Please capture screenshot of Transaction History screen and save as 'transaction_history_interface.png' in assets/ folder")
 
     st.markdown("---")
 
     # Login Screen
-    st.markdown("#### 6.4. Login Screen (Màn hình Đăng nhập)")
+    st.markdown("#### 6.4. Login Screen")
     st.markdown("""
-    **Mô tả chức năng:**
-    - **Component:** Form đăng nhập với authentication
+    **Functional Description:**
+    - **Component:** Authentication login form
     - **Fields:** Username, Password, Branch selection
     - **Features:**
         - JWT authentication
@@ -273,62 +273,62 @@ with tab6:
     """)
     
     try:
-        st.image("assets/login_screen_interface.png", caption="Login Screen - Giao diện thực tế", use_container_width=True)
+        st.image("assets/login_screen_interface.png", caption="Login Screen - Actual Interface", use_container_width=True)
     except:
-        st.info("📸 Screenshot màn hình đăng nhập (login_screen_interface.png)")
+        st.info("📸 Login screen screenshot (login_screen_interface.png)")
 
     st.markdown("---")
 
     # Additional Management Screens
-    st.markdown("#### 6.5. Các màn hình quản lý bổ sung")
+    st.markdown("#### 6.5. Additional Management Screens")
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("##### Quản lý Sản phẩm")
+        st.markdown("##### Product Management")
         st.markdown("""
-        - CRUD operations cho sản phẩm
-        - Quản lý thông tin giải thưởng
-        - Thiết lập số lượng và giá trị
+        - CRUD operations for products
+        - Prize information management
+        - Quantity and value configuration
         """)
         try:
             st.image("assets/product_management_interface.png", caption="Product Management", use_container_width=True)
         except:
-            st.info("🛍️ Screenshot quản lý sản phẩm")
+            st.info("🛍️ Product management screenshot")
         
-        st.markdown("##### Kiểm kê Hàng ngày")  
+        st.markdown("##### Daily Audit")  
         st.markdown("""
-        - Kiểm kê số lượng sản phẩm
-        - Ghi nhận thực tế vs hệ thống
-        - Báo cáo chênh lệch
+        - Product quantity auditing
+        - Record actual vs system inventory
+        - Discrepancy reporting
         """)
         try:
             st.image("assets/daily_audit_interface.png", caption="Daily Audit", use_container_width=True)
         except:
-            st.info("📊 Screenshot kiểm kê hàng ngày")
+            st.info("📊 Daily audit screenshot")
     
     with col2:
-        st.markdown("##### Quản lý Kho")
+        st.markdown("##### Warehouse Management")
         st.markdown("""
-        - Quản lý stock sản phẩm
-        - Nhập/xuất kho
-        - Cảnh báo hết hàng
+        - Product stock management
+        - Inventory in/out operations
+        - Out-of-stock alerts
         """)
         try:
             st.image("assets/warehouse_management_interface.png", caption="Warehouse Management", use_container_width=True)
         except:
-            st.info("📦 Screenshot quản lý kho")
+            st.info("📦 Warehouse management screenshot")
         
-        st.markdown("##### Báo cáo & Tạm ứng")
+        st.markdown("##### Reports & Advance Payments")
         st.markdown("""
-        - **Báo cáo:** Doanh thu, thống kê theo chi nhánh
-        - **Tạm ứng/Thanh toán:** Quản lý advance transactions
-        - Export dữ liệu CSV/Excel
+        - **Reports:** Revenue, branch-wise statistics
+        - **Advance Payments:** Manage advance transactions
+        - Export data to CSV/Excel
         """)
         try:
             st.image("assets/reports_advance_interface.png", caption="Reports & Advance Payments", use_container_width=True)
         except:
-            st.info("💰 Screenshot báo cáo & tạm ứng")
+            st.info("💰 Reports & advance payments screenshot")
 
     st.subheader("7. KPIs and Reports")
     st.markdown("Metrics to measure the system's effectiveness post-deployment:")
