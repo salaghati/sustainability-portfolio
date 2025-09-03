@@ -14,15 +14,48 @@ st.set_page_config(
 
 # --- Main Portfolio Page ---
 st.title("Trinh Anh Tu - My Portfolio")
-st.markdown("Welcome! This application showcases my data analysis projects, demonstrating a complete workflow from data processing to insight generation. **Please use the sidebar to navigate.**")
+st.markdown("Welcome! This application showcases my **business analysis** and **data analysis** projects, demonstrating expertise in requirements gathering, system design, data processing, and insight generation. **Please use the sidebar to navigate.**")
 st.markdown("---")
 
 # --- About Me Section ---
 st.header("About Me")
-st.markdown("""
-    Welcome to my portfolio! I am a recent Information Systems graduate from the University of Information Technology - VNU-HCM.
-    With a curious mindset and a proactive attitude, I am passionate about leveraging data analysis to solve real-world problems and support intelligent decision-making.
-""")
+
+# Create columns for potential profile image and text
+about_col1, about_col2 = st.columns([1, 3])
+
+with about_col1:
+    # Placeholder for profile image - can be added later
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #667eea, #764ba2); 
+                border-radius: 15px; 
+                padding: 2rem; 
+                text-align: center; 
+                color: white;
+                margin-bottom: 1rem;">
+        <div style="font-size: 3rem;">👨‍💻</div>
+        <div style="font-size: 1.2rem; font-weight: 600;">Trinh Anh Tu</div>
+        <div style="font-size: 0.9rem; opacity: 0.9;">Business & Data Analyst</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with about_col2:
+    st.markdown("""
+    Welcome to my portfolio! I am a recent **Information Systems graduate** from the University of Information Technology - VNU-HCM.
+    
+    With a **curious mindset** and **proactive attitude**, I am passionate about bridging the gap between business needs and technical solutions through:
+    
+    **🎯 Business Analysis:**
+    - Requirements gathering and stakeholder management
+    - Process optimization and workflow design
+    - System documentation and user story creation
+    
+    **📊 Data Analysis:**
+    - Data-driven insights and decision support
+    - Statistical analysis and visualization
+    - Business intelligence and reporting
+    
+    I am actively seeking opportunities as a **Business Analyst** or **Data Analyst** where I can leverage my technical skills and business acumen to drive meaningful impact.
+    """)
 
 # --- Projects Section ---
 st.markdown("---")
@@ -48,7 +81,7 @@ st.info("""
 
 **💻 Tech Stack:** `Node.js`, `React.js`, `SQLite`, `Bootstrap`, `JWT Authentication`
 
-**👨‍💼 Role:** Business Analyst & System Designer
+**👨‍💼 Role:** Lead Business Analyst & System Designer
 
 **📋 Navigate:** See `Game Manager v2 Portfolio` page for complete documentation and wireframes.
 """)
