@@ -182,6 +182,13 @@ with col1:
 with col2:
     st.subheader("Work Experience")
     st.markdown("""
+        **FPT Software**
+        - **Business Analyst Intern** (Jul 2024 - Nov 2024)
+        - *Requirement gathering: Collected and defined requirements from stakeholders into 7 features*
+        - *User Stories: Created and managed 39 User Stories across 7 features*  
+        - *UI/UX Design: Created wireframes for 3 main components, increased productivity by 15% and reduced manual time by 10%*
+        - *Stakeholder communication with PMs and development teams*
+        
         **RioTech .,JSC**
         - **Data Analyst Intern** (Sep 2023 - Dec 2023)
         - *Developed dashboards and analyzed sales data to identify trends. Supported data cleaning and transformation processes.*
