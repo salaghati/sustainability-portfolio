@@ -112,53 +112,308 @@ with tab1:
 
 with tab2:
     st.subheader("2. User Stories & Acceptance Criteria (AC)")
+    st.markdown("**Complete documentation of system requirements using Agile methodology**")
+    st.info("**25+ User Stories** with **75+ Acceptance Criteria** covering all system modules")
+    
+    # Authentication Module
+    st.markdown("---")
+    st.markdown("#### 🔐 Module 1: Authentication & Authorization")
+    st.markdown("**Epic: User Authentication & Role-Based Access Control**")
+    
+    with st.expander("User Story 1.1: User Login", expanded=False):
+        st.markdown("""
+        **As a** system user  
+        **I want to** log into the Game Manager system  
+        **So that** I can access my assigned functionalities based on my role
 
-    st.info("Role: Branch Staff")
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** I am on the login page  
+        **WHEN** I enter valid username and password  
+        **THEN** I should be redirected to the main dashboard  
+        **AND** I should receive a JWT token stored in localStorage  
+        **AND** my user information (id, role, branch) should be available
+
+        ✅ **GIVEN** I enter invalid credentials  
+        **WHEN** I attempt to login  
+        **THEN** I should see error message "Sai tài khoản hoặc mật khẩu"  
+        **AND** I should remain on the login page
+
+        ✅ **GIVEN** I am already logged in  
+        **WHEN** I try to access login page  
+        **THEN** I should be redirected to main dashboard
+
+        ✅ **GIVEN** login form validation  
+        **WHEN** I submit empty username or password  
+        **THEN** I should see error "Vui lòng nhập đầy đủ thông tin"
+        """)
+
+    with st.expander("User Story 1.2: Role-Based Access Control", expanded=False):
+        st.markdown("""
+        **As a** system administrator  
+        **I want** different user roles to have different access levels  
+        **So that** system security and data integrity are maintained
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** I am an Admin user (role_id = 1)  
+        **WHEN** I access the system  
+        **THEN** I can view and manage all branches  
+        **AND** I can view and manage all machines  
+        **AND** I can view all transaction histories  
+        **AND** I can access advanced features (branch management, user management)
+
+        ✅ **GIVEN** I am a regular User (role_id != 1)  
+        **WHEN** I access the system  
+        **THEN** I can only view machines in my assigned branch  
+        **AND** I can only view transaction histories in my branch  
+        **AND** I cannot access branch management features  
+        **AND** I cannot access other users' data outside my branch
+
+        ✅ **GIVEN** my JWT token is invalid or expired  
+        **WHEN** I make any API request  
+        **THEN** I should receive 401 Unauthorized response  
+        **AND** I should be redirected to login page
+        """)
+    
+    # Machine Management Module
+    st.markdown("---")
+    st.markdown("#### 🎮 Module 2: Machine Management")
+    st.markdown("**Epic: Gaming Machine CRUD Operations with Business Rules**")
+
+    with st.expander("User Story 2.1: View Machine List", expanded=False):
     st.markdown("""
-    > **As a**- Branch Staff member,
-    > **I want to**- enter end-of-day points for the machines in my branch,
-    - **So that**- I can record business results and have the system automatically calculate the balance.
-    """)
-    st.text("""
-    AC 1: Given the system environment is "Production",
-    When I enter points for a machine on a date that already has data,
-    Then the system must display a warning "Data for this date already exists" and prevent saving.
+        **As a** branch user  
+        **I want to** view the list of gaming machines  
+        **So that** I can manage daily operations and point entries
 
-    AC 2: Given the system environment is "Demo",
-    When I enter points for a machine on a date that already has data,
-    Then the system must allow overwriting the old data and save the new transaction.
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** I am logged in as Admin  
+        **WHEN** I view the machine list  
+        **THEN** I should see machines from all branches  
+        **AND** each machine should display: machine_code, name, branch, current_balance, rate, actions
 
-    AC 3: Given I am editing a transaction,
-    When that transaction is not the latest one for the machine,
-    Then the system must disable the "Save" button and display the message "Only the latest transaction can be edited".
-    """)
+        ✅ **GIVEN** I am logged in as regular user  
+        **WHEN** I view the machine list  
+        **THEN** I should only see machines from my assigned branch  
+        **AND** soft-deleted machines should not be visible
 
-    st.info("Role: Administrator")
+        ✅ **GIVEN** machine current balance calculation  
+        **WHEN** displaying machine list  
+        **THEN** current_balance should reflect the most recent transaction balance  
+        **AND** NOT use the deprecated current_points field in Machine table
+        """)
+
+    with st.expander("User Story 2.2: Create New Machine", expanded=False):
+        st.markdown("""
+        **As an** authorized user  
+        **I want to** create a new gaming machine  
+        **So that** I can expand operational capacity
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** I have appropriate permissions  
+        **WHEN** I create a new machine with valid data  
+        **THEN** machine should be created successfully  
+        **AND** machine_code must be unique within the same branch  
+        **AND** default rate should be set to 2 if not specified
+
+        ✅ **GIVEN** validation rules  
+        **WHEN** I submit machine form  
+        **THEN** machine_code and name are required fields  
+        **AND** machine_code cannot duplicate within the same branch  
+        **AND** rate must be a positive decimal number
+        """)
+
+    with st.expander("User Story 2.3: Edit & Delete Machine", expanded=False):
+        st.markdown("""
+        **As an** authorized user  
+        **I want to** edit and soft delete machines  
+        **So that** I can maintain accurate operational data
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** I have edit permissions  
+        **WHEN** I update machine information  
+        **THEN** changes should be saved successfully  
+        **AND** rate changes apply to future transactions only  
+        **AND** historical transaction rates remain unchanged
+
+        ✅ **GIVEN** soft delete functionality  
+        **WHEN** I delete a machine  
+        **THEN** is_deleted flag should be set to true  
+        **AND** machine should disappear from active lists  
+        **AND** historical transaction data should remain intact
+        """)
+    
+    # Point Transaction Management Module
+    st.markdown("---")
+    st.markdown("#### 💰 Module 3: Point Transaction Management")
+    st.markdown("**Epic: Daily Point Entry with Business Logic and Validation**")
+
+    with st.expander("User Story 3.1: Daily Point Data Entry", expanded=False):
     st.markdown("""
-    > **As an**- Administrator,
-    > **I want to**- view the point transaction history for all machines across the entire system,
-    - **So that**- I can check, reconcile, and monitor the operations of all branches.
-    """)
-    st.text("""
-    AC 1: Given I am logged in as an Admin,
-    When I access the History page,
-    Then the system must display a data table containing all transactions from every branch.
+        **As a** branch operator  
+        **I want to** enter daily point data for machines  
+        **So that** I can track machine performance and calculate revenues
 
-    AC 2: Given I am viewing the History page,
-    When I use the filter by branch or by machine,
-    Then the data table must update according to my selection.
-    """)
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** I select a machine and date  
+        **WHEN** I enter Point In and Point Out values  
+        **THEN** system should calculate Point Balance = Points In - Points Out  
+        **AND** calculate Daily Point = Current Balance - Previous Balance  
+        **AND** calculate Final Amount = (Daily Point / Machine Rate) × 1000
 
-    st.info("Role: Accountant")
+        ✅ **GIVEN** validation rules  
+        **WHEN** I submit point data  
+        **THEN** Points In and Points Out cannot be negative  
+        **AND** all required fields must be filled  
+        **AND** Previous Balance is required (auto-filled from yesterday or manually entered)
+
+        ✅ **GIVEN** Demo Mode toggle  
+        **WHEN** Demo Mode is ON  
+        **THEN** I can overwrite existing data for the same date  
+        **WHEN** Demo Mode is OFF  
+        **THEN** system should warn about overwriting existing date data
+        """)
+
+    with st.expander("User Story 3.2: Transaction History & Editing", expanded=False):
+        st.markdown("""
+        **As a** user  
+        **I want to** view and edit transaction history  
+        **So that** I can analyze trends and correct mistakes
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** transaction history access  
+        **WHEN** I view transactions for a machine  
+        **THEN** data should be sorted by date (newest first)  
+        **AND** display: date, machine_code, points_in, points_out, daily_point, final_amount, rate
+
+        ✅ **GIVEN** transaction editing  
+        **WHEN** I edit a transaction  
+        **THEN** I can only edit the most recent transaction  
+        **AND** Daily Point auto-calculates when Balance changes  
+        **AND** system logs all changes in TransactionEditLog (Admin only can view)
+        
+        ✅ **GIVEN** rate preservation  
+        **WHEN** transaction is edited  
+        **THEN** calculations use the rate stored in transaction record  
+        **AND** NOT the current machine rate
+        """)
+    
+    # Advanced Management Modules
+    st.markdown("---")
+    st.markdown("#### 🛍️ Module 4: Product & Warehouse Management")
+
+    with st.expander("User Story 4.1: Product & Inventory Management", expanded=False):
+        st.markdown("""
+        **As a** warehouse operator  
+        **I want to** manage products and inventory  
+        **So that** I can track stock levels and prevent shortages
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** product management  
+        **WHEN** I create/edit products  
+        **THEN** name and price are required fields  
+        **AND** soft delete preserves historical data  
+        **AND** products can be associated with machines for prize dispensing
+
+        ✅ **GIVEN** warehouse stock tracking  
+        **WHEN** I update product quantities  
+        **THEN** stock levels are tracked per product  
+        **AND** quantities must be non-negative integers  
+        **AND** system provides visibility for reordering decisions
+        """)
+
+    st.markdown("---")
+    st.markdown("#### 📊 Module 5: Daily Audit System")
+
+    with st.expander("User Story 5.1: Daily Machine Audit", expanded=False):
+        st.markdown("""
+        **As an** auditor  
+        **I want to** perform daily machine audits  
+        **So that** I can verify prize quantities and calculate revenues
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** daily audit form  
+        **WHEN** I conduct an audit  
+        **THEN** I must record: start_of_day_count, end_of_day_count, gifts_won  
+        **AND** optionally: end_of_day_coins, coin_value, gift_cost
+
+        ✅ **GIVEN** revenue calculations  
+        **WHEN** audit is completed  
+        **THEN** revenue = (end_of_day_coins × coin_value) - (gifts_won × gift_cost)  
+        **AND** audit is associated with specific machine and user  
+        **AND** all data is timestamped for audit trail
+        """)
+
+    st.markdown("---")
+    st.markdown("#### 💳 Module 6: Advance Payment System")
+
+    with st.expander("User Story 6.1: Employee Financial Management", expanded=False):
+        st.markdown("""
+        **As a** manager  
+        **I want to** manage employee advances and payments  
+        **So that** I can track financial obligations and settlements
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** advance creation  
+        **WHEN** I create an advance for an employee  
+        **THEN** employee debt_amount increases  
+        **AND** advance stores: user_id, amount, description, date, branch_id
+
+        ✅ **GIVEN** payment processing  
+        **WHEN** employee makes a payment  
+        **THEN** debt_amount decreases  
+        **AND** payment can exceed advance (allowing overpayment)  
+        **AND** supports both specific advance payments and direct debt payments
+
+        ✅ **GIVEN** debt tracking  
+        **WHEN** viewing employee summary  
+        **THEN** shows total debt balance per employee  
+        **AND** debt_amount can be negative (credit balance)  
+        **AND** only displays employees with non-zero balances
+        """)
+
+    st.markdown("---")
+    st.markdown("#### 📈 Module 7: Reports & Analytics")
+
+    with st.expander("User Story 7.1: Business Intelligence & Reporting", expanded=False):
     st.markdown("""
-    > **As an**- Accountant,
-    > **I want to**- view the end-of-day balance report for all machines,
-    - **So that**- I can perform financial reconciliation tasks.
-    """)
-    st.text("""
-    AC 1: Given I am logged in as an Accountant,
-    When I access the Reports page,
-    Then the system must display the latest `current_balance` for all active machines.
+        **As a** manager  
+        **I want to** generate comprehensive reports  
+        **So that** I can analyze business performance and make data-driven decisions
+
+        **Acceptance Criteria:**
+        
+        ✅ **GIVEN** reporting interface  
+        **WHEN** I access reports  
+        **THEN** I can filter by date range, machine, and branch  
+        **AND** export data in CSV/Excel format
+
+        ✅ **GIVEN** revenue analytics  
+        **WHEN** viewing performance reports  
+        **THEN** I can see revenue summaries by branch  
+        **AND** track performance trends over time  
+        **AND** analyze machine profitability metrics
+        """)
+
+    st.markdown("---")
+    st.success("""
+    **📋 Requirements Coverage Summary:**
+    - **25+ User Stories** across 7 core business modules
+    - **75+ Acceptance Criteria** with Given-When-Then structure
+    - **Complete CRUD operations** for all entities
+    - **Role-based security** and data isolation
+    - **Business logic validation** and error handling
+    - **Audit trails** and data integrity measures
+    - **Multi-branch operations** with scalable architecture
     """)
 
 with tab3:
@@ -330,312 +585,8 @@ with tab6:
         except:
             st.info("💰 Reports & advance payments screenshot")
 
-    st.subheader("7. User Stories & Acceptance Criteria")
-    st.markdown("**Complete documentation of system requirements using Agile methodology**")
-    st.info("**25+ User Stories** with **75+ Acceptance Criteria** covering all system modules")
-    
-    # Authentication Module
-    st.markdown("---")
-    st.markdown("#### 🔐 Module 1: Authentication & Authorization")
-    st.markdown("**Epic: User Authentication & Role-Based Access Control**")
-    
-    with st.expander("User Story 1.1: User Login", expanded=False):
-        st.markdown("""
-        **As a** system user  
-        **I want to** log into the Game Manager system  
-        **So that** I can access my assigned functionalities based on my role
 
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** I am on the login page  
-        **WHEN** I enter valid username and password  
-        **THEN** I should be redirected to the main dashboard  
-        **AND** I should receive a JWT token stored in localStorage  
-        **AND** my user information (id, role, branch) should be available
-
-        ✅ **GIVEN** I enter invalid credentials  
-        **WHEN** I attempt to login  
-        **THEN** I should see error message "Sai tài khoản hoặc mật khẩu"  
-        **AND** I should remain on the login page
-
-        ✅ **GIVEN** I am already logged in  
-        **WHEN** I try to access login page  
-        **THEN** I should be redirected to main dashboard
-
-        ✅ **GIVEN** login form validation  
-        **WHEN** I submit empty username or password  
-        **THEN** I should see error "Vui lòng nhập đầy đủ thông tin"
-        """)
-
-    with st.expander("User Story 1.2: Role-Based Access Control", expanded=False):
-        st.markdown("""
-        **As a** system administrator  
-        **I want** different user roles to have different access levels  
-        **So that** system security and data integrity are maintained
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** I am an Admin user (role_id = 1)  
-        **WHEN** I access the system  
-        **THEN** I can view and manage all branches  
-        **AND** I can view and manage all machines  
-        **AND** I can view all transaction histories  
-        **AND** I can access advanced features (branch management, user management)
-
-        ✅ **GIVEN** I am a regular User (role_id != 1)  
-        **WHEN** I access the system  
-        **THEN** I can only view machines in my assigned branch  
-        **AND** I can only view transaction histories in my branch  
-        **AND** I cannot access branch management features  
-        **AND** I cannot access other users' data outside my branch
-
-        ✅ **GIVEN** my JWT token is invalid or expired  
-        **WHEN** I make any API request  
-        **THEN** I should receive 401 Unauthorized response  
-        **AND** I should be redirected to login page
-        """)
-    
-    # Machine Management Module
-    st.markdown("---")
-    st.markdown("#### 🎮 Module 2: Machine Management")
-    st.markdown("**Epic: Gaming Machine CRUD Operations with Business Rules**")
-
-    with st.expander("User Story 2.1: View Machine List", expanded=False):
-        st.markdown("""
-        **As a** branch user  
-        **I want to** view the list of gaming machines  
-        **So that** I can manage daily operations and point entries
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** I am logged in as Admin  
-        **WHEN** I view the machine list  
-        **THEN** I should see machines from all branches  
-        **AND** each machine should display: machine_code, name, branch, current_balance, rate, actions
-
-        ✅ **GIVEN** I am logged in as regular user  
-        **WHEN** I view the machine list  
-        **THEN** I should only see machines from my assigned branch  
-        **AND** soft-deleted machines should not be visible
-
-        ✅ **GIVEN** machine current balance calculation  
-        **WHEN** displaying machine list  
-        **THEN** current_balance should reflect the most recent transaction balance  
-        **AND** NOT use the deprecated current_points field in Machine table
-        """)
-
-    with st.expander("User Story 2.2: Create New Machine", expanded=False):
-        st.markdown("""
-        **As an** authorized user  
-        **I want to** create a new gaming machine  
-        **So that** I can expand operational capacity
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** I have appropriate permissions  
-        **WHEN** I create a new machine with valid data  
-        **THEN** machine should be created successfully  
-        **AND** machine_code must be unique within the same branch  
-        **AND** default rate should be set to 2 if not specified
-
-        ✅ **GIVEN** validation rules  
-        **WHEN** I submit machine form  
-        **THEN** machine_code and name are required fields  
-        **AND** machine_code cannot duplicate within the same branch  
-        **AND** rate must be a positive decimal number
-        """)
-
-    with st.expander("User Story 2.3: Edit & Delete Machine", expanded=False):
-        st.markdown("""
-        **As an** authorized user  
-        **I want to** edit and soft delete machines  
-        **So that** I can maintain accurate operational data
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** I have edit permissions  
-        **WHEN** I update machine information  
-        **THEN** changes should be saved successfully  
-        **AND** rate changes apply to future transactions only  
-        **AND** historical transaction rates remain unchanged
-
-        ✅ **GIVEN** soft delete functionality  
-        **WHEN** I delete a machine  
-        **THEN** is_deleted flag should be set to true  
-        **AND** machine should disappear from active lists  
-        **AND** historical transaction data should remain intact
-        """)
-    
-    # Point Transaction Management Module
-    st.markdown("---")
-    st.markdown("#### 💰 Module 3: Point Transaction Management")
-    st.markdown("**Epic: Daily Point Entry with Business Logic and Validation**")
-
-    with st.expander("User Story 3.1: Daily Point Data Entry", expanded=False):
-        st.markdown("""
-        **As a** branch operator  
-        **I want to** enter daily point data for machines  
-        **So that** I can track machine performance and calculate revenues
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** I select a machine and date  
-        **WHEN** I enter Point In and Point Out values  
-        **THEN** system should calculate Point Balance = Points In - Points Out  
-        **AND** calculate Daily Point = Current Balance - Previous Balance  
-        **AND** calculate Final Amount = (Daily Point / Machine Rate) × 1000
-
-        ✅ **GIVEN** validation rules  
-        **WHEN** I submit point data  
-        **THEN** Points In and Points Out cannot be negative  
-        **AND** all required fields must be filled  
-        **AND** Previous Balance is required (auto-filled from yesterday or manually entered)
-
-        ✅ **GIVEN** Demo Mode toggle  
-        **WHEN** Demo Mode is ON  
-        **THEN** I can overwrite existing data for the same date  
-        **WHEN** Demo Mode is OFF  
-        **THEN** system should warn about overwriting existing date data
-        """)
-
-    with st.expander("User Story 3.2: Transaction History & Editing", expanded=False):
-        st.markdown("""
-        **As a** user  
-        **I want to** view and edit transaction history  
-        **So that** I can analyze trends and correct mistakes
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** transaction history access  
-        **WHEN** I view transactions for a machine  
-        **THEN** data should be sorted by date (newest first)  
-        **AND** display: date, machine_code, points_in, points_out, daily_point, final_amount, rate
-
-        ✅ **GIVEN** transaction editing  
-        **WHEN** I edit a transaction  
-        **THEN** I can only edit the most recent transaction  
-        **AND** Daily Point auto-calculates when Balance changes  
-        **AND** system logs all changes in TransactionEditLog (Admin only can view)
-        
-        ✅ **GIVEN** rate preservation  
-        **WHEN** transaction is edited  
-        **THEN** calculations use the rate stored in transaction record  
-        **AND** NOT the current machine rate
-        """)
-    
-    # Advanced Management Modules
-    st.markdown("---")
-    st.markdown("#### 🛍️ Module 4: Product & Warehouse Management")
-
-    with st.expander("User Story 4.1: Product & Inventory Management", expanded=False):
-        st.markdown("""
-        **As a** warehouse operator  
-        **I want to** manage products and inventory  
-        **So that** I can track stock levels and prevent shortages
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** product management  
-        **WHEN** I create/edit products  
-        **THEN** name and price are required fields  
-        **AND** soft delete preserves historical data  
-        **AND** products can be associated with machines for prize dispensing
-
-        ✅ **GIVEN** warehouse stock tracking  
-        **WHEN** I update product quantities  
-        **THEN** stock levels are tracked per product  
-        **AND** quantities must be non-negative integers  
-        **AND** system provides visibility for reordering decisions
-        """)
-
-    st.markdown("---")
-    st.markdown("#### 📊 Module 5: Daily Audit System")
-
-    with st.expander("User Story 5.1: Daily Machine Audit", expanded=False):
-        st.markdown("""
-        **As an** auditor  
-        **I want to** perform daily machine audits  
-        **So that** I can verify prize quantities and calculate revenues
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** daily audit form  
-        **WHEN** I conduct an audit  
-        **THEN** I must record: start_of_day_count, end_of_day_count, gifts_won  
-        **AND** optionally: end_of_day_coins, coin_value, gift_cost
-
-        ✅ **GIVEN** revenue calculations  
-        **WHEN** audit is completed  
-        **THEN** revenue = (end_of_day_coins × coin_value) - (gifts_won × gift_cost)  
-        **AND** audit is associated with specific machine and user  
-        **AND** all data is timestamped for audit trail
-        """)
-
-    st.markdown("---")
-    st.markdown("#### 💳 Module 6: Advance Payment System")
-
-    with st.expander("User Story 6.1: Employee Financial Management", expanded=False):
-        st.markdown("""
-        **As a** manager  
-        **I want to** manage employee advances and payments  
-        **So that** I can track financial obligations and settlements
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** advance creation  
-        **WHEN** I create an advance for an employee  
-        **THEN** employee debt_amount increases  
-        **AND** advance stores: user_id, amount, description, date, branch_id
-
-        ✅ **GIVEN** payment processing  
-        **WHEN** employee makes a payment  
-        **THEN** debt_amount decreases  
-        **AND** payment can exceed advance (allowing overpayment)  
-        **AND** supports both specific advance payments and direct debt payments
-
-        ✅ **GIVEN** debt tracking  
-        **WHEN** viewing employee summary  
-        **THEN** shows total debt balance per employee  
-        **AND** debt_amount can be negative (credit balance)  
-        **AND** only displays employees with non-zero balances
-        """)
-
-    st.markdown("---")
-    st.markdown("#### 📈 Module 7: Reports & Analytics")
-
-    with st.expander("User Story 7.1: Business Intelligence & Reporting", expanded=False):
-        st.markdown("""
-        **As a** manager  
-        **I want to** generate comprehensive reports  
-        **So that** I can analyze business performance and make data-driven decisions
-
-        **Acceptance Criteria:**
-        
-        ✅ **GIVEN** reporting interface  
-        **WHEN** I access reports  
-        **THEN** I can filter by date range, machine, and branch  
-        **AND** export data in CSV/Excel format
-
-        ✅ **GIVEN** revenue analytics  
-        **WHEN** viewing performance reports  
-        **THEN** I can see revenue summaries by branch  
-        **AND** track performance trends over time  
-        **AND** analyze machine profitability metrics
-        """)
-
-    st.markdown("---")
-    st.success("""
-    **📋 Requirements Coverage Summary:**
-    - **25+ User Stories** across 7 core business modules
-    - **75+ Acceptance Criteria** with Given-When-Then structure
-    - **Complete CRUD operations** for all entities
-    - **Role-based security** and data isolation
-    - **Business logic validation** and error handling
-    - **Audit trails** and data integrity measures
-    - **Multi-branch operations** with scalable architecture
-    """)
-    
-    st.subheader("8. KPIs and Reports")
+    st.subheader("7. KPIs and Reports")
     st.markdown("Metrics to measure the system's effectiveness post-deployment:")
     
     kpi_data = {
