@@ -7,7 +7,7 @@ import os
 
 st.set_page_config(
     page_title="Trinh Anh Tu - My Portfolio",
-    page_icon="👨‍💻",
+    page_icon="📄",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -54,7 +54,7 @@ with about_col1:
                     padding: 2rem; 
                     text-align: center; 
                     color: white;">
-            <div style="font-size: 3rem;">👨‍💻</div>
+            <div style="font-size: 3rem;">BA</div>
             <div style="font-size: 1.2rem; font-weight: 600;">Trinh Anh Tu</div>
             <div style="font-size: 0.9rem; opacity: 0.9;">Business & Data Analyst</div>
         </div>
@@ -96,18 +96,18 @@ st.info("""
 
 *Complete web application for managing gaming machines across multiple branches with comprehensive business analytics and reporting.*
 
-**🎯 Key Features:**
+**Key Features:**
 - **Machine Management:** CRUD operations, soft delete, branch assignment
 - **Point Transactions:** Daily data entry with automatic balance calculation  
 - **User Management:** Role-based (Admin/User) and branch-based authorization
 - **Business Intelligence:** Comprehensive reporting and audit trails
 - **Product & Warehouse:** Inventory management and daily auditing
 
-**💻 Tech Stack:** `Node.js`, `React.js`, `SQLite`, `Bootstrap`, `JWT Authentication`
+**Tech Stack:** `Node.js`, `React.js`, `SQLite`, `Bootstrap`, `JWT Authentication`
 
-**👨‍💼 Role:** Lead Business Analyst & System Designer
+**Role:** Lead Business Analyst & System Designer
 
-**📋 Navigate:** See `Game Manager v2 Portfolio` page for complete documentation and wireframes.
+**Navigate:** See `Game Manager v2 Portfolio` page for complete documentation and wireframes.
 """)
 
 st.markdown("### **Data Analysis Projects**")

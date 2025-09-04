@@ -117,7 +117,7 @@ with tab2:
     
     # Authentication Module
     st.markdown("---")
-    st.markdown("#### 🔐 Module 1: Authentication & Authorization")
+    st.markdown("#### Module 1: Authentication & Authorization")
     st.markdown("**Epic: User Authentication & Role-Based Access Control**")
     
     with st.expander("User Story 1.1: User Login", expanded=False):
@@ -128,22 +128,22 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** I am on the login page  
+        **GIVEN** I am on the login page  
         **WHEN** I enter valid username and password  
         **THEN** I should be redirected to the main dashboard  
         **AND** I should receive a JWT token stored in localStorage  
         **AND** my user information (id, role, branch) should be available
 
-        ✅ **GIVEN** I enter invalid credentials  
+        **GIVEN** I enter invalid credentials  
         **WHEN** I attempt to login  
         **THEN** I should see error message "Sai tài khoản hoặc mật khẩu"  
         **AND** I should remain on the login page
 
-        ✅ **GIVEN** I am already logged in  
+        **GIVEN** I am already logged in  
         **WHEN** I try to access login page  
         **THEN** I should be redirected to main dashboard
 
-        ✅ **GIVEN** login form validation  
+        **GIVEN** login form validation  
         **WHEN** I submit empty username or password  
         **THEN** I should see error "Vui lòng nhập đầy đủ thông tin"
         """)
@@ -156,21 +156,21 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** I am an Admin user (role_id = 1)  
+        **GIVEN** I am an Admin user (role_id = 1)  
         **WHEN** I access the system  
         **THEN** I can view and manage all branches  
         **AND** I can view and manage all machines  
         **AND** I can view all transaction histories  
         **AND** I can access advanced features (branch management, user management)
 
-        ✅ **GIVEN** I am a regular User (role_id != 1)  
+        **GIVEN** I am a regular User (role_id != 1)  
         **WHEN** I access the system  
         **THEN** I can only view machines in my assigned branch  
         **AND** I can only view transaction histories in my branch  
         **AND** I cannot access branch management features  
         **AND** I cannot access other users' data outside my branch
 
-        ✅ **GIVEN** my JWT token is invalid or expired  
+        **GIVEN** my JWT token is invalid or expired  
         **WHEN** I make any API request  
         **THEN** I should receive 401 Unauthorized response  
         **AND** I should be redirected to login page
@@ -178,7 +178,7 @@ with tab2:
     
     # Machine Management Module
     st.markdown("---")
-    st.markdown("#### 🎮 Module 2: Machine Management")
+    st.markdown("#### Module 2: Machine Management")
     st.markdown("**Epic: Gaming Machine CRUD Operations with Business Rules**")
 
     with st.expander("User Story 2.1: View Machine List", expanded=False):
@@ -189,17 +189,17 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** I am logged in as Admin  
+        **GIVEN** I am logged in as Admin  
         **WHEN** I view the machine list  
         **THEN** I should see machines from all branches  
         **AND** each machine should display: machine_code, name, branch, current_balance, rate, actions
 
-        ✅ **GIVEN** I am logged in as regular user  
+        **GIVEN** I am logged in as regular user  
         **WHEN** I view the machine list  
         **THEN** I should only see machines from my assigned branch  
         **AND** soft-deleted machines should not be visible
 
-        ✅ **GIVEN** machine current balance calculation  
+        **GIVEN** machine current balance calculation  
         **WHEN** displaying machine list  
         **THEN** current_balance should reflect the most recent transaction balance  
         **AND** NOT use the deprecated current_points field in Machine table
@@ -213,13 +213,13 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** I have appropriate permissions  
+        **GIVEN** I have appropriate permissions  
         **WHEN** I create a new machine with valid data  
         **THEN** machine should be created successfully  
         **AND** machine_code must be unique within the same branch  
         **AND** default rate should be set to 2 if not specified
 
-        ✅ **GIVEN** validation rules  
+        **GIVEN** validation rules  
         **WHEN** I submit machine form  
         **THEN** machine_code and name are required fields  
         **AND** machine_code cannot duplicate within the same branch  
@@ -234,13 +234,13 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** I have edit permissions  
+        **GIVEN** I have edit permissions  
         **WHEN** I update machine information  
         **THEN** changes should be saved successfully  
         **AND** rate changes apply to future transactions only  
         **AND** historical transaction rates remain unchanged
 
-        ✅ **GIVEN** soft delete functionality  
+        **GIVEN** soft delete functionality  
         **WHEN** I delete a machine  
         **THEN** is_deleted flag should be set to true  
         **AND** machine should disappear from active lists  
@@ -249,7 +249,7 @@ with tab2:
     
     # Point Transaction Management Module
     st.markdown("---")
-    st.markdown("#### 💰 Module 3: Point Transaction Management")
+    st.markdown("#### Module 3: Point Transaction Management")
     st.markdown("**Epic: Daily Point Entry with Business Logic and Validation**")
 
     with st.expander("User Story 3.1: Daily Point Data Entry", expanded=False):
@@ -260,19 +260,19 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** I select a machine and date  
+        **GIVEN** I select a machine and date  
         **WHEN** I enter Point In and Point Out values  
         **THEN** system should calculate Point Balance = Points In - Points Out  
         **AND** calculate Daily Point = Current Balance - Previous Balance  
         **AND** calculate Final Amount = (Daily Point / Machine Rate) × 1000
 
-        ✅ **GIVEN** validation rules  
+        **GIVEN** validation rules  
         **WHEN** I submit point data  
         **THEN** Points In and Points Out cannot be negative  
         **AND** all required fields must be filled  
         **AND** Previous Balance is required (auto-filled from yesterday or manually entered)
 
-        ✅ **GIVEN** Demo Mode toggle  
+        **GIVEN** Demo Mode toggle  
         **WHEN** Demo Mode is ON  
         **THEN** I can overwrite existing data for the same date  
         **WHEN** Demo Mode is OFF  
@@ -287,18 +287,18 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** transaction history access  
+        **GIVEN** transaction history access  
         **WHEN** I view transactions for a machine  
         **THEN** data should be sorted by date (newest first)  
         **AND** display: date, machine_code, points_in, points_out, daily_point, final_amount, rate
 
-        ✅ **GIVEN** transaction editing  
+        **GIVEN** transaction editing  
         **WHEN** I edit a transaction  
         **THEN** I can only edit the most recent transaction  
         **AND** Daily Point auto-calculates when Balance changes  
         **AND** system logs all changes in TransactionEditLog (Admin only can view)
         
-        ✅ **GIVEN** rate preservation  
+        **GIVEN** rate preservation  
         **WHEN** transaction is edited  
         **THEN** calculations use the rate stored in transaction record  
         **AND** NOT the current machine rate
@@ -306,7 +306,7 @@ with tab2:
     
     # Advanced Management Modules
     st.markdown("---")
-    st.markdown("#### 🛍️ Module 4: Product & Warehouse Management")
+    st.markdown("#### Module 4: Product & Warehouse Management")
 
     with st.expander("User Story 4.1: Product & Inventory Management", expanded=False):
         st.markdown("""
@@ -316,13 +316,13 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** product management  
+        **GIVEN** product management  
         **WHEN** I create/edit products  
         **THEN** name and price are required fields  
         **AND** soft delete preserves historical data  
         **AND** products can be associated with machines for prize dispensing
 
-        ✅ **GIVEN** warehouse stock tracking  
+        **GIVEN** warehouse stock tracking  
         **WHEN** I update product quantities  
         **THEN** stock levels are tracked per product  
         **AND** quantities must be non-negative integers  
@@ -330,7 +330,7 @@ with tab2:
         """)
 
     st.markdown("---")
-    st.markdown("#### 📊 Module 5: Daily Audit System")
+    st.markdown("#### Module 5: Daily Audit System")
 
     with st.expander("User Story 5.1: Daily Machine Audit", expanded=False):
         st.markdown("""
@@ -340,12 +340,12 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** daily audit form  
+        **GIVEN** daily audit form  
         **WHEN** I conduct an audit  
         **THEN** I must record: start_of_day_count, end_of_day_count, gifts_won  
         **AND** optionally: end_of_day_coins, coin_value, gift_cost
 
-        ✅ **GIVEN** revenue calculations  
+        **GIVEN** revenue calculations  
         **WHEN** audit is completed  
         **THEN** revenue = (end_of_day_coins × coin_value) - (gifts_won × gift_cost)  
         **AND** audit is associated with specific machine and user  
@@ -353,7 +353,7 @@ with tab2:
         """)
 
     st.markdown("---")
-    st.markdown("#### 💳 Module 6: Advance Payment System")
+    st.markdown("#### Module 6: Advance Payment System")
 
     with st.expander("User Story 6.1: Employee Financial Management", expanded=False):
         st.markdown("""
@@ -363,18 +363,18 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** advance creation  
+        **GIVEN** advance creation  
         **WHEN** I create an advance for an employee  
         **THEN** employee debt_amount increases  
         **AND** advance stores: user_id, amount, description, date, branch_id
 
-        ✅ **GIVEN** payment processing  
+        **GIVEN** payment processing  
         **WHEN** employee makes a payment  
         **THEN** debt_amount decreases  
         **AND** payment can exceed advance (allowing overpayment)  
         **AND** supports both specific advance payments and direct debt payments
 
-        ✅ **GIVEN** debt tracking  
+        **GIVEN** debt tracking  
         **WHEN** viewing employee summary  
         **THEN** shows total debt balance per employee  
         **AND** debt_amount can be negative (credit balance)  
@@ -382,7 +382,7 @@ with tab2:
         """)
 
     st.markdown("---")
-    st.markdown("#### 📈 Module 7: Reports & Analytics")
+    st.markdown("#### Module 7: Reports & Analytics")
 
     with st.expander("User Story 7.1: Business Intelligence & Reporting", expanded=False):
         st.markdown("""
@@ -392,12 +392,12 @@ with tab2:
 
         **Acceptance Criteria:**
         
-        ✅ **GIVEN** reporting interface  
+        **GIVEN** reporting interface  
         **WHEN** I access reports  
         **THEN** I can filter by date range, machine, and branch  
         **AND** export data in CSV/Excel format
 
-        ✅ **GIVEN** revenue analytics  
+        **GIVEN** revenue analytics  
         **WHEN** viewing performance reports  
         **THEN** I can see revenue summaries by branch  
         **AND** track performance trends over time  
@@ -549,7 +549,7 @@ with tab6:
         try:
             st.image("assets/product_management_interface.png", caption="Product Management", use_container_width=True)
         except:
-            st.info("🛍️ Product management screenshot")
+            st.info("Product management screenshot")
         
         st.markdown("##### Daily Audit")  
         st.markdown("""
@@ -560,7 +560,7 @@ with tab6:
         try:
             st.image("assets/daily_audit_interface.png", caption="Daily Audit", use_container_width=True)
         except:
-            st.info("📊 Daily audit screenshot")
+            st.info("Daily audit screenshot")
     
     with col2:
         st.markdown("##### Warehouse Management")
@@ -583,7 +583,7 @@ with tab6:
         try:
             st.image("assets/reports_advance_payments_interface.png", caption="Reports & Advance Payments", use_container_width=True)
         except:
-            st.info("💰 Reports & advance payments screenshot")
+            st.info("Reports & advance payments screenshot")
 
 
     st.subheader("7. KPIs and Reports")

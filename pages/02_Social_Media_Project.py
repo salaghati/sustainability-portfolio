@@ -101,7 +101,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📈 Social Media Project")
+st.title("Social Media Project")
 st.markdown("### Complete Analysis: Sustainability Content Performance & Strategy")
 
 with st.expander("📖 Project Background & Objectives", expanded=True):
@@ -124,19 +124,19 @@ def load_cached_data():
 try:
     df = load_cached_data()
 except Exception as e:
-    st.error(f"❌ Error loading data: {e}")
+    st.error(f"Error loading data: {e}")
     st.stop()
 
 # Enhanced sidebar filters
 with st.sidebar:
-    st.header("🔍 Analysis Filters")
+    st.header("Analysis Filters")
     st.markdown("*Customize your data view below*")
     
     # Platform filter
     if "platform" in df.columns:
         platforms = sorted(df["platform"].dropna().unique())
         platform_sel = st.multiselect(
-            "📱 Social Media Platforms",
+            "Social Media Platforms",
             options=platforms,
             default=platforms,
             help="Select one or more platforms to compare their performance metrics"
@@ -199,7 +199,7 @@ with st.sidebar:
     
     # Analysis type
     st.markdown("---")
-    st.markdown("### 🔍 Analysis Scope")
+    st.markdown("### Analysis Scope")
     
     analysis_type = st.radio(
         "Choose focus",
@@ -230,7 +230,7 @@ elif analysis_type == "Recent Posts Only" and "post_date" in filtered_df.columns
     filtered_df = filtered_df[filtered_df["post_date"] >= recent_date]
 
 # Results summary
-st.success(f"📊 **Showing {len(filtered_df):,} posts** from total {len(df):,} posts")
+st.success(f"**Showing {len(filtered_df):,} posts** from total {len(df):,} posts")
 
 st.markdown("---")
 
@@ -238,7 +238,7 @@ st.markdown("---")
 # SECTION 1: OVERVIEW & KPIs
 # =============================================================================
 
-st.header("📊 Performance Overview")
+st.header("Performance Overview")
 
 # KPI Section
 kpis = calculate_kpis(filtered_df)
@@ -248,7 +248,7 @@ kpi_col1, kpi_col2, kpi_col3 = st.columns(3)
 with kpi_col1:
     st.markdown(f"""
     <div class="kpi-card">
-        <div style="font-size: 1.5rem;">📝</div>
+        <div style="font-size: 1.5rem;"></div>
         <div class="kpi-number">{kpis['total_posts']:,}</div>
         <div class="kpi-label">Total Posts</div>
     </div>
@@ -275,10 +275,10 @@ with kpi_col3:
     """, unsafe_allow_html=True)
 
 # Charts section
-st.subheader("📈 Performance Visualizations")
+st.subheader("Performance Visualizations")
 
 # Tabs for better organization
-tab1, tab2, tab3 = st.tabs(["📅 Time Trends", "🏆 Platform Comparison", "🎭 Sentiment Analysis"])
+tab1, tab2, tab3 = st.tabs(["Time Trends", "Platform Comparison", "Sentiment Analysis"])
 
 with tab1:
     chart = create_timeseries_chart(filtered_df)
@@ -359,10 +359,10 @@ with metrics_col2:
         platform_count = filtered_df["platform"].nunique()
         most_used = filtered_df["platform"].mode().iloc[0] if len(filtered_df) > 0 else "N/A"
         
-        st.metric("📱 Platform Diversity", f"{platform_count} platforms", 
+        st.metric("Platform Diversity", f"{platform_count} platforms", 
                  help=f"Most used: {most_used}")
     else:
-        st.metric("📱 Platform Diversity", "N/A")
+        st.metric("Platform Diversity", "N/A")
 
 with metrics_col3:
     if "post_date" in filtered_df.columns and len(filtered_df) > 0:
@@ -372,14 +372,14 @@ with metrics_col3:
         st.metric("⚡ Content Velocity", f"{posts_per_day:.1f} posts/day", 
                  help=f"Over {date_range_days:,} days")
     else:
-        st.metric("⚡ Content Velocity", "N/A")
+        st.metric("Content Velocity", "N/A")
 
 # Advanced analysis tabs
 adv_tab1, adv_tab2, adv_tab3, adv_tab4 = st.tabs([
-    "🏷️ Hashtag Intelligence", 
-    "🌍 Topic Insights", 
-    "⏰ Optimal Timing", 
-    "📢 CTA Analysis"
+    "Hashtag Intelligence", 
+    "Topic Insights", 
+    "Optimal Timing", 
+    "CTA Analysis"
 ])
 
 with adv_tab1:
@@ -390,10 +390,10 @@ with adv_tab1:
         if chart:
             st.altair_chart(chart, use_container_width=True)
         else:
-            st.warning("⚠️ No hashtag data available in current selection")
+            st.warning("No hashtag data available in current selection")
     
     with hashtag_col2:
-        st.markdown("#### 🎯 Top Performers")
+        st.markdown("#### Top Performers")
         
         if "hashtag" in filtered_df.columns:
             top_hashtags = (
@@ -449,10 +449,10 @@ with adv_tab3:
     with time_col1:
         if "platform" in filtered_df.columns:
             platform_focus = st.selectbox(
-                "🎯 Focus Platform for Time Analysis",
+                "Focus Platform for Time Analysis",
                 options=[None] + sorted(filtered_df["platform"].dropna().unique()),
                 index=0,
-                format_func=lambda x: "🌐 All Platforms" if x is None else f"📱 {x}",
+                format_func=lambda x: "All Platforms" if x is None else f"{x}",
                 help="Select specific platform for detailed timing insights"
             )
         else:
@@ -465,15 +465,15 @@ with adv_tab3:
             st.warning("⚠️ Insufficient time data for heatmap")
     
     with time_col2:
-        st.markdown("#### ⏰ Timing Guide")
+        st.markdown("#### Timing Guide")
         
         st.markdown("""
         <div class="heatmap-legend">
-            <strong>🎨 Reading the Heatmap:</strong><br>
-            🟦 Lower engagement<br>
-            🟨 Moderate engagement<br>  
-            🟥 High engagement<br><br>
-            <strong>💡 Look for:</strong><br>
+            <strong>Reading the Heatmap:</strong><br>
+            Lower engagement (blue)<br>
+            Moderate engagement (yellow)<br>  
+            High engagement (red)<br><br>
+            <strong>Look for:</strong><br>
             • Dark spots = Prime time<br>
             • Patterns = Audience habits<br>
             • Platform differences
@@ -528,7 +528,7 @@ with export_col2:
         )
         summary_csv = summary.to_csv().encode("utf-8")
         st.download_button(
-            f"📊 Platform Summary ({len(summary)} platforms)",
+            f"Platform Summary ({len(summary)} platforms)",
             data=summary_csv,
             file_name="platform_performance_summary.csv",
             mime="text/csv",
@@ -538,22 +538,22 @@ with export_col2:
 
 with export_col3:
     st.markdown("""
-    **📈 Analysis Complete:**  
-    ✅ Performance metrics analyzed  
-    ✅ Trends & patterns identified  
-    ✅ Optimization insights generated  
-    ✅ Ready for implementation  
+    **Analysis Complete:**  
+    Performance metrics analyzed  
+    Trends & patterns identified  
+    Optimization insights generated  
+    Ready for implementation  
     """)
 
 # Final insights
 st.markdown("---")
-st.subheader("📝 Key Strategic Insights")
+st.subheader("Key Strategic Insights")
 
 insights_col1, insights_col2 = st.columns(2)
 
 with insights_col1:
     st.success("""
-    **🎯 Content Strategy:**
+    **Content Strategy:**
     - Focus on high-performing platforms for maximum reach
     - Balance sentiment mix: 60% positive, 30% neutral, 10% negative
     - Use trending hashtags but combine with niche ones
@@ -562,7 +562,7 @@ with insights_col1:
 
 with insights_col2:
     st.info("""
-    **📊 Performance Optimization:**
+    **Performance Optimization:**
     - Monitor quality score monthly (target: >20%)
     - Maintain consistent posting velocity
     - Test different CTAs and measure results

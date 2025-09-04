@@ -6,7 +6,7 @@ import pandas as pd
 from modules.transport.utils import load_and_clean_transport_data
 from modules.transport.charts import kpi_card, trend_chart, top_n_chart, distribution_chart, pie_chart, timing_heatmap
 
-st.title("🚌 Transport Project")
+st.title("Transport Project")
 st.markdown("### Complete Analysis: NYC Green Taxi Operations & Insights")
 
 with st.expander("📖 Project Background & Objectives", expanded=True):
@@ -31,7 +31,7 @@ if df.empty:
 
 # --- Sidebar Filters ---
 with st.sidebar:
-    st.header("🚌 Transport Filters")
+    st.header("Transport Filters")
     st.markdown("*Customize your trip analysis*")
     
     # Date range filter
@@ -50,7 +50,7 @@ with st.sidebar:
     
     # Additional filters could be added here in the future
     st.markdown("---")
-    st.markdown("### 📊 Analysis Scope")
+    st.markdown("### Analysis Scope")
     
     analysis_focus = st.radio(
         "Choose analysis focus",
@@ -77,7 +77,7 @@ elif analysis_focus == "Peak Hours Only":
     ]
 
 # Results summary
-st.success(f"🚌 **Analyzing {len(filtered_df):,} trips** from total {len(df):,} trips")
+st.success(f"**Analyzing {len(filtered_df):,} trips** from total {len(df):,} trips")
 
 st.markdown("---")
 
@@ -85,7 +85,7 @@ st.markdown("---")
 # SECTION 1: KEY PERFORMANCE INDICATORS
 # =============================================================================
 
-st.header("📊 Key Performance Indicators")
+st.header("Key Performance Indicators")
 
 kpi_cols = st.columns(4)
 
@@ -110,10 +110,10 @@ st.markdown("---")
 # SECTION 2: TRIP CHARACTERISTICS ANALYSIS  
 # =============================================================================
 
-st.header("🚗 Trip Characteristics Analysis")
+st.header("Trip Characteristics Analysis")
 
 # Trip characteristics in tabs
-char_tab1, char_tab2, char_tab3 = st.tabs(["📏 Distance & Duration", "💳 Payment & Passengers", "📈 Trends & Routes"])
+char_tab1, char_tab2, char_tab3 = st.tabs(["Distance & Duration", "Payment & Passengers", "Trends & Routes"])
 
 with char_tab1:
     st.subheader("Distance and Duration Distributions")
@@ -125,7 +125,7 @@ with char_tab1:
             distribution_chart(filtered_df, 'trip_distance', 'Trip Distance Distribution', 'Distance (miles)'), 
             use_container_width=True
         )
-        st.caption("📊 Distribution of trip distances, showing the frequency of short vs. long trips.")
+        st.caption("Distribution of trip distances, showing the frequency of short vs. long trips.")
     
     with dist_cols[1]:
         st.altair_chart(
@@ -157,10 +157,10 @@ with char_tab3:
     st.subheader("Trends and Popular Routes")
     
     st.altair_chart(trend_chart(filtered_df), use_container_width=True)
-    st.caption("📈 Daily trip volumes over the selected date range.")
+    st.caption("Daily trip volumes over the selected date range.")
     
     st.altair_chart(top_n_chart(filtered_df, 'route', 10), use_container_width=True)
-    st.caption("🗺️ Top 10 most frequent trip routes (Pickup ID → Dropoff ID).")
+    st.caption("Top 10 most frequent trip routes (Pickup ID → Dropoff ID).")
 
 st.markdown("---")
 
@@ -168,9 +168,9 @@ st.markdown("---")
 # SECTION 3: TIMING ANALYSIS
 # =============================================================================
 
-st.header("⏰ Timing Analysis & Optimization")
+st.header("Timing Analysis & Optimization")
 
-timing_tab1, timing_tab2 = st.tabs(["🔥 Peak Hours Heatmap", "📊 Timing Insights"])
+timing_tab1, timing_tab2 = st.tabs(["Peak Hours Heatmap", "Timing Insights"])
 
 with timing_tab1:
     st.subheader("Trip Volume by Hour and Day of Week")
@@ -221,15 +221,15 @@ with timing_tab2:
             """)
     
     with insights_col2:
-        st.markdown("#### 💡 Business Recommendations")
+        st.markdown("#### Business Recommendations")
         
         st.markdown("""
-        **🚗 Driver Allocation:**
+        **Driver Allocation:**
         - Deploy more drivers during identified peak hours
         - Consider surge pricing during high-demand periods
         - Optimize vehicle maintenance during low-demand hours
         
-        **📊 Revenue Optimization:**
+        **Revenue Optimization:**
         - Implement dynamic pricing based on demand patterns
         - Focus marketing efforts on low-demand periods
         - Plan special promotions during off-peak hours
@@ -241,7 +241,7 @@ st.markdown("---")
 # SECTION 4: PERFORMANCE METRICS & INSIGHTS
 # =============================================================================
 
-st.header("📈 Advanced Performance Metrics")
+st.header("Advanced Performance Metrics")
 
 perf_col1, perf_col2, perf_col3 = st.columns(3)
 
@@ -250,12 +250,12 @@ with perf_col1:
     if len(filtered_df) > 0 and 'total_amount' in filtered_df.columns and 'trip_distance' in filtered_df.columns:
         avg_revenue_per_mile = (filtered_df['total_amount'] / filtered_df['trip_distance']).mean()
         st.metric(
-            "💰 Revenue per Mile", 
+            "Revenue per Mile", 
             f"${avg_revenue_per_mile:.2f}",
             help="Average revenue generated per mile traveled"
         )
     else:
-        st.metric("💰 Revenue per Mile", "N/A")
+        st.metric("Revenue per Mile", "N/A")
 
 with perf_col2:
     # Trip efficiency (distance/duration)
@@ -274,12 +274,12 @@ with perf_col3:
     if len(filtered_df) > 0 and 'tip_amount' in filtered_df.columns and 'total_amount' in filtered_df.columns:
         avg_tip_pct = (filtered_df['tip_amount'] / filtered_df['total_amount'] * 100).mean()
         st.metric(
-            "🎯 Avg Tip %", 
+            "Avg Tip %", 
             f"{avg_tip_pct:.1f}%",
             help="Average tip percentage as proxy for customer satisfaction"
         )
     else:
-        st.metric("🎯 Avg Tip %", "N/A")
+        st.metric("Avg Tip %", "N/A")
 
 st.markdown("---")
 
@@ -310,7 +310,7 @@ with export_col2:
         summary_stats = filtered_df.describe().round(2)
         summary_csv = summary_stats.to_csv().encode("utf-8")
         st.download_button(
-            f"📊 Summary Statistics",
+            f"Summary Statistics",
             data=summary_csv,
             file_name="trip_summary_statistics.csv",
             mime="text/csv",
@@ -320,22 +320,22 @@ with export_col2:
 
 with export_col3:
     st.markdown("""
-    **🚌 Analysis Complete:**  
-    ✅ Trip patterns identified  
-    ✅ Peak hours analyzed  
-    ✅ Revenue insights generated  
-    ✅ Operational recommendations ready  
+    **Analysis Complete:**  
+    Trip patterns identified  
+    Peak hours analyzed  
+    Revenue insights generated  
+    Operational recommendations ready  
     """)
 
 # Final insights summary
 st.markdown("---")
-st.subheader("📝 Strategic Insights Summary")
+st.subheader("Strategic Insights Summary")
 
 summary_col1, summary_col2 = st.columns(2)
 
 with summary_col1:
     st.success("""
-    **🎯 Operational Excellence:**
+    **Operational Excellence:**
     - **Peak Hour Management:** Deploy resources during identified high-demand periods
     - **Route Optimization:** Focus on popular routes for maximum efficiency  
     - **Pricing Strategy:** Implement dynamic pricing based on demand patterns
@@ -344,7 +344,7 @@ with summary_col1:
 
 with summary_col2:
     st.info("""
-    **📊 Performance Monitoring:**
+    **Performance Monitoring:**
     - **Revenue per Mile:** Track efficiency of trip monetization
     - **Average Speed:** Monitor traffic conditions and route efficiency
     - **Customer Satisfaction:** Use tip percentages to gauge service quality
