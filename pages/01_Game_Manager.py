@@ -326,7 +326,7 @@ with tab6:
         - Export data to CSV/Excel
         """)
         try:
-            st.image("assets/reports_advance_interface.png", caption="Reports & Advance Payments", use_container_width=True)
+            st.image("assets/reports_advance_payments_interface.png", caption="Reports & Advance Payments", use_container_width=True)
         except:
             st.info("💰 Reports & advance payments screenshot")
 
