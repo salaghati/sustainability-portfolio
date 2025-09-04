@@ -182,7 +182,7 @@ with tab2:
     st.markdown("**Epic: Gaming Machine CRUD Operations with Business Rules**")
 
     with st.expander("User Story 2.1: View Machine List", expanded=False):
-    st.markdown("""
+        st.markdown("""
         **As a** branch user  
         **I want to** view the list of gaming machines  
         **So that** I can manage daily operations and point entries
@@ -253,7 +253,7 @@ with tab2:
     st.markdown("**Epic: Daily Point Entry with Business Logic and Validation**")
 
     with st.expander("User Story 3.1: Daily Point Data Entry", expanded=False):
-    st.markdown("""
+        st.markdown("""
         **As a** branch operator  
         **I want to** enter daily point data for machines  
         **So that** I can track machine performance and calculate revenues
@@ -385,7 +385,7 @@ with tab2:
     st.markdown("#### 📈 Module 7: Reports & Analytics")
 
     with st.expander("User Story 7.1: Business Intelligence & Reporting", expanded=False):
-    st.markdown("""
+        st.markdown("""
         **As a** manager  
         **I want to** generate comprehensive reports  
         **So that** I can analyze business performance and make data-driven decisions
